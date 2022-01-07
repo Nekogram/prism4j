@@ -3,6 +3,8 @@
 Simplified Java clone of [prism-js](https://github.com/PrismJS/prism). No rendering, no themes,
 no hooks, no plugins. But still _a_ language parsing. Primary aim of this library is to provide a _tokenization_ strategy of arbitrary syntaxes for later processing. Works on Android (great with [Markwon](https://github.com/noties/Markwon) - markdown display library). 
 
+This is a fork of [noties/Prism4j](https://github.com/noties/Prism4j) which is unmaintained since 2019.
+
 ## Core
 
 Core module `prism4j` is a lightweight module that comes with API (no language definitions).
