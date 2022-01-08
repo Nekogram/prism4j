@@ -5,8 +5,11 @@
 
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.DefaultGrammarLocator;
+import io.noties.prism4j.GrammarUtils;
+import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.TestUtils;
 import org.jetbrains.annotations.NotNull;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +17,15 @@ import org.junit.runners.Parameterized;
 
 import java.util.Collection;
 
-import io.noties.prism4j.DefaultGrammarLocator;
-import io.noties.prism4j.GrammarUtils;
-import io.noties.prism4j.Prism4j;
-import io.noties.prism4j.TestUtils;
-
 @RunWith(Parameterized.class)
 public class TestDart {
+
+    private final String file;
+    private Prism4j prism4j;
+
+    public TestDart(@NotNull String file) {
+        this.file = file;
+    }
 
     @Parameterized.Parameters(name = "{0}")
     @NotNull
@@ -28,17 +33,9 @@ public class TestDart {
         return TestUtils.testFiles("dart");
     }
 
-    private Prism4j prism4j;
-
     @Before
     public void before() {
         prism4j = new Prism4j(new DefaultGrammarLocator());
-    }
-
-    private String file;
-
-    public TestDart(@NotNull String file) {
-        this.file = file;
     }
 
     @Test

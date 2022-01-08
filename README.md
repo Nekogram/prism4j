@@ -109,8 +109,8 @@ will automatically add requested languages.
 annotationProcessor 'io.noties:prism4j-bundler:${prism_version}'
 ```
 
-Please note that `bundler` can add languages that are _ported_ (see `./prism4j-languages/src/main/java/io/noties/prism4j/languages` folder for the list). Currently, it
-supports:
+Please note that `bundler` can add languages that are _ported_ (
+see `./prism4j-languages/src/main/java/io/noties/prism4j/languages` folder for the list). Currently, it supports:
 
 * `brainf*ck`
 * `c`

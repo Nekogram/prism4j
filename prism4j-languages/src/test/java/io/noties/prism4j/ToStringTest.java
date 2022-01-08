@@ -1,6 +1,5 @@
 package io.noties.prism4j;
 
-import io.noties.prism4j.annotations.PrismBundle;
 import org.junit.Test;
 
 //@PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorToStringTest")

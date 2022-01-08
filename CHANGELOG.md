@@ -23,10 +23,10 @@
 * Add `languages()` method to generated `GrammarLocator` class
 * Allow `includeAll` option (include all available languages)
 * Add language support:
-  * `groovy` (no string interpolation)
-  * `markdown`
-  * `scala`
-  * `swift`
+    * `groovy` (no string interpolation)
+    * `markdown`
+    * `scala`
+    * `swift`
 
 # 1.0.1
 

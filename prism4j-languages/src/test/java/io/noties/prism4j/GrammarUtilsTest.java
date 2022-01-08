@@ -1,6 +1,5 @@
 package io.noties.prism4j;
 
-import io.noties.prism4j.annotations.PrismBundle;
 import ix.Ix;
 import ix.IxConsumer;
 import ix.IxFunction;
