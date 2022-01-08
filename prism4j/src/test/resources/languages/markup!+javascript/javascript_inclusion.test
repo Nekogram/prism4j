@@ -1,0 +1,86 @@
+<script type="text/javascript">foo()</script>
+<script>
+"foo bar"
+</script>
+<script src="./external.js"></script>
+
+----------------------------------------------------
+
+[
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"script"
+		]],
+		["attr-name", [
+			"type"
+		]],
+		["attr-value", [
+			["punctuation", "="],
+			["punctuation", "\""],
+			"text/javascript",
+			["punctuation", "\""]
+		]],
+		["punctuation", ">"]
+	]],
+	["script", [
+		["function", "foo"],
+		["punctuation", "("],
+		["punctuation", ")"]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"script"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"script"
+		]],
+		["punctuation", ">"]
+	]],
+	["script", [
+		["string", "\"foo bar\""]
+	]],
+	["tag", [
+		["tag", [
+			["punctuation", "</"],
+			"script"
+		]],
+		["punctuation", ">"]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"script"
+		]],
+		["attr-name", [
+            "src"
+        ]],
+        ["attr-value", [
+            ["punctuation", "="],
+            ["punctuation", "\""],
+            "./external.js",
+            ["punctuation", "\""]
+        ]],
+		["punctuation", ">"]
+	]],
+	["script",[]],
+	["tag", [
+        ["tag", [
+            ["punctuation", "</"],
+            "script"
+        ]],
+        ["punctuation", ">"]
+    ]]
+]
+
+----------------------------------------------------
+
+Checks for Javascript usage inside Markup, using <script> tags.
