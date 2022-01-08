@@ -42,7 +42,7 @@ public class Prism_css_extras {
 
             GrammarUtils.insertBeforeToken(css, "function",
                     token("hexcode", pattern(compile("#[\\da-f]{3,8}", CASE_INSENSITIVE))),
-                    token("entity", pattern(compile("\\\\[\\da-f]{1,8}", CASE_INSENSITIVE))),
+                    token("entity", pattern(compile("\\\\[\\da-fA-F]{1,8}", CASE_INSENSITIVE))),
                     token("number", pattern(compile("[\\d%.]+")))
             );
         }

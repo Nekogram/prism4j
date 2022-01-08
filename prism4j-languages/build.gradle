@@ -71,9 +71,7 @@ task regenerateTests {
         "{${Ix.fromArray(it).map { "\"$it\"" }.join(',')}}"
     }
 
-    final def createGrammarLocator = { "GrammarLocator_${it.join('_').replaceAll('-', '_')}" }
-
-    final def createSource = { include, grammarLocator, className, folderName, rootGrammar ->
+    final def createSource = { className, folderName, rootGrammar ->
         template()
                 .replaceAll("\\{\\{class-name}}", className)
                 .replaceAll("\\{\\{folder-name}}", folderName)
@@ -92,11 +90,9 @@ task regenerateTests {
                 FileUtils.writeStringToFile(
                         file,
                         createSource(
-                                createInclude(it.second),
-                                createGrammarLocator(it.second),
                                 className,
                                 it.first.name,
-                                it.second[0]
+                                it.second[0].toLowerCase()
                         ),
                         StandardCharsets.UTF_8
                 )

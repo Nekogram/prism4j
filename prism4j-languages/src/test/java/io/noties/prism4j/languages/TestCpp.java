@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @RunWith(Parameterized.class)
 public class TestCpp {
@@ -41,13 +42,13 @@ public class TestCpp {
     @Test
     public void test() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        TestUtils.assertCase(c, prism4j.tokenize(c.input, prism4j.grammar("Cpp")));
+        TestUtils.assertCase(c, prism4j.tokenize(c.input, Objects.requireNonNull(prism4j.grammar("cpp"))));
     }
 
     @Test
-    public void testCloned() {
+    public void testClone() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        final Prism4j.Grammar grammar = GrammarUtils.clone(prism4j.grammar("Cpp"));
+        final Prism4j.Grammar grammar = GrammarUtils.clone(Objects.requireNonNull(prism4j.grammar("cpp")));
         TestUtils.assertCase(c, prism4j.tokenize(c.input, grammar));
     }
 }

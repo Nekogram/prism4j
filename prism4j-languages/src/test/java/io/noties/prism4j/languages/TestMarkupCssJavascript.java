@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @RunWith(Parameterized.class)
 public class TestMarkupCssJavascript {
@@ -41,13 +42,13 @@ public class TestMarkupCssJavascript {
     @Test
     public void test() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        TestUtils.assertCase(c, prism4j.tokenize(c.input, prism4j.grammar("Markup")));
+        TestUtils.assertCase(c, prism4j.tokenize(c.input, Objects.requireNonNull(prism4j.grammar("markup"))));
     }
 
     @Test
-    public void testCloned() {
+    public void testClone() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        final Prism4j.Grammar grammar = GrammarUtils.clone(prism4j.grammar("Markup"));
+        final Prism4j.Grammar grammar = GrammarUtils.clone(Objects.requireNonNull(prism4j.grammar("markup")));
         TestUtils.assertCase(c, prism4j.tokenize(c.input, grammar));
     }
 }

@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @RunWith(Parameterized.class)
 public class TestGroovy {
@@ -41,13 +42,13 @@ public class TestGroovy {
     @Test
     public void test() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        TestUtils.assertCase(c, prism4j.tokenize(c.input, prism4j.grammar("Groovy")));
+        TestUtils.assertCase(c, prism4j.tokenize(c.input, Objects.requireNonNull(prism4j.grammar("groovy"))));
     }
 
     @Test
-    public void testCloned() {
+    public void testClone() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        final Prism4j.Grammar grammar = GrammarUtils.clone(prism4j.grammar("Groovy"));
+        final Prism4j.Grammar grammar = GrammarUtils.clone(Objects.requireNonNull(prism4j.grammar("groovy")));
         TestUtils.assertCase(c, prism4j.tokenize(c.input, grammar));
     }
 }

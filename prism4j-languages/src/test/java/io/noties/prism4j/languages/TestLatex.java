@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @RunWith(Parameterized.class)
 public class TestLatex {
@@ -41,13 +42,13 @@ public class TestLatex {
     @Test
     public void test() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        TestUtils.assertCase(c, prism4j.tokenize(c.input, prism4j.grammar("Latex")));
+        TestUtils.assertCase(c, prism4j.tokenize(c.input, Objects.requireNonNull(prism4j.grammar("latex"))));
     }
 
     @Test
-    public void testCloned() {
+    public void testClone() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        final Prism4j.Grammar grammar = GrammarUtils.clone(prism4j.grammar("Latex"));
+        final Prism4j.Grammar grammar = GrammarUtils.clone(Objects.requireNonNull(prism4j.grammar("latex")));
         TestUtils.assertCase(c, prism4j.tokenize(c.input, grammar));
     }
 }
