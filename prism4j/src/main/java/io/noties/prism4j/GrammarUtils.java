@@ -3,26 +3,13 @@ package io.noties.prism4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class GrammarUtils {
 
-    /**
-     * Used when extending an existing grammar to filter out tokens that should not be cloned.
-     *
-     * @see #extend(Prism4j.Grammar, String, TokenFilter, Prism4j.Token...)
-     */
-    public interface TokenFilter {
+    private static final Cloner CLONER = Cloner.create();
 
-        /**
-         * @param token {@link io.noties.prism4j.Prism4j.Token} to validate
-         * @return a boolean indicating if supplied token should be included (passes the test)
-         */
-        boolean test(@NotNull Prism4j.Token token);
+    private GrammarUtils() {
     }
 
     /**
@@ -257,8 +244,17 @@ public abstract class GrammarUtils {
         return grammar;
     }
 
-    private GrammarUtils() {
-    }
+    /**
+     * Used when extending an existing grammar to filter out tokens that should not be cloned.
+     *
+     * @see #extend(Prism4j.Grammar, String, TokenFilter, Prism4j.Token...)
+     */
+    public interface TokenFilter {
 
-    private static final Cloner CLONER = Cloner.create();
+        /**
+         * @param token {@link io.noties.prism4j.Prism4j.Token} to validate
+         * @return a boolean indicating if supplied token should be included (passes the test)
+         */
+        boolean test(@NotNull Prism4j.Token token);
+    }
 }

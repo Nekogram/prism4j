@@ -1,4 +1,5 @@
 # 1.1.0
+
 * Fix issue when cloning a grammar was causing stack overflow (recursive copying)
 * Fix issue with recursive toString in Grammar, Token adn Pattern
 * Add `includeAll` option for `@PrismBundle`

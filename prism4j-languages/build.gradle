@@ -28,7 +28,7 @@ sourceSets {
 }
 
 dependencies {
-    
+
     // I think I'm going crazy with this... but there is some magic underneath and we cannot (_sometimes_ we can!)
     // use local projects... so, these artifacts must be push to local maven first
 
@@ -37,7 +37,7 @@ dependencies {
 
 //    testAnnotationProcessor project(':prism4j-bundler')
     testAnnotationProcessor "io.noties:prism4j-bundler:2.0.0-SNAPSHOT"
-    
+
     testImplementation JUNIT
     testImplementation COMMONS_IO
     testImplementation IX_JAVA
@@ -70,13 +70,13 @@ afterEvaluate {
 
     final def createGrammarLocator = { "GrammarLocator_${it.join('_').replaceAll('-', '_')}" }
 
-    final def createSource = { include, grammarLocator, className, folderName, rootGrammar  ->
+    final def createSource = { include, grammarLocator, className, folderName, rootGrammar ->
         template()
-            .replaceAll("\\{\\{include}}", include)
-            .replaceAll("\\{\\{grammar-locator}}", grammarLocator)
-            .replaceAll("\\{\\{class-name}}", className)
-            .replaceAll("\\{\\{folder-name}}", folderName)
-            .replaceAll("\\{\\{root-grammar}}", rootGrammar)
+                .replaceAll("\\{\\{include}}", include)
+                .replaceAll("\\{\\{grammar-locator}}", grammarLocator)
+                .replaceAll("\\{\\{class-name}}", className)
+                .replaceAll("\\{\\{folder-name}}", folderName)
+                .replaceAll("\\{\\{root-grammar}}", rootGrammar)
     }
 
     Ix.fromArray(file('./src/test/resources/languages/').listFiles())

@@ -1,12 +1,11 @@
 package io.noties.prism4j;
 
-import org.junit.Before;
-import org.junit.Test;
-
+import io.noties.prism4j.annotations.PrismBundle;
 import ix.Ix;
 import ix.IxConsumer;
 import ix.IxFunction;
-import io.noties.prism4j.annotations.PrismBundle;
+import org.junit.Before;
+import org.junit.Test;
 
 @PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorGrammarUtils")
 public class GrammarUtilsTest {

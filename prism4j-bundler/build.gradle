@@ -1,8 +1,3 @@
-import ix.Ix
-import org.apache.commons.io.FileUtils
-
-import java.nio.charset.StandardCharsets
-
 buildscript {
     repositories {
         jcenter()
@@ -42,5 +37,5 @@ if (project.hasProperty('release')) {
 }
 
 afterEvaluate {
-    
+
 }

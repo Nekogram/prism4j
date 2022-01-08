@@ -2,7 +2,9 @@ package io.noties.prism4j;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-
+import ix.Ix;
+import ix.IxFunction;
+import ix.IxPredicate;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,10 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.List;
 
-import ix.Ix;
-import ix.IxFunction;
-import ix.IxPredicate;
-
 import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
 
 public abstract class TestUtils {
@@ -23,6 +21,9 @@ public abstract class TestUtils {
     private static final String DELIMITER = "-{52}";
 
     private static final Gson GSON = new Gson();
+
+    private TestUtils() {
+    }
 
     @NotNull
     public static Collection<Object> testFiles(@NotNull String lang) {
@@ -47,19 +48,6 @@ public abstract class TestUtils {
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public static class Case {
-
-        public final String input;
-        public final JsonArray simplifiedOutput;
-        public final String description;
-
-        Case(@NotNull String input, @NotNull JsonArray simplifiedOutput, @NotNull String description) {
-            this.input = input;
-            this.simplifiedOutput = simplifiedOutput;
-            this.description = description;
         }
     }
 
@@ -131,6 +119,16 @@ public abstract class TestUtils {
         return array;
     }
 
-    private TestUtils() {
+    public static class Case {
+
+        public final String input;
+        public final JsonArray simplifiedOutput;
+        public final String description;
+
+        Case(@NotNull String input, @NotNull JsonArray simplifiedOutput, @NotNull String description) {
+            this.input = input;
+            this.simplifiedOutput = simplifiedOutput;
+            this.description = description;
+        }
     }
 }

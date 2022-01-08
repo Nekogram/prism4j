@@ -10,101 +10,10 @@ import java.util.regex.Matcher;
 
 public class Prism4j {
 
-    public interface Grammar {
+    private final GrammarLocator grammarLocator;
 
-        @NotNull
-        String name();
-
-        // should mention that returned array is mutable
-        @NotNull
-        List<Token> tokens();
-    }
-
-    public interface Token {
-
-        @NotNull
-        String name();
-
-        @NotNull
-        List<Pattern> patterns();
-    }
-
-    public interface Pattern {
-
-        @NotNull
-        java.util.regex.Pattern regex();
-
-        boolean lookbehind();
-
-        boolean greedy();
-
-        @Nullable
-        String alias();
-
-        @Nullable
-        Grammar inside();
-    }
-
-    /**
-     * Basic structure that represents parsing state
-     *
-     * @see Text
-     * @see Syntax
-     */
-    public interface Node {
-
-        /**
-         * @return raw text length. For {@link Text} node it\'s {@link Text#literal()} length
-         * and for {@link Syntax} it is {@link Syntax#matchedString()} length
-         */
-        int textLength();
-
-        /**
-         * As we have only two types maybe doing a lot of `instanceof` checks is not that required
-         *
-         * @return a boolean indicating if this node is an instance of {@link Syntax}
-         */
-        boolean isSyntax();
-    }
-
-    public interface Text extends Node {
-
-        @NotNull
-        String literal();
-    }
-
-    public interface Syntax extends Node {
-
-        @NotNull
-        String type();
-
-        @NotNull
-        List<? extends Node> children();
-
-        @Nullable
-        String alias();
-
-        @NotNull
-        String matchedString();
-
-        boolean greedy();
-
-        /**
-         * The main aim for this flag is to be able to properly construct simplified
-         * array of tokens during tests. If it\'s set to true, then children will be
-         * inside another array. Otherwise they will be _flattened_ into the same array
-         * as token type information
-         *
-         * @return a flag indicating if children of this node were tokenized
-         */
-        boolean tokenized();
-    }
-
-    /**
-     * @see AbsVisitor
-     */
-    public interface Visitor {
-        void visit(@NotNull List<? extends Node> nodes);
+    public Prism4j(@NotNull GrammarLocator grammarLocator) {
+        this.grammarLocator = grammarLocator;
     }
 
     /**
@@ -171,11 +80,12 @@ public class Prism4j {
         return new PatternImpl(regex, lookbehind, greedy, alias, inside);
     }
 
+    private static boolean isSyntaxNode(@NotNull Node node) {
+        return node.isSyntax();
+    }
 
-    private final GrammarLocator grammarLocator;
-
-    public Prism4j(@NotNull GrammarLocator grammarLocator) {
-        this.grammarLocator = grammarLocator;
+    private static boolean isGreedyNode(@NotNull Node node) {
+        return node.isSyntax() && ((Syntax) node).greedy();
     }
 
     @NotNull
@@ -355,11 +265,101 @@ public class Prism4j {
         }
     }
 
-    private static boolean isSyntaxNode(@NotNull Node node) {
-        return node.isSyntax();
+
+    public interface Grammar {
+
+        @NotNull
+        String name();
+
+        // should mention that returned array is mutable
+        @NotNull
+        List<Token> tokens();
     }
 
-    private static boolean isGreedyNode(@NotNull Node node) {
-        return node.isSyntax() && ((Syntax) node).greedy();
+    public interface Token {
+
+        @NotNull
+        String name();
+
+        @NotNull
+        List<Pattern> patterns();
+    }
+
+    public interface Pattern {
+
+        @NotNull
+        java.util.regex.Pattern regex();
+
+        boolean lookbehind();
+
+        boolean greedy();
+
+        @Nullable
+        String alias();
+
+        @Nullable
+        Grammar inside();
+    }
+
+    /**
+     * Basic structure that represents parsing state
+     *
+     * @see Text
+     * @see Syntax
+     */
+    public interface Node {
+
+        /**
+         * @return raw text length. For {@link Text} node it\'s {@link Text#literal()} length
+         * and for {@link Syntax} it is {@link Syntax#matchedString()} length
+         */
+        int textLength();
+
+        /**
+         * As we have only two types maybe doing a lot of `instanceof` checks is not that required
+         *
+         * @return a boolean indicating if this node is an instance of {@link Syntax}
+         */
+        boolean isSyntax();
+    }
+
+    public interface Text extends Node {
+
+        @NotNull
+        String literal();
+    }
+
+    public interface Syntax extends Node {
+
+        @NotNull
+        String type();
+
+        @NotNull
+        List<? extends Node> children();
+
+        @Nullable
+        String alias();
+
+        @NotNull
+        String matchedString();
+
+        boolean greedy();
+
+        /**
+         * The main aim for this flag is to be able to properly construct simplified
+         * array of tokens during tests. If it\'s set to true, then children will be
+         * inside another array. Otherwise they will be _flattened_ into the same array
+         * as token type information
+         *
+         * @return a flag indicating if children of this node were tokenized
+         */
+        boolean tokenized();
+    }
+
+    /**
+     * @see AbsVisitor
+     */
+    public interface Visitor {
+        void visit(@NotNull List<? extends Node> nodes);
     }
 }

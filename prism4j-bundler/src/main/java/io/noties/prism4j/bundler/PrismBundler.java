@@ -3,40 +3,27 @@ package io.noties.prism4j.bundler;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 import com.google.googlejavaformat.java.JavaFormatterOptions;
-
-import com.google.googlejavaformat.java.RemoveUnusedImports;
+import io.noties.prism4j.annotations.PrismBundle;
+import ix.Ix;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Writer;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.JavaFileObject;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import ix.Ix;
-import io.noties.prism4j.annotations.PrismBundle;
-
-import static javax.tools.Diagnostic.Kind.*;
+import static javax.tools.Diagnostic.Kind.ERROR;
+import static javax.tools.Diagnostic.Kind.NOTE;
 
 public class PrismBundler extends AbstractProcessor {
 
@@ -60,6 +47,186 @@ public class PrismBundler extends AbstractProcessor {
     private Messager messager;
     private Elements elements;
     private Filer filer;
+
+    @NotNull
+    private static String languageSourceFileName(@NotNull String name) {
+        return String.format(Locale.US, LANGUAGE_SOURCE_PATTERN, javaValidName(name));
+    }
+
+    @NotNull
+    private static String grammarLocatorTemplate() {
+        try {
+            return IOUtils.resourceToString("/GrammarLocator.template.java", StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @NotNull
+    private static String grammarLocatorSource(
+            @NotNull String template,
+            @NotNull ClassInfo classInfo,
+            @NotNull Map<String, LanguageInfo> languages) {
+        final StringBuilder builder = new StringBuilder(template);
+        replaceTemplate(builder, TEMPLATE_PACKAGE_NAME, classInfo.packageName);
+        replaceTemplate(builder, TEMPLATE_IMPORTS, createImports(languages));
+        replaceTemplate(builder, TEMPLATE_CLASS_NAME, classInfo.className);
+        replaceTemplate(builder, TEMPLATE_REAL_LANGUAGE_NAME, createRealLanguageName(languages));
+        replaceTemplate(builder, TEMPLATE_OBTAIN_GRAMMAR, createObtainGrammar(languages));
+        replaceTemplate(builder, TEMPLATE_TRIGGER_MODIFY, createTriggerModify(languages));
+        replaceTemplate(builder, TEMPLATE_LANGUAGES, createLanguages(languages));
+        final Formatter formatter = new Formatter(JavaFormatterOptions.defaultOptions());
+        try {
+            return formatter.formatSource(builder.toString());
+        } catch (FormatterException e) {
+            System.out.printf("source: %n%s%n", builder.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void replaceTemplate(@NotNull StringBuilder template, @NotNull String name, @NotNull String content) {
+        final int index = template.indexOf(name);
+        template.replace(index, index + name.length(), content);
+    }
+
+    @NotNull
+    private static String createImports(@NotNull Map<String, LanguageInfo> languages) {
+        final StringBuilder builder = new StringBuilder();
+        Ix.from(languages.values())
+                .map(languageInfo -> languageInfo.name)
+                .orderBy(String::compareTo)
+                .foreach(s -> builder
+                        .append("import ")
+                        .append(LANGUAGES_PACKAGE)
+                        .append(".Prism_")
+                        .append(javaValidName(s))
+                        .append(';')
+                        .append('\n'));
+        return builder.toString();
+    }
+
+    // we must return a set of languageInfos here (so we do not copy language more than once
+    // thus allowing multiple grammarLocators)
+
+    @NotNull
+    private static String createRealLanguageName(@NotNull Map<String, LanguageInfo> languages) {
+        final StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, LanguageInfo> entry : languages.entrySet()) {
+            final List<String> aliases = entry.getValue().aliases;
+            if (aliases != null
+                    && aliases.size() > 0) {
+                for (String alias : aliases) {
+                    builder.append("case \"")
+                            .append(alias)
+                            .append('\"')
+                            .append(':')
+                            .append('\n');
+                }
+                builder.append("out = \"")
+                        .append(entry.getKey())
+                        .append('\"')
+                        .append(';')
+                        .append('\n')
+                        .append("break;\n");
+            }
+        }
+
+        if (builder.length() > 0) {
+            builder.append("default:\n")
+                    .append("out = name;\n")
+                    .append("}\nreturn out;");
+            builder.insert(0, "final String out;\nswitch (name) {");
+            return builder.toString();
+        } else {
+            return "return name;";
+        }
+    }
+
+    @NotNull
+    private static String createObtainGrammar(@NotNull Map<String, LanguageInfo> languages) {
+        final StringBuilder builder = new StringBuilder();
+        builder
+                .append("final Prism4j.Grammar grammar;\n")
+                .append("switch(name) {\n");
+        Ix.from(languages.keySet())
+                .orderBy(String::compareTo)
+                .foreach(s -> builder.append("case \"")
+                        .append(s)
+                        .append("\":\n")
+                        .append("grammar = Prism_")
+                        .append(javaValidName(s))
+                        .append(".create(prism4j);\nbreak;\n"));
+        builder.append("default:\ngrammar = null;\n}")
+                .append("return grammar;");
+        return builder.toString();
+    }
+
+    @NotNull
+    private static String createTriggerModify(@NotNull Map<String, LanguageInfo> languages) {
+
+        // so, create a map collection where each entry in `modify` is the key and languageInfo.name is value
+        final Map<String, List<String>> map = new HashMap<>(3);
+
+        List<String> modify;
+
+        for (LanguageInfo info : languages.values()) {
+
+            modify = info.modify;
+
+            if (modify != null
+                    && modify.size() > 0) {
+
+                for (String name : modify) {
+                    map.computeIfAbsent(name, k -> new ArrayList<>(3)).add(info.name);
+                }
+            }
+        }
+
+        if (map.size() == 0) {
+            return "";
+        }
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append("switch(name){\n");
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            builder.append("case \"")
+                    .append(entry.getKey())
+                    .append("\":\n");
+            for (String lang : entry.getValue()) {
+                builder.append("prism4j.grammar(\"")
+                        .append(lang)
+                        .append("\");\n");
+            }
+            builder.append("break;\n");
+        }
+        builder.append("}");
+        return builder.toString();
+    }
+
+    @NotNull
+    private static String javaValidName(@NotNull String name) {
+        return name.replaceAll("-", "_");
+    }
+
+    @NotNull
+    private static String createLanguages(@NotNull Map<String, LanguageInfo> languages) {
+
+        final StringBuilder builder = new StringBuilder();
+        final List<String> list = new ArrayList<>(languages.keySet());
+        list.sort(String::compareTo);
+
+        builder.append("final Set<String> set = new HashSet<String>(")
+                .append(list.size())
+                .append(");\n");
+
+        for (String language : list) {
+            builder.append("set.add(\"").append(language).append("\");\n");
+        }
+
+        builder.append("return set;");
+
+        return builder.toString();
+    }
 
     // this override might've killed me... without it processor cannot find ANY resources...
     @Override
@@ -115,9 +282,6 @@ public class PrismBundler extends AbstractProcessor {
 
         return false;
     }
-
-    // we must return a set of languageInfos here (so we do not copy language more than once
-    // thus allowing multiple grammarLocators)
 
     @NotNull
     private Set<LanguageInfo> process(@NotNull Element element) {
@@ -269,20 +433,6 @@ public class PrismBundler extends AbstractProcessor {
     }
 
     @NotNull
-    private static String languageSourceFileName(@NotNull String name) {
-        return String.format(Locale.US, LANGUAGE_SOURCE_PATTERN, javaValidName(name));
-    }
-
-    @NotNull
-    private static String grammarLocatorTemplate() {
-        try {
-            return IOUtils.resourceToString("/GrammarLocator.template.java", StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @NotNull
     private ClassInfo classInfo(@NotNull Element element, @NotNull String name) {
 
         final String packageName;
@@ -307,168 +457,5 @@ public class PrismBundler extends AbstractProcessor {
         }
 
         return new ClassInfo(packageName, className);
-    }
-
-    @NotNull
-    private static String grammarLocatorSource(
-            @NotNull String template,
-            @NotNull ClassInfo classInfo,
-            @NotNull Map<String, LanguageInfo> languages) {
-        final StringBuilder builder = new StringBuilder(template);
-        replaceTemplate(builder, TEMPLATE_PACKAGE_NAME, classInfo.packageName);
-        replaceTemplate(builder, TEMPLATE_IMPORTS, createImports(languages));
-        replaceTemplate(builder, TEMPLATE_CLASS_NAME, classInfo.className);
-        replaceTemplate(builder, TEMPLATE_REAL_LANGUAGE_NAME, createRealLanguageName(languages));
-        replaceTemplate(builder, TEMPLATE_OBTAIN_GRAMMAR, createObtainGrammar(languages));
-        replaceTemplate(builder, TEMPLATE_TRIGGER_MODIFY, createTriggerModify(languages));
-        replaceTemplate(builder, TEMPLATE_LANGUAGES, createLanguages(languages));
-        final Formatter formatter = new Formatter(JavaFormatterOptions.defaultOptions());
-        try {
-            return formatter.formatSource(builder.toString());
-        } catch (FormatterException e) {
-            System.out.printf("source: %n%s%n", builder.toString());
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void replaceTemplate(@NotNull StringBuilder template, @NotNull String name, @NotNull String content) {
-        final int index = template.indexOf(name);
-        template.replace(index, index + name.length(), content);
-    }
-
-    @NotNull
-    private static String createImports(@NotNull Map<String, LanguageInfo> languages) {
-        final StringBuilder builder = new StringBuilder();
-        Ix.from(languages.values())
-                .map(languageInfo -> languageInfo.name)
-                .orderBy(String::compareTo)
-                .foreach(s -> builder
-                        .append("import ")
-                        .append(LANGUAGES_PACKAGE)
-                        .append(".Prism_")
-                        .append(javaValidName(s))
-                        .append(';')
-                        .append('\n'));
-        return builder.toString();
-    }
-
-    @NotNull
-    private static String createRealLanguageName(@NotNull Map<String, LanguageInfo> languages) {
-        final StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, LanguageInfo> entry : languages.entrySet()) {
-            final List<String> aliases = entry.getValue().aliases;
-            if (aliases != null
-                    && aliases.size() > 0) {
-                for (String alias : aliases) {
-                    builder.append("case \"")
-                            .append(alias)
-                            .append('\"')
-                            .append(':')
-                            .append('\n');
-                }
-                builder.append("out = \"")
-                        .append(entry.getKey())
-                        .append('\"')
-                        .append(';')
-                        .append('\n')
-                        .append("break;\n");
-            }
-        }
-
-        if (builder.length() > 0) {
-            builder.append("default:\n")
-                    .append("out = name;\n")
-                    .append("}\nreturn out;");
-            builder.insert(0, "final String out;\nswitch (name) {");
-            return builder.toString();
-        } else {
-            return "return name;";
-        }
-    }
-
-    @NotNull
-    private static String createObtainGrammar(@NotNull Map<String, LanguageInfo> languages) {
-        final StringBuilder builder = new StringBuilder();
-        builder
-                .append("final Prism4j.Grammar grammar;\n")
-                .append("switch(name) {\n");
-        Ix.from(languages.keySet())
-                .orderBy(String::compareTo)
-                .foreach(s -> builder.append("case \"")
-                        .append(s)
-                        .append("\":\n")
-                        .append("grammar = Prism_")
-                        .append(javaValidName(s))
-                        .append(".create(prism4j);\nbreak;\n"));
-        builder.append("default:\ngrammar = null;\n}")
-                .append("return grammar;");
-        return builder.toString();
-    }
-
-    @NotNull
-    private static String createTriggerModify(@NotNull Map<String, LanguageInfo> languages) {
-
-        // so, create a map collection where each entry in `modify` is the key and languageInfo.name is value
-        final Map<String, List<String>> map = new HashMap<>(3);
-
-        List<String> modify;
-
-        for (LanguageInfo info : languages.values()) {
-
-            modify = info.modify;
-
-            if (modify != null
-                    && modify.size() > 0) {
-
-                for (String name : modify) {
-                    map.computeIfAbsent(name, k -> new ArrayList<>(3)).add(info.name);
-                }
-            }
-        }
-
-        if (map.size() == 0) {
-            return "";
-        }
-
-        final StringBuilder builder = new StringBuilder();
-        builder.append("switch(name){\n");
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-            builder.append("case \"")
-                    .append(entry.getKey())
-                    .append("\":\n");
-            for (String lang : entry.getValue()) {
-                builder.append("prism4j.grammar(\"")
-                        .append(lang)
-                        .append("\");\n");
-            }
-            builder.append("break;\n");
-        }
-        builder.append("}");
-        return builder.toString();
-    }
-
-    @NotNull
-    private static String javaValidName(@NotNull String name) {
-        return name.replaceAll("-", "_");
-    }
-
-    @NotNull
-    private static String createLanguages(@NotNull Map<String, LanguageInfo> languages) {
-
-        final StringBuilder builder = new StringBuilder();
-        final List<String> list = new ArrayList<>(languages.keySet());
-        list.sort(String::compareTo);
-
-        builder.append("final Set<String> set = new HashSet<String>(")
-                .append(list.size())
-                .append(");\n");
-
-        for (String language : list) {
-            builder.append("set.add(\"").append(language).append("\");\n");
-        }
-
-        builder.append("return set;");
-
-        return builder.toString();
     }
 }

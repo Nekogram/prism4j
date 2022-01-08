@@ -12,17 +12,16 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 
 abstract class ListResources {
-
-    @NotNull
-    abstract List<String> listResourceFiles(@NotNull Class<?> type, @NotNull String folder);
 
     @NotNull
     static ListResources create() {
         return new Impl();
     }
+
+    @NotNull
+    abstract List<String> listResourceFiles(@NotNull Class<?> type, @NotNull String folder);
 
     static class Impl extends ListResources {
 

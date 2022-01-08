@@ -8,6 +8,9 @@ import java.util.List;
 
 abstract class ArrayUtils {
 
+    private ArrayUtils() {
+    }
+
     @SafeVarargs
     @NotNull
     static <T> List<T> toList(T... args) {
@@ -19,8 +22,5 @@ abstract class ArrayUtils {
             Collections.addAll(list, args);
         }
         return list;
-    }
-
-    private ArrayUtils() {
     }
 }

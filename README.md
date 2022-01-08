@@ -1,7 +1,9 @@
 # Prism4j
 
-Simplified Java clone of [prism-js](https://github.com/PrismJS/prism). No rendering, no themes,
-no hooks, no plugins. But still _a_ language parsing. Primary aim of this library is to provide a _tokenization_ strategy of arbitrary syntaxes for later processing. Works on Android (great with [Markwon](https://github.com/noties/Markwon) - markdown display library). 
+Simplified Java clone of [prism-js](https://github.com/PrismJS/prism). No rendering, no themes, no hooks, no plugins.
+But still _a_ language parsing. Primary aim of this library is to provide a _tokenization_ strategy of arbitrary
+syntaxes for later processing. Works on Android (great with [Markwon](https://github.com/noties/Markwon) - markdown
+display library).
 
 This is a fork of [noties/Prism4j](https://github.com/noties/Prism4j) which is unmaintained since 2019.
 
@@ -16,26 +18,26 @@ implementation "io.noties:prism4j:${prism_version}"
 ```
 
 ```java
-final Prism4j prism4j = new Prism4j(new MyGrammarLocator());
-final Grammar grammar = prism4j.grammar("json");
-if (grammar != null) {
-    final List<Node> nodes = prism4j.tokenize(code, grammar);
-    final AbsVisitor visitor = new AbsVisitor() {
-            @Override
-            protected void visitText(@NonNull Prism4j.Text text) {
-                // raw text
-                text.literal();
-            }
+final Prism4j prism4j=new Prism4j(new MyGrammarLocator());
+final Grammar grammar=prism4j.grammar("json");
+        if(grammar!=null){
+final List<Node> nodes=prism4j.tokenize(code,grammar);
+final AbsVisitor visitor=new AbsVisitor(){
+@Override
+protected void visitText(@NonNull Prism4j.Text text){
+        // raw text
+        text.literal();
+        }
 
-            @Override
-            protected void visitSyntax(@NonNull Prism4j.Syntax syntax) {
-                // type of the syntax token
-                syntax.type();
-                visit(syntax.children());
-            }
+@Override
+protected void visitSyntax(@NonNull Prism4j.Syntax syntax){
+        // type of the syntax token
+        syntax.type();
+        visit(syntax.children());
+        }
         };
-    visitor.visit(nodes);
-}
+        visitor.visit(nodes);
+        }
 ```
 
 Where `MyGrammarLocator` can be as simple as:
@@ -72,26 +74,26 @@ import static io.noties.prism4j.Prism4j.token;
 @Aliases("jsonp")
 public class Prism_json {
 
-  @NonNull
-  public static Prism4j.Grammar create(@NonNull Prism4j prism4j) {
-    return grammar(
-      "json",
-      token("property", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?=\\s*:)", CASE_INSENSITIVE))),
-      token("string", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?!\\s*:)"), false, true)),
-      token("number", pattern(compile("\\b0x[\\dA-Fa-f]+\\b|(?:\\b\\d+\\.?\\d*|\\B\\.\\d+)(?:[Ee][+-]?\\d+)?"))),
-      token("punctuation", pattern(compile("[{}\\[\\]);,]"))),
-      token("operator", pattern(compile(":"))),
-      token("boolean", pattern(compile("\\b(?:true|false)\\b", CASE_INSENSITIVE))),
-      token("null", pattern(compile("\\bnull\\b", CASE_INSENSITIVE)))
-    );
-  }
+    @NonNull
+    public static Prism4j.Grammar create(@NonNull Prism4j prism4j) {
+        return grammar(
+                "json",
+                token("property", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?=\\s*:)", CASE_INSENSITIVE))),
+                token("string", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?!\\s*:)"), false, true)),
+                token("number", pattern(compile("\\b0x[\\dA-Fa-f]+\\b|(?:\\b\\d+\\.?\\d*|\\B\\.\\d+)(?:[Ee][+-]?\\d+)?"))),
+                token("punctuation", pattern(compile("[{}\\[\\]);,]"))),
+                token("operator", pattern(compile(":"))),
+                token("boolean", pattern(compile("\\b(?:true|false)\\b", CASE_INSENSITIVE))),
+                token("null", pattern(compile("\\bnull\\b", CASE_INSENSITIVE)))
+        );
+    }
 }
 ```
 
 ## Bundler
 
-In order to simplify adding language definitions to your project there is a special module
-called `prism4j-bundler` that will automatically add requested languages.
+In order to simplify adding language definitions to your project there is a special module called `prism4j-bundler` that
+will automatically add requested languages.
 
 [![prism4j-bundler](https://img.shields.io/maven-central/v/io.noties/prism4j-bundler.svg?label=prism4j-bundler)](http://search.maven.org/#search|ga|1|g%3A%22io.noties%22%20AND%20a%3A%22prism4j-bundler%22)
 
@@ -99,8 +101,9 @@ called `prism4j-bundler` that will automatically add requested languages.
 annotationProcessor 'io.noties:prism4j-bundler:${prism_version}'
 ```
 
-Please note that `bundler` can add languages that are _ported_ (see `./languages` folder for the list).
-Currently it supports:
+Please note that `bundler` can add languages that are _ported_ (see `./languages` folder for the list). Currently it
+supports:
+
 * `brainf*ck`
 * `c`
 * `clike`
@@ -129,31 +132,36 @@ Currently it supports:
 Please see `Contributing` section if you wish to port a language.
 
 ```java
+
 @PrismBundle(
-    includes = { "clike", "java", "c" },
-    grammarLocatorClassName = ".MyGrammarLocator"
+        includes = {"clike", "java", "c"},
+        grammarLocatorClassName = ".MyGrammarLocator"
 )
-public class MyClass {}
+public class MyClass {
+}
 ```
 
-You can have multiple language bundles, just annotate different classes in your project. There are
-no special requirements for a class to be annotated (in can be any class in your project).
+You can have multiple language bundles, just annotate different classes in your project. There are no special
+requirements for a class to be annotated (in can be any class in your project).
 
 * `includes` - indicates what supported languages to add to your project. Please use _real_
-language name (not an alias). So `javascript` instead of `js`; `markup` instead of `xml`.
+  language name (not an alias). So `javascript` instead of `js`; `markup` instead of `xml`.
 
-* `grammarLocatorClassName` - is the Java class name of generated `GrammarLocator`. It can start with a `dot` to
- put generated `GrammarLocator` to the same package as annotated element. Or be fully qualified Java name (starting with a package).
+* `grammarLocatorClassName` - is the Java class name of generated `GrammarLocator`. It can start with a `dot` to put
+  generated `GrammarLocator` to the same package as annotated element. Or be fully qualified Java name (starting with a
+  package).
 
 ### !important
-**NB** generated `GrammarLocator` will create languages when they are requested (aka _lazy_ loading). Make sure this works for you by keeping as is or by manually triggering language creation via `prism4j.grammar("my-language");` when convenient at runtime.
+
+**NB** generated `GrammarLocator` will create languages when they are requested (aka _lazy_ loading). Make sure this
+works for you by keeping as is or by manually triggering language creation via `prism4j.grammar("my-language");` when
+convenient at runtime.
 
 ## Contributing
 
-If you want to contribute to this project porting grammar definitions would be the best start.
-But before you begin please create an issue with `language-support` tag so others can see that
-a language is being worked at. This issue will be also the great place to discuss things that
-could arise whilst in process.
+If you want to contribute to this project porting grammar definitions would be the best start. But before you begin
+please create an issue with `language-support` tag so others can see that a language is being worked at. This issue will
+be also the great place to discuss things that could arise whilst in process.
 
 Language definitions are at the `/languages` folder (go down the `io.noties.prism4j.languages`
 package to find the files). A new file should follow simple naming convention:
@@ -163,43 +171,50 @@ In order to provide `bundler` with meta-information about a language `@Aliases`,
 and `@Modify` annotations can be used:
 
 * `@Aliases` specifies what aliases a language has. For example `markup` language has
-these: `@Aliases({"html", "xml", "mathml", "svg"})`. So when a `GrammarLocator` will be
-asked for a `svg` language the `markup` will be returned.
+  these: `@Aliases({"html", "xml", "mathml", "svg"})`. So when a `GrammarLocator` will be asked for a `svg` language
+  the `markup` will be returned.
+
 ```java
+
 @Aliases({"html", "xml", "mathml", "svg"})
-public class Prism_markup {}
+public class Prism_markup {
+}
 ```
 
-* `@Extend` annotation indicates if a language definition is a sibling of another one.
-So even if a parent language is not included in `@PrismBundle` it will be added to a project
-anyway. For example, `c`:
+* `@Extend` annotation indicates if a language definition is a sibling of another one. So even if a parent language is
+  not included in `@PrismBundle` it will be added to a project anyway. For example, `c`:
 
 ```java
+
 @Extend("clike")
-public class Prism_c {}
+public class Prism_c {
+}
 ```
 
-* `@Modify` annotation makes sure that if a language definition modifies another one,
-modified language will be processed before returning to a caller. This does not include a
-language that is being modified to a project. But if it's present, it will be modified.
-For example, `css`:
+* `@Modify` annotation makes sure that if a language definition modifies another one, modified language will be
+  processed before returning to a caller. This does not include a language that is being modified to a project. But if
+  it's present, it will be modified. For example, `css`:
 
 ```java
+
 @Modify("markup")
-public class Prism_css {}
+public class Prism_css {
+}
 ```
 
 `@Modify` accepts an array of language names
 
 ---
 
-After you are done (haha!) with a language definition please make sure that you also move
-test cases from [prism-js](https://github.com/PrismJS/prism) for the project (for newly added
-language of cause). Thankfully just a byte of work required here as `prism4j-languages` module
-understands native format of _prism-js_ test cases (that are ending with `*.test`).
-Please inspect test folder of the `prism4j-languages` module for further info. In short: copy test cases from `prism-js` project (the whole folder for specific language) into `prism4j-languages/src/test/resources/languages/` folder. 
+After you are done (haha!) with a language definition please make sure that you also move test cases
+from [prism-js](https://github.com/PrismJS/prism) for the project (for newly added language of cause). Thankfully just a
+byte of work required here as `prism4j-languages` module understands native format of _prism-js_ test cases (that are
+ending with `*.test`). Please inspect test folder of the `prism4j-languages` module for further info. In short: copy
+test cases from `prism-js` project (the whole folder for specific language)
+into `prism4j-languages/src/test/resources/languages/` folder.
 
 Then, if you run:
+
 ```bash
 ./gradlew :prism4j-languages:test
 ```
@@ -208,9 +223,9 @@ and all tests pass (including your newly added), then it's _safe_ to issue a pul
 
 ### Important note about regex for contributors
 
-As this project _wants_ to work on Android, your regex's patterns must have `}` symbol escaped (`\\}`). Yes, _an_ IDE will warn you that this escape is not needed, but do not believe it. Pattern just won't compile at runtime (Android). I wish this could be unit-**tested** but unfortunately Robolectric compiles just fine (no surprise actually).
-
-
+As this project _wants_ to work on Android, your regex's patterns must have `}` symbol escaped (`\\}`). Yes, _an_ IDE
+will warn you that this escape is not needed, but do not believe it. Pattern just won't compile at runtime (Android). I
+wish this could be unit-**tested** but unfortunately Robolectric compiles just fine (no surprise actually).
 
 ## License
 

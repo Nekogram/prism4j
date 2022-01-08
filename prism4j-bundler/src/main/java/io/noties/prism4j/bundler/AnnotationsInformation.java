@@ -8,6 +8,11 @@ import java.util.List;
 
 public abstract class AnnotationsInformation {
 
+    @NotNull
+    public static AnnotationsInformation create() {
+        return new Impl();
+    }
+
     @Nullable
     public abstract String findExtendInformation(@NotNull String source);
 
@@ -17,13 +22,57 @@ public abstract class AnnotationsInformation {
     @Nullable
     public abstract List<String> findModifyInformation(@NotNull String source);
 
-
-    @NotNull
-    public static AnnotationsInformation create() {
-        return new Impl();
-    }
-
     static class Impl extends AnnotationsInformation {
+
+        @Nullable
+        private static List<String> findAnnotationArrayInformation(@NotNull String annotation, @NotNull String source) {
+
+            final int start = source.indexOf(annotation);
+            if (start < 0) {
+                return null;
+            }
+
+            final int end = source.indexOf(')', start);
+            if (end < 0) {
+                return null;
+            }
+
+            final List<String> aliases = new ArrayList<>(3);
+
+            final StringBuilder builder = new StringBuilder();
+
+            char c;
+
+            boolean insideString = false;
+
+            for (int i = start; i < end; i++) {
+
+                c = source.charAt(i);
+
+                if (Character.isWhitespace(c)) {
+                    continue;
+                }
+
+                if ('\"' == c) {
+                    insideString = !insideString;
+                    if (!insideString) {
+                        aliases.add(builder.toString());
+                        builder.setLength(0);
+                    }
+                    continue;
+                }
+
+                if (insideString) {
+                    builder.append(c);
+                }
+            }
+
+            if (aliases.size() == 0) {
+                return null;
+            } else {
+                return aliases;
+            }
+        }
 
         @Nullable
         @Override
@@ -80,56 +129,6 @@ public abstract class AnnotationsInformation {
         @Override
         public List<String> findModifyInformation(@NotNull String source) {
             return findAnnotationArrayInformation("@Modify", source);
-        }
-
-        @Nullable
-        private static List<String> findAnnotationArrayInformation(@NotNull String annotation, @NotNull String source) {
-
-            final int start = source.indexOf(annotation);
-            if (start < 0) {
-                return null;
-            }
-
-            final int end = source.indexOf(')', start);
-            if (end < 0) {
-                return null;
-            }
-
-            final List<String> aliases = new ArrayList<>(3);
-
-            final StringBuilder builder = new StringBuilder();
-
-            char c;
-
-            boolean insideString = false;
-
-            for (int i = start; i < end; i++) {
-
-                c = source.charAt(i);
-
-                if (Character.isWhitespace(c)) {
-                    continue;
-                }
-
-                if ('\"' == c) {
-                    insideString = !insideString;
-                    if (!insideString) {
-                        aliases.add(builder.toString());
-                        builder.setLength(0);
-                    }
-                    continue;
-                }
-
-                if (insideString) {
-                    builder.append(c);
-                }
-            }
-
-            if (aliases.size() == 0) {
-                return null;
-            } else {
-                return aliases;
-            }
         }
     }
 }

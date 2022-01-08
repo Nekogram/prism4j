@@ -11,6 +11,11 @@ import java.util.Map;
 abstract class Cloner {
 
     @NotNull
+    static Cloner create() {
+        return new Impl();
+    }
+
+    @NotNull
     abstract Prism4j.Grammar clone(@NotNull Prism4j.Grammar grammar);
 
     @NotNull
@@ -19,31 +24,7 @@ abstract class Cloner {
     @NotNull
     abstract Prism4j.Pattern clone(@NotNull Prism4j.Pattern pattern);
 
-    @NotNull
-    static Cloner create() {
-        return new Impl();
-    }
-
     static class Impl extends Cloner {
-
-        interface Context {
-
-            @Nullable
-            Prism4j.Grammar grammar(@NotNull Prism4j.Grammar origin);
-
-            @Nullable
-            Prism4j.Token token(@NotNull Prism4j.Token origin);
-
-            @Nullable
-            Prism4j.Pattern pattern(@NotNull Prism4j.Pattern origin);
-
-
-            void save(@NotNull Prism4j.Grammar origin, @NotNull Prism4j.Grammar clone);
-
-            void save(@NotNull Prism4j.Token origin, @NotNull Prism4j.Token clone);
-
-            void save(@NotNull Prism4j.Pattern origin, @NotNull Prism4j.Pattern clone);
-        }
 
         @NotNull
         @Override
@@ -128,9 +109,32 @@ abstract class Cloner {
             return clone;
         }
 
+        interface Context {
+
+            @Nullable
+            Prism4j.Grammar grammar(@NotNull Prism4j.Grammar origin);
+
+            @Nullable
+            Prism4j.Token token(@NotNull Prism4j.Token origin);
+
+            @Nullable
+            Prism4j.Pattern pattern(@NotNull Prism4j.Pattern origin);
+
+
+            void save(@NotNull Prism4j.Grammar origin, @NotNull Prism4j.Grammar clone);
+
+            void save(@NotNull Prism4j.Token origin, @NotNull Prism4j.Token clone);
+
+            void save(@NotNull Prism4j.Pattern origin, @NotNull Prism4j.Pattern clone);
+        }
+
         private static class ContextImpl implements Context {
 
             private final Map<Integer, Object> cache = new HashMap<>(3);
+
+            private static int key(@NotNull Object o) {
+                return System.identityHashCode(o);
+            }
 
             @Nullable
             @Override
@@ -163,10 +167,6 @@ abstract class Cloner {
             @Override
             public void save(@NotNull Prism4j.Pattern origin, @NotNull Prism4j.Pattern clone) {
                 cache.put(key(origin), clone);
-            }
-
-            private static int key(@NotNull Object o) {
-                return System.identityHashCode(o);
             }
         }
     }
