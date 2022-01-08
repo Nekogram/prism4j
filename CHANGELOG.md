@@ -1,10 +1,17 @@
 # Changelog
 
+## 2.1.0
+
+* first forked version
+* fix crashes on empty strings
+* add `DefaultGrammarLocator` to `prism4j-languages` module to allow easy usage
+* code cleanups, reformats and dependency updates
+
 ## 2.0.0
 
 * package name migration: `ru.noties.prism` -&gt; `io.noties.prism`
 * maven artifact group-id change: `ru.noties` -&gt; `io.noties`
-* removed android suppport annotations, a light-weight alternative from Intellij is used (support annotations were added
+* removed android support annotations, a light-weight alternative from Intellij is used (support annotations were added
   to generated code which jetifier cannot process)
 
 # 1.1.0
