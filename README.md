@@ -18,51 +18,59 @@ implementation "io.noties:prism4j:${prism_version}"
 ```
 
 ```java
-final Prism4j prism4j=new Prism4j(new MyGrammarLocator());
-final Grammar grammar=prism4j.grammar("json");
-        if(grammar!=null){
-final List<Node> nodes=prism4j.tokenize(code,grammar);
-final AbsVisitor visitor=new AbsVisitor(){
-@Override
-protected void visitText(@NonNull Prism4j.Text text){
-        // raw text
-        text.literal();
-        }
+class Prism4jExample {
+    static void example() {
+        final Prism4j prism4j = new Prism4j(new MyGrammarLocator());
+        final Grammar grammar = prism4j.grammar("json");
+        if (grammar != null) {
+            final List<Node> nodes = prism4j.tokenize(code, grammar);
+            final AbsVisitor visitor = new AbsVisitor() {
+                @Override
+                void visitText(@NonNull Prism4j.Text text) {
+                    // raw text
+                    text.literal();
+                }
 
-@Override
-protected void visitSyntax(@NonNull Prism4j.Syntax syntax){
-        // type of the syntax token
-        syntax.type();
-        visit(syntax.children());
-        }
-        };
-        visitor.visit(nodes);
-        }
-```
-
-Where `MyGrammarLocator` can be as simple as:
-
-```java
-public class MyGrammarLocator implements GrammarLocator {
-
-    @Nullable
-    @Override
-    public Prism4j.Grammar grammar(@NonNull Prism4j prism4j, @NonNull String language) {
-        switch (language) {
-
-            case "json":
-                return Prism_json.create(prism4j);
-
-            // everything else is omitted
-
-            default:
-                return null;
+                @Override
+                void visitSyntax(@NonNull Prism4j.Syntax syntax) {
+                    // type of the syntax token
+                    syntax.type();
+                    visit(syntax.children());
+                }
+            };
+            visitor.visit(nodes);
         }
     }
 }
 ```
 
-And language definition:
+Where `MyGrammarLocator` can be as simple as:
+
+```java
+import io.noties.prism4j.languages.*;
+
+public class MyGrammarLocator implements GrammarLocator {
+
+    @Nullable
+    @Override
+    public Prism4j.Grammar grammar(@NonNull Prism4j prism4j, @NonNull String language) {
+        return switch (language) {
+
+            case "json":
+                Prism_json.create(prism4j);
+            case "yaml":
+                Prism_yaml.create(prism4j);
+
+            // everything else is omitted
+
+            default:
+                null;
+        };
+    }
+}
+```
+
+Languages can be [imported](#Bundler) or defined with:
 
 ```java
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
@@ -101,7 +109,7 @@ will automatically add requested languages.
 annotationProcessor 'io.noties:prism4j-bundler:${prism_version}'
 ```
 
-Please note that `bundler` can add languages that are _ported_ (see `./languages` folder for the list). Currently it
+Please note that `bundler` can add languages that are _ported_ (see `./prism4j-languages/src/main/java/io/noties/prism4j/languages` folder for the list). Currently, it
 supports:
 
 * `brainf*ck`
@@ -151,7 +159,7 @@ requirements for a class to be annotated (in can be any class in your project).
   generated `GrammarLocator` to the same package as annotated element. Or be fully qualified Java name (starting with a
   package).
 
-### !important
+### Important
 
 **NB** generated `GrammarLocator` will create languages when they are requested (aka _lazy_ loading). Make sure this
 works for you by keeping as is or by manually triggering language creation via `prism4j.grammar("my-language");` when
@@ -226,21 +234,3 @@ and all tests pass (including your newly added), then it's _safe_ to issue a pul
 As this project _wants_ to work on Android, your regex's patterns must have `}` symbol escaped (`\\}`). Yes, _an_ IDE
 will warn you that this escape is not needed, but do not believe it. Pattern just won't compile at runtime (Android). I
 wish this could be unit-**tested** but unfortunately Robolectric compiles just fine (no surprise actually).
-
-## License
-
-```
-  Copyright 2019 Dimitry Ivanov (legal@noties.io)
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-```
