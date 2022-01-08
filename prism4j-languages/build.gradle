@@ -19,17 +19,10 @@ repositories {
 
 apply plugin: 'java-library'
 
-sourceSets {
-    main.java.srcDirs += '../languages'
-    test.java.srcDirs += './build/src-gen/'
-}
-
 dependencies {
 
     implementation project(':prism4j')
     implementation project(':annotations')
-
-    testAnnotationProcessor project(':prism4j-bundler')
 
     compileOnly 'org.jetbrains:annotations:23.0.0'
 
@@ -44,9 +37,8 @@ dependencies {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-afterEvaluate {
-
-    final def root = file('./build/src-gen/io/noties/prism4j/languages')
+task regenerateTests {
+    final def root = file('./src/test/java/io/noties/prism4j/languages')
     if (!root.exists()) {
         FileUtils.forceMkdir(root)
     } else {
@@ -55,10 +47,25 @@ afterEvaluate {
     }
 
     final def template = {
-        FileUtils.readFileToString(file('./src/Test.java.template'), StandardCharsets.UTF_8)
+        FileUtils.readFileToString(file('./src/Test.template.java'), StandardCharsets.UTF_8)
     }.memoize()
 
-    final def createClassName = { "Test_${it.join('_').replaceAll('-', '_')}" }
+    final def langName = {
+        it = (String[]) it
+        for (i in 0..<it.length) {
+            i = (int) i
+            it[i] = (it[i] as String)[0].toUpperCase() + (it[i] as String).substring(1)
+        }
+        def split = it.join('').split('-')
+        for (i in 0..<split.length) {
+            if (i + 1 <= split.length) {
+                split[i] = (split[i] as String)[0].toUpperCase() + (split[i] as String).substring(1)
+            }
+        }
+        return split.join('')
+    }
+
+    final def createClassName = { "Test${langName(it)}" }
 
     final def createInclude = {
         "{${Ix.fromArray(it).map { "\"$it\"" }.join(',')}}"
@@ -68,8 +75,6 @@ afterEvaluate {
 
     final def createSource = { include, grammarLocator, className, folderName, rootGrammar ->
         template()
-                .replaceAll("\\{\\{include}}", include)
-                .replaceAll("\\{\\{grammar-locator}}", grammarLocator)
                 .replaceAll("\\{\\{class-name}}", className)
                 .replaceAll("\\{\\{folder-name}}", folderName)
                 .replaceAll("\\{\\{root-grammar}}", rootGrammar)

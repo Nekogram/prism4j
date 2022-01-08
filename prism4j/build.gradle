@@ -5,7 +5,7 @@ version = VERSION_NAME
 dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
 
-    implementation project(":annotations")
+    implementation project(':annotations')
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

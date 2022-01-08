@@ -3,13 +3,13 @@ package io.noties.prism4j;
 import io.noties.prism4j.annotations.PrismBundle;
 import org.junit.Test;
 
-@PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorToStringTest")
+//@PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorToStringTest")
 public class ToStringTest {
 
     @Test
     public void test() {
 
-        final GrammarLocator locator = new GrammarLocatorToStringTest();
+        final GrammarLocator locator = new DefaultGrammarLocator();
         final Prism4j prism4j = new Prism4j(locator);
 
         Prism4j.Grammar grammar;

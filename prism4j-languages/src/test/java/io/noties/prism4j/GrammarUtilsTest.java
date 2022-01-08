@@ -7,7 +7,7 @@ import ix.IxFunction;
 import org.junit.Before;
 import org.junit.Test;
 
-@PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorGrammarUtils")
+//@PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorGrammarUtils")
 public class GrammarUtilsTest {
 
     private GrammarLocator grammarLocator;
@@ -15,7 +15,7 @@ public class GrammarUtilsTest {
 
     @Before
     public void before() {
-        grammarLocator = new GrammarLocatorGrammarUtils();
+        grammarLocator = new DefaultGrammarLocator();
         prism4j = new Prism4j(grammarLocator);
     }
 

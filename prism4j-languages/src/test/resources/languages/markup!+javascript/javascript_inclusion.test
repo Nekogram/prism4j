@@ -2,6 +2,7 @@
 <script>
 "foo bar"
 </script>
+<script src="./external.js"></script>
 
 ----------------------------------------------------
 
@@ -52,7 +53,32 @@
 			"script"
 		]],
 		["punctuation", ">"]
-	]]
+	]],
+
+	["tag", [
+		["tag", [
+			["punctuation", "<"],
+			"script"
+		]],
+		["attr-name", [
+            "src"
+        ]],
+        ["attr-value", [
+            ["punctuation", "="],
+            ["punctuation", "\""],
+            "./external.js",
+            ["punctuation", "\""]
+        ]],
+		["punctuation", ">"]
+	]],
+	["script",[]],
+	["tag", [
+        ["tag", [
+            ["punctuation", "</"],
+            "script"
+        ]],
+        ["punctuation", ">"]
+    ]]
 ]
 
 ----------------------------------------------------
