@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+* remove `clean` Gradle task
+
 ## 2.1.0
 
 * first forked version
