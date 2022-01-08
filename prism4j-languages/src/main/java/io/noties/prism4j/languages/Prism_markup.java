@@ -18,7 +18,7 @@ public abstract class Prism_markup {
 
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
-        final Prism4j.Token entity = token("entity", pattern(compile("&#?[\\da-z]{1,8};", Pattern.CASE_INSENSITIVE)));
+        final Token entity = token("entity", pattern(compile("&#?[\\da-z]{1,8};", Pattern.CASE_INSENSITIVE)));
         return grammar(
                 "markup",
                 token("comment", pattern(compile("<!--[\\s\\S]*?-->"))),

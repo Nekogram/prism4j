@@ -19,7 +19,7 @@ public class Prism_swift {
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar swift = GrammarUtils.extend(
+        final Grammar swift = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "swift",
                 token("string", pattern(
@@ -48,14 +48,14 @@ public class Prism_swift {
                 ))
         );
 
-        final List<Prism4j.Token> tokens = swift.tokens();
+        final List<Token> tokens = swift.tokens();
 
         tokens.add(token("constant", pattern(compile("\\b(?:nil|[A-Z_]{2,}|k[A-Z][A-Za-z_]+)\\b"))));
         tokens.add(token("atrule", pattern(compile("@\\b(?:IB(?:Outlet|Designable|Action|Inspectable)|class_protocol|exported|noreturn|NS(?:Copying|Managed)|objc|UIApplicationMain|auto_closure)\\b"))));
         tokens.add(token("builtin", pattern(compile("\\b(?:[A-Z]\\S+|abs|advance|alignof(?:Value)?|assert|contains|count(?:Elements)?|debugPrint(?:ln)?|distance|drop(?:First|Last)|dump|enumerate|equal|filter|find|first|getVaList|indices|isEmpty|join|last|lexicographicalCompare|map|max(?:Element)?|min(?:Element)?|numericCast|overlaps|partition|print(?:ln)?|reduce|reflect|reverse|sizeof(?:Value)?|sort(?:ed)?|split|startsWith|stride(?:of(?:Value)?)?|suffix|swap|toDebugString|toString|transcode|underestimateCount|unsafeBitCast|with(?:ExtendedLifetime|Unsafe(?:MutablePointers?|Pointers?)|VaList))\\b"))));
 
-        final Prism4j.Token interpolationToken = GrammarUtils.findToken(swift, "string/interpolation");
-        final Prism4j.Grammar interpolationGrammar = interpolationToken != null
+        final Token interpolationToken = GrammarUtils.findToken(swift, "string/interpolation");
+        final Grammar interpolationGrammar = interpolationToken != null
                 ? GrammarUtils.findFirstInsideGrammar(interpolationToken)
                 : null;
         if (interpolationGrammar != null) {

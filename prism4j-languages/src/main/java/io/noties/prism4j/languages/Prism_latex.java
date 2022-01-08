@@ -16,7 +16,7 @@ public class Prism_latex {
 
         final Pattern funcPattern = compile("\\\\(?:[^a-z()\\[\\]]|[a-z*]+)", CASE_INSENSITIVE);
 
-        final Prism4j.Grammar insideEqu = grammar("inside",
+        final Grammar insideEqu = grammar("inside",
                 token("equation-command", pattern(funcPattern, false, false, "regex"))
         );
 

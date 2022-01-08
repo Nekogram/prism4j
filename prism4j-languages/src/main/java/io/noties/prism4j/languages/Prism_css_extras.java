@@ -17,13 +17,13 @@ public class Prism_css_extras {
     @Nullable
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar css = prism4j.grammar("css");
+        final Grammar css = prism4j.grammar("css");
 
         if (css != null) {
 
-            final Prism4j.Token selector = GrammarUtils.findToken(css, "selector");
+            final Token selector = GrammarUtils.findToken(css, "selector");
             if (selector != null) {
-                final Prism4j.Pattern pattern = pattern(
+                final Pattern pattern = pattern(
                         compile("[^{}\\s][^{}]*(?=\\s*\\{)"),
                         false,
                         false,

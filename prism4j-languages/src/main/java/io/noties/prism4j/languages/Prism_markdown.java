@@ -17,12 +17,12 @@ public class Prism_markdown {
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar markdown = GrammarUtils.extend(
+        final Grammar markdown = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "markup"),
                 "markdown"
         );
 
-        final Prism4j.Token bold = token("bold", pattern(
+        final Token bold = token("bold", pattern(
                 compile("(^|[^\\\\])(\\*\\*|__)(?:(?:\\r?\\n|\\r)(?!\\r?\\n|\\r)|.)+?\\2"),
                 true,
                 false,
@@ -30,7 +30,7 @@ public class Prism_markdown {
                 grammar("inside", token("punctuation", pattern(compile("^\\*\\*|^__|\\*\\*$|__$"))))
         ));
 
-        final Prism4j.Token italic = token("italic", pattern(
+        final Token italic = token("italic", pattern(
                 compile("(^|[^\\\\])([*_])(?:(?:\\r?\\n|\\r)(?!\\r?\\n|\\r)|.)+?\\2"),
                 true,
                 false,
@@ -38,7 +38,7 @@ public class Prism_markdown {
                 grammar("inside", token("punctuation", pattern(compile("^[*_]|[*_]$"))))
         ));
 
-        final Prism4j.Token url = token("url", pattern(
+        final Token url = token("url", pattern(
                 compile("!?\\[[^\\]]+\\](?:\\([^\\s)]+(?:[\\t ]+\"(?:\\\\.|[^\"\\\\])*\")?\\)| ?\\[[^\\]\\n]*\\])"),
                 false,
                 false,

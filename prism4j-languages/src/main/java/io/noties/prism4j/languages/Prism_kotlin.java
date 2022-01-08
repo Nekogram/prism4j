@@ -19,7 +19,7 @@ public class Prism_kotlin {
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar kotlin = GrammarUtils.extend(
+        final Grammar kotlin = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "kotlin",
                 new GrammarUtils.TokenFilter() {
@@ -60,7 +60,7 @@ public class Prism_kotlin {
         );
 
         // this grammar has 1 token: interpolation, which has 2 patterns
-        final Prism4j.Grammar interpolationInside;
+        final Grammar interpolationInside;
         {
 
             // okay, I was cloning the tokens of kotlin grammar (so there is no recursive chain of calls),
@@ -68,7 +68,7 @@ public class Prism_kotlin {
             // I did this because interpolation test was failing due to the fact that `string`
             // `raw-string` tokens didn't have `inside`, so there were not tokenized
             // I still find that it has potential to fall with stackoverflow (in some cases)
-            final List<Prism4j.Token> tokens = new ArrayList<>(kotlin.tokens().size() + 1);
+            final List<Token> tokens = new ArrayList<>(kotlin.tokens().size() + 1);
             tokens.add(token("delimiter", pattern(compile("^\\$\\{|\\}$"), false, false, "variable")));
             tokens.addAll(kotlin.tokens());
 
@@ -81,14 +81,14 @@ public class Prism_kotlin {
             );
         }
 
-        final Prism4j.Token string = GrammarUtils.findToken(kotlin, "string");
-        final Prism4j.Token rawString = GrammarUtils.findToken(kotlin, "raw-string");
+        final Token string = GrammarUtils.findToken(kotlin, "string");
+        final Token rawString = GrammarUtils.findToken(kotlin, "raw-string");
 
         if (string != null
                 && rawString != null) {
 
-            final Prism4j.Pattern stringPattern = string.patterns().get(0);
-            final Prism4j.Pattern rawStringPattern = rawString.patterns().get(0);
+            final Pattern stringPattern = string.patterns().get(0);
+            final Pattern rawStringPattern = rawString.patterns().get(0);
 
             string.patterns().add(
                     pattern(stringPattern.regex(), stringPattern.lookbehind(), stringPattern.greedy(), stringPattern.alias(), interpolationInside)

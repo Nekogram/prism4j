@@ -23,7 +23,7 @@ public abstract class Prism_css {
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar grammar = grammar(
+        final Grammar grammar = grammar(
                 "css",
                 token("comment", pattern(compile("\\/\\*[\\s\\S]*?\\*\\/"))),
                 token(
@@ -60,17 +60,17 @@ public abstract class Prism_css {
         // can we maybe add some helper to specify simplified location?
 
         // now we need to put the all tokens from grammar inside `atrule` (except the `atrule` of cause)
-        final Prism4j.Token atrule = grammar.tokens().get(1);
-        final Prism4j.Grammar inside = GrammarUtils.findFirstInsideGrammar(atrule);
+        final Token atrule = grammar.tokens().get(1);
+        final Grammar inside = GrammarUtils.findFirstInsideGrammar(atrule);
         if (inside != null) {
-            for (Prism4j.Token token : grammar.tokens()) {
+            for (Token token : grammar.tokens()) {
                 if (!"atrule".equals(token.name())) {
                     inside.tokens().add(token);
                 }
             }
         }
 
-        final Prism4j.Grammar markup = prism4j.grammar("markup");
+        final Grammar markup = prism4j.grammar("markup");
         if (markup != null) {
             GrammarUtils.insertBeforeToken(markup, "tag",
                     token(
@@ -88,10 +88,10 @@ public abstract class Prism_css {
             // important thing here is to clone found grammar
             // otherwise we will have stackoverflow (inside tag references style-attr, which
             // references inside tag, etc)
-            final Prism4j.Grammar markupTagInside;
+            final Grammar markupTagInside;
             {
-                Prism4j.Grammar _temp = null;
-                final Prism4j.Token token = GrammarUtils.findToken(markup, "tag");
+                Grammar _temp = null;
+                final Token token = GrammarUtils.findToken(markup, "tag");
                 if (token != null) {
                     _temp = GrammarUtils.findFirstInsideGrammar(token);
                     if (_temp != null) {

@@ -15,7 +15,7 @@ public class Prism_c {
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar c = GrammarUtils.extend(
+        final Grammar c = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "c",
                 new GrammarUtils.TokenFilter() {
