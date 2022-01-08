@@ -1,6 +1,3 @@
 plugins {
     id 'java'
 }
-
-group 'io.noties'
-version '2.0.0'

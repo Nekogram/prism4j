@@ -1,12 +1,12 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     group = GROUP
     version = VERSION_NAME
@@ -14,22 +14,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-wrapper {
-    gradleVersion '5.4.1'
-    distributionType 'all'
-}
-
-ext {
-
-    ANNOTATIONS = 'org.jetbrains:annotations-java5:17.0.0'
-
-    IX_JAVA = 'com.github.akarnokd:ixjava:1.0.0'
-    COMMONS_IO = 'commons-io:commons-io:2.6'
-    GOOGLE_JAVA_FORMAT = 'com.google.googlejavaformat:google-java-format:1.6'
-    GSON = 'com.google.code.gson:gson:2.8.5'
-    JSON_UNIT = 'net.javacrumbs.json-unit:json-unit:2.0.0.RC1'
-
-    JUNIT = 'junit:junit:4.12'
 }

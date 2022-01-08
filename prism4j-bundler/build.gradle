@@ -4,8 +4,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath IX_JAVA
-        classpath COMMONS_IO
+        classpath 'com.github.akarnokd:ixjava:1.0.0'
+        classpath 'commons-io:commons-io:2.6'
     }
 }
 
@@ -14,10 +14,10 @@ apply plugin: 'java-library'
 version = VERSION_NAME
 
 dependencies {
-    implementation ANNOTATIONS
-    implementation IX_JAVA
-    implementation COMMONS_IO
-    implementation GOOGLE_JAVA_FORMAT
+    compileOnly 'org.jetbrains:annotations:23.0.0'
+    implementation 'com.github.akarnokd:ixjava:1.0.0'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.google.googlejavaformat:google-java-format:1.13.0'
 
     implementation project(":annotations")
 }
