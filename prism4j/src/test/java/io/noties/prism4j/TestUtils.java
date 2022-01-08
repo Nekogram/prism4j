@@ -3,8 +3,6 @@ package io.noties.prism4j;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import ix.Ix;
-import ix.IxFunction;
-import ix.IxPredicate;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,18 +31,8 @@ public abstract class TestUtils {
         try (InputStream in = TestUtils.class.getClassLoader().getResourceAsStream(folder)) {
             //noinspection unchecked
             return (Collection) Ix.from(IOUtils.readLines(in, StandardCharsets.UTF_8))
-                    .filter(new IxPredicate<String>() {
-                        @Override
-                        public boolean test(String s) {
-                            return s.endsWith(".test");
-                        }
-                    })
-                    .map(new IxFunction<String, String>() {
-                        @Override
-                        public String apply(String s) {
-                            return folder + s;
-                        }
-                    })
+                    .filter(s -> s.endsWith(".test"))
+                    .map(s -> folder + s)
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException(e);

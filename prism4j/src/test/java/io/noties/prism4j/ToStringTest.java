@@ -2,7 +2,6 @@ package io.noties.prism4j;
 
 import org.junit.Test;
 
-//@PrismBundle(includeAll = true, grammarLocatorClassName = ".GrammarLocatorToStringTest")
 public class ToStringTest {
 
     @Test
