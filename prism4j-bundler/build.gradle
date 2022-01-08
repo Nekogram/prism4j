@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
     dependencies {
@@ -13,29 +13,14 @@ apply plugin: 'java-library'
 
 version = VERSION_NAME
 
-sourceSets {
-    main.java.srcDirs += '../annotations'
-//    main.resources.srcDirs += 'src/main/resources'
-}
-
 dependencies {
     implementation ANNOTATIONS
     implementation IX_JAVA
     implementation COMMONS_IO
     implementation GOOGLE_JAVA_FORMAT
+
+    implementation project(":annotations")
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
-
-if (project.hasProperty('release')) {
-    if (project.hasProperty('local')) {
-        ext.RELEASE_REPOSITORY_URL = LOCAL_MAVEN_URL
-        ext.SNAPSHOT_REPOSITORY_URL = LOCAL_MAVEN_URL
-    }
-    apply from: 'https://raw.githubusercontent.com/noties/gradle-mvn-push/master/gradle-mvn-push-jar.gradle'
-}
-
-afterEvaluate {
-
-}

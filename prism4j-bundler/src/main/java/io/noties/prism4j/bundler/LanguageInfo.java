@@ -1,6 +1,5 @@
 package io.noties.prism4j.bundler;
 
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

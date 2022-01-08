@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath IX_JAVA
@@ -14,10 +14,7 @@ buildscript {
 }
 
 repositories {
-    if (project.hasProperty('LOCAL_MAVEN_URL')) {
-        maven { url LOCAL_MAVEN_URL }
-    }
-    jcenter()
+    mavenCentral()
 }
 
 apply plugin: 'java-library'
@@ -29,14 +26,9 @@ sourceSets {
 
 dependencies {
 
-    // I think I'm going crazy with this... but there is some magic underneath and we cannot (_sometimes_ we can!)
-    // use local projects... so, these artifacts must be push to local maven first
+    implementation project(':prism4j')
 
-//    implementation project(':prism4j')
-    implementation "io.noties:prism4j:2.0.0-SNAPSHOT"
-
-//    testAnnotationProcessor project(':prism4j-bundler')
-    testAnnotationProcessor "io.noties:prism4j-bundler:2.0.0-SNAPSHOT"
+    testAnnotationProcessor project(':prism4j-bundler')
 
     testImplementation JUNIT
     testImplementation COMMONS_IO
@@ -45,8 +37,8 @@ dependencies {
     testImplementation JSON_UNIT
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_7
-targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 afterEvaluate {
 
