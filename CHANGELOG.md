@@ -2,7 +2,7 @@
 
 ## 2.1.1
 
-* remove `clean` Gradle task
+* fix Jitpack build issues
 
 ## 2.1.0
 

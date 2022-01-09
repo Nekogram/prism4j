@@ -8,15 +8,15 @@ bar{
 ----------------------------------------------------
 
 [
-	["selector", "foo"],
+	["selector", ["foo"]],
 	["punctuation", "{"],
-	["selector", "foo + bar"],
+	["selector", ["foo + bar "]],
 	["punctuation", "{"],
-	["selector", "foo:first-child:hover"],
+	["selector", ["foo",["pseudo-class", ":first-child"],["pseudo-class", ":hover"]]],
 	["punctuation", "{"],
-	["selector", "*"],
+	["selector", ["* "]],
 	["punctuation", "{"],
-	["selector", "foo,\r\nbar"],
+	["selector", ["foo,\r\nbar"]],
 	["punctuation", "{"]
 ]
 

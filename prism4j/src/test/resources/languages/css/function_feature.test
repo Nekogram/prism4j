@@ -9,7 +9,7 @@ filter: opacity(alpha=0);
 	["punctuation", ":"],
 	["function", "translate"],
 	["punctuation", "("],
-	"-50%",
+	["number", "-50%"],
 	["punctuation", ")"],
 	["punctuation", ";"],
 
@@ -17,7 +17,13 @@ filter: opacity(alpha=0);
 	["punctuation", ":"],
 	["function", "rgba"],
 	["punctuation", "("],
-	"0, 0, 0, 0.2",
+	["number", "0"],
+	", ",
+	["number", "0"],
+	", ",
+	["number", "0"],
+	", ",
+	["number", "0.2"],
 	["punctuation", ")"],
 	["punctuation", ";"],
 
@@ -25,7 +31,8 @@ filter: opacity(alpha=0);
 	["punctuation", ":"],
 	["function", "opacity"],
 	["punctuation", "("],
-	"alpha=0",
+	"alpha=",
+	["number", "0"],
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
