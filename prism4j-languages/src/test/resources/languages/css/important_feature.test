@@ -11,7 +11,9 @@ padding: 10px 20px 30px !important;
 	["punctuation", ";"],
 	["property", "padding"],
     ["punctuation", ":"],
-    " 10px 20px 30px ",
+    ["number", "10px"],
+    ["number", "20px"],
+    ["number", "30px"],
     ["important", "!important"],
     ["punctuation", ";"]
 ]

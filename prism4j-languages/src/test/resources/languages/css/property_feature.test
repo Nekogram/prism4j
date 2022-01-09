@@ -20,7 +20,7 @@ background-color: blue;
 	["punctuation", ";"],
 	["property", "--ötökkä"],
 	["punctuation", ":"],
-	" 2",
+	["number", "2"],
 	["punctuation", ";"]
 ]
 

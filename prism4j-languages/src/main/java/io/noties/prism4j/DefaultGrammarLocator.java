@@ -45,7 +45,11 @@ public class DefaultGrammarLocator implements GrammarLocator {
             cache.put(name, NULL);
         } else {
             cache.put(name, grammar);
-            triggerModify(prism4j, name);
+            Prism4j.Grammar grammarExtended = triggerModify(prism4j, name);
+            if (grammarExtended != null) {
+                cache.put(name, grammarExtended);
+                grammar = grammarExtended;
+            }
         }
 
         return grammar;
@@ -161,16 +165,18 @@ public class DefaultGrammarLocator implements GrammarLocator {
         return grammar;
     }
 
-    protected void triggerModify(@NotNull Prism4j prism4j, @NotNull String name) {
+    protected Prism4j.Grammar triggerModify(@NotNull Prism4j prism4j, @NotNull String name) {
+        Prism4j.Grammar grammar = null;
         switch (name) {
             case "markup":
                 prism4j.grammar("css");
                 prism4j.grammar("javascript");
                 break;
             case "css":
-                prism4j.grammar("css-extras");
+                grammar = prism4j.grammar("css-extras");
                 break;
         }
+        return grammar;
     }
 
     @Override
