@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2
+
+* fix issue with extended CSS (`css-extra`)
+
 ## 2.1.1
 
 * remove `clean` Gradle task
