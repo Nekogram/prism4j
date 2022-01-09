@@ -71,9 +71,6 @@ public class DefaultGrammarLocator implements GrammarLocator {
             case "dotnet":
                 out = "csharp";
                 break;
-            case "jsonp":
-                out = "json";
-                break;
             default:
                 out = name;
         }
@@ -128,6 +125,9 @@ public class DefaultGrammarLocator implements GrammarLocator {
                 break;
             case "json":
                 grammar = Prism_json.create(prism4j);
+                break;
+            case "jsonp":
+                grammar = Prism_jsonp.create(prism4j);
                 break;
             case "kotlin":
                 grammar = Prism_kotlin.create(prism4j);
@@ -198,6 +198,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
         set.add("java");
         set.add("javascript");
         set.add("json");
+        set.add("jsonp");
         set.add("kotlin");
         set.add("latex");
         set.add("makefile");
