@@ -14,19 +14,19 @@ catch (bar)
 	["class-name", [
 		"Foo"
 	]],
-	"\r\ninterface ",
+	"\ninterface ",
 	["class-name", [
 		"bar"
 	]],
-	"\r\nextends ",
+	"\nextends ",
 	["class-name", [
 		"Foo"
 	]],
-	"\r\nimplements ",
+	"\nimplements ",
 	["class-name", [
 		"bar"
 	]],
-	"\r\ntrait ",
+	"\ntrait ",
 	["class-name", [
 		"Foo"
 	]],

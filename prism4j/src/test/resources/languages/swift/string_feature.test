@@ -15,7 +15,7 @@ bar"
 [
 	["string", ["\"\""]],
 	["string", ["\"fo\\\"o\""]],
-	["string", ["\"foo\\\r\nbar\""]],
+	["string", ["\"foo\\\nbar\""]],
 	["string", [
 		"\"foo ",
 		["interpolation", [
@@ -39,7 +39,7 @@ bar"
 	]],
 	["string", ["\"foo /* comment */ bar\""]],
 	["string", ["'foo // bar'"]],
-	["string", ["\"foo\\\r\n/* comment */\\\r\nbar\""]]
+	["string", ["\"foo\\\n/* comment */\\\nbar\""]]
 ]
 
 ----------------------------------------------------

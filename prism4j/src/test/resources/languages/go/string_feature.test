@@ -24,7 +24,7 @@
 	["string", "'\\xff'"],
 	["string", "'\\u12e4'"],
 	["string", "`abc`"],
-	["string", "`\\n\r\n\\n`"],
+	["string", "`\\n\n\\n`"],
 	["string", "\"\\n\""],
 	["string", "\"\\\"\""],
 	["string", "\"Hello, world!\\n\""],

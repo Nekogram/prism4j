@@ -20,7 +20,7 @@ bar"
 	["string", "@\"\""],
 	["string", "@\"foo\""],
 	["string", "@\"fo\"\"o\""],
-	["string", "@\"foo\r\nbar\""],
+	["string", "@\"foo\nbar\""],
 	["string", "'a'"],
 	["string", "'\\''"],
 	["string", "'\\\\'"]

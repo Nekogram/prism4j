@@ -13,7 +13,7 @@ bar`
 		["string", "`foo bar`"]
 	]],
 	["template-string", [
-		["string", "`foo\r\nbar`"]
+		["string", "`foo\nbar`"]
 	]],
 	["template-string", [
 		["string", "`40+2="],

@@ -34,19 +34,19 @@ b\end{gather}
 	["equation", [
 		"$a ",
 		["equation-command", "\\dots"],
-		"\r\nb$"
+		"\nb$"
 	]],
 	["equation", ["\\(foo\\)"]],
 	["equation", [
 		"\\(a ",
 		["equation-command", "\\dots"],
-		"\r\nb\\)"
+		"\nb\\)"
 	]],
 	["equation", ["\\[foo\\]"]],
 	["equation", [
 		"\\[a ",
 		["equation-command", "\\dots"],
-		"\r\nb\\]"
+		"\nb\\]"
 	]],
 
 	["function", "\\begin"], ["punctuation", "{"],
@@ -56,7 +56,7 @@ b\end{gather}
 	["keyword", "equation"], ["punctuation", "}"],
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "equation"], ["punctuation", "}"],
-	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["equation", ["a ", ["equation-command", "\\dots"], "\nb"]],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "equation"], ["punctuation", "}"],
 
@@ -67,7 +67,7 @@ b\end{gather}
 	["keyword", "math"], ["punctuation", "}"],
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "math"], ["punctuation", "}"],
-	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["equation", ["a ", ["equation-command", "\\dots"], "\nb"]],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "math"], ["punctuation", "}"],
 
@@ -78,7 +78,7 @@ b\end{gather}
 	["keyword", "eqnarray"], ["punctuation", "}"],
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "eqnarray"], ["punctuation", "}"],
-	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["equation", ["a ", ["equation-command", "\\dots"], "\nb"]],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "eqnarray"], ["punctuation", "}"],
 
@@ -89,7 +89,7 @@ b\end{gather}
 	["keyword", "align"], ["punctuation", "}"],
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "align*"], ["punctuation", "}"],
-	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["equation", ["a ", ["equation-command", "\\dots"], "\nb"]],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "align*"], ["punctuation", "}"],
 
@@ -100,7 +100,7 @@ b\end{gather}
 	["keyword", "multline"], ["punctuation", "}"],
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "multline"], ["punctuation", "}"],
-	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["equation", ["a ", ["equation-command", "\\dots"], "\nb"]],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "multline"], ["punctuation", "}"],
 
@@ -111,7 +111,7 @@ b\end{gather}
 	["keyword", "gather"], ["punctuation", "}"],
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "gather"], ["punctuation", "}"],
-	["equation", ["a ", ["equation-command", "\\dots"], "\r\nb"]],
+	["equation", ["a ", ["equation-command", "\\dots"], "\nb"]],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "gather"], ["punctuation", "}"]
 ]

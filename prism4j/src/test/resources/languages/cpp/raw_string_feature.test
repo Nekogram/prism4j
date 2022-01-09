@@ -7,7 +7,7 @@ R"(foo)"R"(bar)"
 ----------------------------------------------------
 
 [
-	["raw-string", "R\"raw(\r\ntest\r\n)raw\""],
+	["raw-string", "R\"raw(\ntest\n)raw\""],
 	["raw-string", "R\"(no delimiter)\""],
 	["raw-string", "R\"(foo)\""],
 	["raw-string", "R\"(bar)\""]

@@ -7,7 +7,7 @@ list.filter {}
 [
 	["function", "foo"], ["punctuation", "("], ["punctuation", ")"],
 	["function", "foo_Bar_42"], ["punctuation", "("], ["punctuation", ")"],
-	"\r\nlist", ["punctuation", "."],
+	"\nlist", ["punctuation", "."],
 	["function", "filter"], ["punctuation", "{"], ["punctuation", "}"]
 ]
 

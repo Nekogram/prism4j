@@ -64,7 +64,7 @@ baz">
         ["attr-value", [
             ["punctuation", "="],
             ["punctuation", "\""],
-            "foo\r\nbar\r\nbaz",
+            "foo\nbar\nbaz",
             ["punctuation", "\""]
         ]],
 		["punctuation", ">"]

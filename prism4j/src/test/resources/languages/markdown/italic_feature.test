@@ -17,7 +17,7 @@ _foo[bar](baz)_
 	]],
 	["italic", [
 		["punctuation", "*"],
-		"foo\r\nbar",
+		"foo\nbar",
 		["punctuation", "*"]
 	]],
 	["italic", [
@@ -27,7 +27,7 @@ _foo[bar](baz)_
 	]],
 	["italic", [
 		["punctuation", "_"],
-		"foo\r\nbar",
+		"foo\nbar",
 		["punctuation", "_"]
 	]],
 

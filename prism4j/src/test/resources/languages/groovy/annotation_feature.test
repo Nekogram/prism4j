@@ -5,7 +5,7 @@
 
 [
 	["annotation", "@BaseScript"],
-	" MyBaseClass baseScript\r\n",
+	" MyBaseClass baseScript\n",
 	["annotation", "@DelegatesTo"],
 	["punctuation", "("],
 	"EmailSpec",

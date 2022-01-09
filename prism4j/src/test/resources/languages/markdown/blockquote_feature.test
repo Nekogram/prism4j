@@ -5,8 +5,8 @@
 ----------------------------------------------------
 
 [
-	["blockquote", ">"], " foo\r\n",
-	["blockquote", ">>"], " foo\r\n",
+	["blockquote", ">"], " foo\n",
+	["blockquote", ">>"], " foo\n",
 	["blockquote", "> >"], " foo"
 ]
 

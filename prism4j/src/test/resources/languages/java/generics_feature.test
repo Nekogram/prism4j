@@ -15,7 +15,7 @@ Duo<Double, Character> dual = new Duo<Double, Character>(12.2585, 'C');
 	]],
 	["punctuation", "{"],
 	["punctuation", "}"],
-	"\r\nSolo",
+	"\nSolo",
 	["generics", [
 		["punctuation", "<"],
 		"Integer",
@@ -33,7 +33,7 @@ Duo<Double, Character> dual = new Duo<Double, Character>(12.2585, 'C');
 	["punctuation", "("],
 	["punctuation", ")"],
 	["punctuation", ";"],
-	"\r\nDuo",
+	"\nDuo",
 	["generics", [
 		["punctuation", "<"],
 		"Double",

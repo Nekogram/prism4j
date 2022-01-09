@@ -12,8 +12,8 @@ bar.png")
 	["url", "url(foo.png)"],
 	["url", "url('foo.png')"],
 	["url", "url(\"foo.png\")"],
-	["url", "url('foo\\\r\nbar.png')"],
-	["url", "url(\"foo\\\r\nbar.png\")"]
+	["url", "url('foo\\\nbar.png')"],
+	["url", "url(\"foo\\\nbar.png\")"]
 ]
 
 ----------------------------------------------------

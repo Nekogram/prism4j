@@ -19,7 +19,7 @@ __foo[bar](baz)__
 	]],
 	["bold", [
 		["punctuation", "**"],
-		"foo\r\nbar",
+		"foo\nbar",
 		["punctuation", "**"]
 	]],
 	["bold", [
@@ -29,7 +29,7 @@ __foo[bar](baz)__
 	]],
 	["bold", [
 		["punctuation", "__"],
-		"foo\r\nbar",
+		"foo\nbar",
 		["punctuation", "__"]
 	]],
 

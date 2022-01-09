@@ -7,7 +7,7 @@ foo bar baz
 
 [
 	["cdata", "<![CDATA[ foo bar baz ]]>"],
-	["cdata", "<![CDATA[\r\nfoo bar baz\r\n]]>"]
+	["cdata", "<![CDATA[\nfoo bar baz\n]]>"]
 ]
 
 ----------------------------------------------------

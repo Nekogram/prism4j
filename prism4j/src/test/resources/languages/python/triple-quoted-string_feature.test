@@ -11,9 +11,9 @@ baz'''
 
 [
 	["triple-quoted-string", "\"\"\"foobar\"\"\""],
-	["triple-quoted-string", "\"\"\"fo\"o\r\n#bar\r\nbaz\"\"\""],
+	["triple-quoted-string", "\"\"\"fo\"o\n#bar\nbaz\"\"\""],
 	["triple-quoted-string", "'''foobar'''"],
-	["triple-quoted-string", "'''fo'o\r\n#bar\r\nbaz'''"]
+	["triple-quoted-string", "'''fo'o\n#bar\nbaz'''"]
 ]
 
 ----------------------------------------------------

@@ -12,10 +12,10 @@ bar: |
 	["punctuation", "---"],
 	["key", "foo"], ["punctuation", ":"],
 	["punctuation", ">"],
-	["scalar", "\r\n\tFoo bar\r\n\tbaz"],
+	["scalar", "\n\tFoo bar\n\tbaz"],
 	["key", "bar"], ["punctuation", ":"],
 	["punctuation", "|"],
-	["scalar", "\r\n\tFoo bar\r\n\tbaz"]
+	["scalar", "\n\tFoo bar\n\tbaz"]
 ]
 
 ----------------------------------------------------

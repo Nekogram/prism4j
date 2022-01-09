@@ -12,13 +12,13 @@ baz
 [
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "verbatim*"], ["punctuation", "}"],
-	["cdata", "\r\nFoo bar\r\n"],
+	["cdata", "\nFoo bar\n"],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "verbatim*"], ["punctuation", "}"],
 
 	["function", "\\begin"], ["punctuation", "{"],
 	["keyword", "lstlisting"], ["punctuation", "}"],
-	["cdata", "\r\nFoo bar\r\nbaz\r\n"],
+	["cdata", "\nFoo bar\nbaz\n"],
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "lstlisting"], ["punctuation", "}"]
 ]

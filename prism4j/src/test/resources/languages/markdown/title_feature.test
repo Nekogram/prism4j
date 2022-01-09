@@ -17,9 +17,9 @@ title 2
 ----------------------------------------------------
 
 [
-	["title", ["title 1\r\n", ["punctuation", "=="]]],
-	["title", ["foobar\r\n", ["punctuation", "======"]]],
-	["title", ["title 2\r\n", ["punctuation", "--"]]],
+	["title", ["title 1\n", ["punctuation", "=="]]],
+	["title", ["foobar\n", ["punctuation", "======"]]],
+	["title", ["title 2\n", ["punctuation", "--"]]],
 
 	["title", [["punctuation", "#"], " title 1"]],
 	["title", [["punctuation", "##"], " title 2"]],

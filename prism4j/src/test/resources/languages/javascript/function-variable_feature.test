@@ -11,7 +11,7 @@ fooBar = x => x
 	["punctuation", "("], ["punctuation", ")"], ["punctuation", "{"], ["punctuation", "}"],
 	["function-variable", "bar"], ["operator", "="], ["keyword", "function"], ["function", "baz"],
 	["punctuation", "("], ["punctuation", ")"], ["punctuation", "{"], ["punctuation", "}"],
-	["function-variable", "fooBar"], ["operator", "="], " x ", ["operator", "=>"], " x\r\n",
+	["function-variable", "fooBar"], ["operator", "="], " x ", ["operator", "=>"], " x\n",
 	["function-variable", "ಠ_ಠ"], ["operator", "="], ["punctuation", "("], ["punctuation", ")"],
 	["operator", "=>"], ["punctuation", "{"], ["punctuation", "}"],
 	["function-variable", "Ƞȡ_҇"], ["operator", "="],

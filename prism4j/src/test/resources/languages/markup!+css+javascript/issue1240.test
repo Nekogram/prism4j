@@ -21,7 +21,7 @@
 		["keyword", "let"],
 		" str ",
 		["operator", "="],
-		["template-string", [["string", "`\r\n\t\t<style>\r\n\t\t\t.foo { color: blue; }\r\n\t\t</style>\r\n\t`"]]],
+		["template-string", [["string", "`\n\t\t<style>\n\t\t\t.foo { color: blue; }\n\t\t</style>\n\t`"]]],
 		["punctuation", ";"]
 	]],
 	["tag", [

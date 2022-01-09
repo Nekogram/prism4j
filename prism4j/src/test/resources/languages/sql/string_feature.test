@@ -12,10 +12,10 @@ bar'
 [
 	["string", "\"\""],
 	["string", "\"fo\\\"obar\""],
-	["string", "\"foo\r\nbar\""],
+	["string", "\"foo\nbar\""],
 	["string", "''"],
 	["string", "'fo\\'obar'"],
-	["string", "'foo\r\nbar'"]
+	["string", "'foo\nbar'"]
 ]
 
 ----------------------------------------------------

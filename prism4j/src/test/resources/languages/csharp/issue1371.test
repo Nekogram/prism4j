@@ -28,7 +28,7 @@ class Works : LandAnimal {
 	["punctuation", "("],
 	["punctuation", ")"],
 	["punctuation", ";"],
-	"\r\ncontainer",
+	"\ncontainer",
 	["punctuation", "."],
 	["generic-method", [
 		["function", "Register"],
@@ -51,7 +51,7 @@ class Works : LandAnimal {
 	["operator", "="],
 	["operator", ">"],
 	["punctuation", "{"],
-	"\r\n    f",
+	"\n    f",
 	["punctuation", "."],
 	["generic-method", [
 		["function", "For"],

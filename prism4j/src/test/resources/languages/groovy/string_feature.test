@@ -33,10 +33,10 @@ bar"""
 [
 	["string", "\"\"\"\"\"\""],
 	["string", "\"\"\"foo\"\"\""],
-	["string", "\"\"\"foo\r\nbar\"\"\""],
+	["string", "\"\"\"foo\nbar\"\"\""],
 	["string", "''''''"],
 	["string", "'''foo'''"],
-	["string", "'''foo\r\nbar'''"],
+	["string", "'''foo\nbar'''"],
 
 	["string", "\"\""],
 	["string", "\"fo\\\"o\""],
@@ -47,11 +47,11 @@ bar"""
 	["string", "/fo\\/o/"],
 
 	["string", "$/fo$/$o/$"],
-	["string", "$/foo\r\nbar/$"],
+	["string", "$/foo\nbar/$"],
 	["string", "\"foo /* comment */ bar\""],
 	["string", "'foo // bar'"],
-	["string", "'''foo\r\n/* comment */\r\nbar'''"],
-	["string", "\"\"\"foo\r\n// comment\r\nbar\"\"\""]
+	["string", "'''foo\n/* comment */\nbar'''"],
+	["string", "\"\"\"foo\n// comment\nbar\"\"\""]
 ]
 
 ----------------------------------------------------

@@ -8,7 +8,7 @@ baz -->
 [
 	["comment", "<!---->"],
 	["comment", "<!-- foo bar -->"],
-	["comment", "<!-- foo bar\r\nbaz -->"]
+	["comment", "<!-- foo bar\nbaz -->"]
 ]
 
 ----------------------------------------------------

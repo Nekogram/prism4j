@@ -12,7 +12,7 @@ bar */
 
 [
 	["comment", "/**/"],
-	["comment", "/* foo\r\nbar */"],
+	["comment", "/* foo\nbar */"],
 	["comment", "--"],
 	["comment", "-- foo"],
 	["comment", "//"],

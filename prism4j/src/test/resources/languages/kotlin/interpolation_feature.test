@@ -24,7 +24,7 @@ ${'$'} ${foobar()}
 		"\""
 	]],
 	["raw-string", [
-		"\"\"\"\r\n",
+		"\"\"\"\n",
 		["interpolation", "$foo"],
 		["interpolation", [
 			["delimiter", "${"], "bar", ["delimiter", "}"]
@@ -37,7 +37,7 @@ ${'$'} ${foobar()}
 			["function", "foobar"], ["punctuation", "("], ["punctuation", ")"],
 			["delimiter", "}"]
 		]],
-		"\r\n\"\"\""
+		"\n\"\"\""
 	]]
 ]
 
