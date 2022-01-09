@@ -18,12 +18,9 @@ public class Prism_c {
         final Grammar c = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "c",
-                new GrammarUtils.TokenFilter() {
-                    @Override
-                    public boolean test(@NotNull Prism4j.Token token) {
-                        final String name = token.name();
-                        return !"class-name".equals(name) && !"boolean".equals(name);
-                    }
+                token -> {
+                    final String name = token.name();
+                    return !"class-name".equals(name) && !"boolean".equals(name);
                 },
                 token("keyword", pattern(compile("\\b(?:_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|asm|typeof|inline|auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|int|long|register|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while)\\b"))),
                 token("operator", pattern(compile("-[>-]?|\\+\\+?|!=?|<<?=?|>>?=?|==?|&&?|\\|\\|?|[~^%?*\\/]"))),
