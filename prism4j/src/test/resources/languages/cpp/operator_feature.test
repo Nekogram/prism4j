@@ -3,9 +3,10 @@
 ~ & | ^
 += -= *= /= %= >>= <<= &= |= ^=
 ! && ||
--> ::
+->
 ? :
-= == != < > <= >=
+= == != < > <= >= <=>
+and and_eq bitand bitor not not_eq or or_eq xor xor_eq
 
 ----------------------------------------------------
 
@@ -42,7 +43,6 @@
 	["operator", "||"],
 
 	["operator", "->"],
-	["operator", "::"],
 
 	["operator", "?"],
 	["operator", ":"],
@@ -53,9 +53,21 @@
 	["operator", "<"],
 	["operator", ">"],
 	["operator", "<="],
-	["operator", ">="]
+	["operator", ">="],
+	["operator", "<=>"],
+
+	["operator", "and"],
+	["operator", "and_eq"],
+	["operator", "bitand"],
+	["operator", "bitor"],
+	["operator", "not"],
+	["operator", "not_eq"],
+	["operator", "or"],
+	["operator", "or_eq"],
+	["operator", "xor"],
+	["operator", "xor_eq"]
 ]
 
 ----------------------------------------------------
 
-Checks for all operators
+Checks for all operators.
