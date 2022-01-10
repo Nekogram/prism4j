@@ -27,7 +27,7 @@ public class Prism_git {
                         )
                 )),
                 token("coord", pattern(compile("^@@.*@@$", MULTILINE))),
-                token("commit_sha1", pattern(compile("^commit \\w{40}$", MULTILINE)))
+                token("commit-sha1", pattern(compile("^commit \\w{40}$", MULTILINE)))
         );
     }
 }
