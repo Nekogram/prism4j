@@ -19,8 +19,9 @@ public class Prism_sql {
                 )),
                 token("variable", pattern(
                         compile("@[\\w.$]+|@([\"'`])(?:\\\\[\\s\\S]|(?!\\1)[^\\\\])+\\1"),
-                        false, false
-                        )
+                        false, true
+                        ),
+                        pattern(compile("@[\\w.$]+"))
                 ),
                 token("string", pattern(
                         compile("(^|[^@\\\\])(\"|')(?:\\\\[\\s\\S]|(?!\\2)[^\\\\])*\\2"),
