@@ -1,20 +1,19 @@
-(::example [x y] (:kebab-case x y))
+{ } [ ] ( )
+,
 
 ----------------------------------------------------
 
 [
-	["punctuation", "("],
-	["operator", "::example"],
+	["punctuation", "{"],
+	["punctuation", "}"],
 	["punctuation", "["],
-	"x y",
 	["punctuation", "]"],
 	["punctuation", "("],
-	["operator", ":kebab-case"],
-	" x y",
 	["punctuation", ")"],
-	["punctuation", ")"]
+
+	["punctuation", ","]
 ]
 
 ----------------------------------------------------
 
-Checks for operators and punctuation.
+Checks for punctuation.
