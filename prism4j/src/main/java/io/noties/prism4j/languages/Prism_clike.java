@@ -20,7 +20,7 @@ public abstract class Prism_clike {
                 "clike",
                 token(
                         "comment",
-                        pattern(compile("(^|[^\\\\])\\/\\*[\\s\\S]*?(?:\\*\\/|$)"), true),
+                        pattern(compile("(^|[^\\\\])\\/\\*[\\s\\S]*?(?:\\*\\/|$)"), true, true),
                         pattern(compile("(^|[^\\\\:])\\/\\/.*"), true, true)
                 ),
                 token(
@@ -30,7 +30,7 @@ public abstract class Prism_clike {
                 token(
                         "class-name",
                         pattern(
-                                compile("((?:\\b(?:class|interface|extends|implements|trait|instanceof|new)\\s+)|(?:catch\\s+\\())[\\w.\\\\]+"),
+                                compile("(\\b(?:class|interface|extends|implements|trait|instanceof|new)\\s+|\\bcatch\\s+\\()[\\w.\\\\]+"),
                                 true,
                                 false,
                                 null,
@@ -42,12 +42,12 @@ public abstract class Prism_clike {
                         pattern(compile("\\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\\b"))
                 ),
                 token("boolean", pattern(compile("\\b(?:true|false)\\b"))),
-                token("function", pattern(compile("[a-z0-9_]+(?=\\()", Pattern.CASE_INSENSITIVE))),
+                token("function", pattern(compile("\\b\\w+(?=\\()"))),
                 token(
                         "number",
-                        pattern(compile("\\b0x[\\da-f]+\\b|(?:\\b\\d+\\.?\\d*|\\B\\.\\d+)(?:e[+-]?\\d+)?", Pattern.CASE_INSENSITIVE))
+                        pattern(compile("\\b0x[\\da-f]+\\b|(?:\\b\\d+(?:\\.\\d*)?|\\B\\.\\d+)(?:e[+-]?\\d+)?", Pattern.CASE_INSENSITIVE))
                 ),
-                token("operator", pattern(compile("--?|\\+\\+?|!=?=?|<=?|>=?|==?=?|&&?|\\|\\|?|\\?|\\*|\\/|~|\\^|%"))),
+                token("operator", pattern(compile("[<>]=?|[!=]=?=?|--?|\\+\\+?|&&?|\\|\\|?|[?*/~^%]"))),
                 token("punctuation", pattern(compile("[{}\\[\\];(),.:]")))
         );
     }
