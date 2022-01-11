@@ -1,6 +1,7 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.annotations.Aliases;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
@@ -9,6 +10,7 @@ import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.*;
 
 @SuppressWarnings("unused")
+@Aliases({"tex", "context"})
 public class Prism_latex {
 
     @NotNull
@@ -29,7 +31,7 @@ public class Prism_latex {
                 ),
                 token("equation",
                         pattern(
-                                compile("\\$(?:\\\\[\\s\\S]|[^\\\\$])*\\$|\\\\\\([\\s\\S]*?\\\\\\)|\\\\\\[[\\s\\S]*?\\\\\\]"),
+                                compile("\\$\\$(?:\\\\[\\s\\S]|[^\\\\$])+\\$\\$|\\$(?:\\\\[\\s\\S]|[^\\\\$])+\\$|\\\\\\([\\s\\S]*?\\\\\\)|\\\\\\[[\\s\\S]*?\\\\\\]"),
                                 false,
                                 false,
                                 "string",
