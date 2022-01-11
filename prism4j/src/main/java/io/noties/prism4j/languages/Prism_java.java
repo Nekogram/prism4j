@@ -15,38 +15,56 @@ public class Prism_java {
     @NotNull
     public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
 
-        final Token keyword = token("keyword", pattern(compile("\\b(?:abstract|continue|for|new|switch|assert|default|goto|package|synchronized|boolean|do|if|private|this|break|double|implements|protected|throw|byte|else|import|public|throws|case|enum|instanceof|return|transient|catch|extends|int|short|try|char|final|interface|static|void|class|finally|long|strictfp|volatile|const|float|native|super|while)\\b")));
+        final String keywordPattern = "\\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|exports|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|module|native|new|non-sealed|null|open|opens|package|permits|private|protected|provides|public|record|requires|return|sealed|short|static|strictfp|super|switch|synchronized|this|throw|throws|to|transient|transitive|try|uses|var|void|volatile|while|with|yield)\\b";
+        final Token keyword = token("keyword", pattern(compile(keywordPattern)));
+
+        final String classNamePrefix = "(^|[^\\w.])(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*";
+        final Pattern className = pattern(compile(classNamePrefix + "[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"),
+                true, false, null, grammar("inside",
+                        token("namespace",
+                                pattern(compile("^[a-z]\\w*(?:\\s*\\.\\s*[a-z]\\w*)*(?:\\s*\\.)?"),
+                                        false, false, null,
+                                        grammar("inside",
+                                                token("punctuation", pattern(compile("\\.")))
+                                        )
+                                )
+                        ),
+                        token("punctuation", pattern(compile("\\.")))
+                )
+        );
 
         final Grammar java = GrammarUtils.extend(GrammarUtils.require(prism4j, "clike"), "java",
+                token("string", pattern(compile("(^|[^\\\\])\"(?:\\\\.|[^\"\\\\\\r\\n])*\""), true, true)),
+                token("class-name", className, pattern(compile(classNamePrefix + "[A-Z]\\w*(?=\\s+\\w+\\s*[;,=()])"), true, false, null, className.inside())),
                 keyword,
-                token("number", pattern(compile("\\b0b[01]+\\b|\\b0x[\\da-f]*\\.?[\\da-fp-]+\\b|(?:\\b\\d+\\.?\\d*|\\B\\.\\d+)(?:e[+-]?\\d+)?[df]?", CASE_INSENSITIVE))),
+                token("function", pattern(compile("\\b\\w+(?=\\()")), pattern(compile("(::\\s*)[a-z_]\\w*"), true)),
+                token("number", pattern(compile("\\b0b[01][01_]*L?\\b|\\b0x(?:\\.[\\da-f_p+-]+|[\\da-f_]+(?:\\.[\\da-f_p+-]+)?)\\b|(?:\\b\\d[\\d_]*(?:\\.[\\d_]*)?|\\B\\.\\d[\\d_]*)(?:e[+-]?\\d[\\d_]*)?[dfl]?", CASE_INSENSITIVE))),
                 token("operator", pattern(
-                        compile("(^|[^.])(?:\\+[+=]?|-[-=]?|!=?|<<?=?|>>?>?=?|==?|&[&=]?|\\|[|=]?|\\*=?|\\/=?|%=?|\\^=?|[?:~])", MULTILINE),
+                        compile("(^|[^.])(?:<<=?|>>>?=?|->|--|\\+\\+|&&|\\|\\||::|[?:~]|[-+*/%&|^!=<>]=?)", MULTILINE),
                         true
                 ))
         );
 
-        GrammarUtils.insertBeforeToken(java, "function",
-                token("annotation", pattern(
-                        compile("(^|[^.])@\\w+"),
-                        true,
-                        false,
-                        "punctuation"
-                ))
+        GrammarUtils.insertBeforeToken(java, "string",
+                token("triple-quoted-string", pattern(compile("\"\"\"[ \\t]*[\\r\\n](?:(?:\"|\"\")?(?:\\\\.|[^\"\\\\]))*\"\"\""), false, true, "string")),
+                token("char", pattern(compile("'(?:\\\\.|[^'\\\\\\r\\n]){1,6}'"), false, true))
         );
 
         GrammarUtils.insertBeforeToken(java, "class-name",
-                token("generics", pattern(
-                        compile("<\\s*\\w+(?:\\.\\w+)?(?:\\s*,\\s*\\w+(?:\\.\\w+)?)*>", CASE_INSENSITIVE),
+                token("annotation", pattern(
+                        compile("(^|[^.])@\\w+(?:\\s*\\.\\s*\\w+)*"),
+                        true,
                         false,
-                        false,
-                        "function",
-                        grammar(
-                                "inside",
+                        "punctuation"
+                )),
+                token("generics", pattern(compile("<(?:[\\w\\s,.?]|&(?!&)|<(?:[\\w\\s,.?]|&(?!&)|<(?:[\\w\\s,.?]|&(?!&)|<(?:[\\w\\s,.?]|&(?!&))*>)*>)*>)*>"), false, false, null,
+                        grammar("inside",
+                                token("class-name", className),
                                 keyword,
-                                token("punctuation", pattern(compile("[<>(),.:]")))
-                        )
-                ))
+                                token("punctuation", pattern(compile("[<>(),.:]"))),
+                                token("operator", pattern(compile("[?&|]")))))
+                ),
+                token("namespace", pattern(compile("(\\b(?:exports|import(?:\\s+static)?|module|open|opens|package|provides|requires|to|transitive|uses|with)\\s+)(?!" + keywordPattern + ")[a-z]\\w*(?:\\.[a-z]\\w*)*\\.?"), true, false, null, grammar("inside", token("punctuation", pattern(compile("\\."))))))
         );
 
         return java;
