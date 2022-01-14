@@ -8,7 +8,7 @@ library).
 This is a fork of [noties/Prism4j](https://github.com/noties/Prism4j) which is unmaintained since 2019. Some features
 were removed from the project to make it easier to use it (e.g. the `PrismBundler`).
 
-## Core
+## Usage
 
 ```kotlin
 implementation "org.codeberg.qwerty287:Prism4j:${prism4j_version}"
