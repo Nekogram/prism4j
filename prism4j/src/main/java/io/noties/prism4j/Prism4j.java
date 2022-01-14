@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 
 public class Prism4j {
@@ -108,11 +107,11 @@ public class Prism4j {
         return tokenize(text, GrammarUtils.require(this, languageName));
     }
 
-    public void visit(@NotNull AbsVisitor visitor, @NotNull String text, @NotNull Grammar grammar) {
+    public void visit(@NotNull Visitor visitor, @NotNull String text, @NotNull Grammar grammar) {
         visitor.visit(tokenize(text, grammar));
     }
 
-    public void visit(@NotNull AbsVisitor visitor, @NotNull String text, @NotNull String languageName) {
+    public void visit(@NotNull Visitor visitor, @NotNull String text, @NotNull String languageName) {
         visit(visitor, text, GrammarUtils.require(this, languageName));
     }
 

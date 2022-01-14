@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public abstract class AbsVisitor {
+public abstract class Visitor {
 
     public void visit(@NotNull List<? extends Prism4j.Node> nodes) {
         for (Prism4j.Node node : nodes) {
