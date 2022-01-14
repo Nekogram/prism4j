@@ -73,8 +73,8 @@ In order to simplify adding language definitions to your project, Prism4j has so
 ### Adding a language that is not supported
 
 1. The best way is to port the language and create a pull request to this repository so everyone can use your language
-   definition. Please see [`Contributing`](#Contributing) section.
-2. You can also follow the instructions under [`Contributing`](#Contributing) to add a language directly to your
+   definition. Please see [`Add languages`](#add-languages) section.
+2. You can also follow the instructions under [`Add languages`](#add-languages) to add a language directly to your
    project. If you use this approach, you'll have to create a new class which implements `GrammarLocator` and create new
    Prism4j instances with `new Prism4j(new MyGrammarLocator())`. However, I'd really appreciate it if you would create a
    pull request!
@@ -85,7 +85,7 @@ The `DefaultGrammarLocator` will create languages when they are requested (aka _
 you by keeping as is or by manually triggering language creation via `prism4j.grammar("my-language");` when convenient
 at runtime.
 
-## Contributing
+## Add languages
 
 Language definitions are at the `prism4j/src/main/java/io/noties/prism4j/languages/` folder. A new file should follow
 simple naming convention: `Prism_{real_language_name}.java`. So, a definition for `json` would be `Prism_json.java`.
