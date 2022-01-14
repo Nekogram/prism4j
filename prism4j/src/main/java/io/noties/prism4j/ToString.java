@@ -14,21 +14,21 @@ abstract class ToString {
     @NotNull
     static String toString(@NotNull Grammar grammar) {
         final StringBuilder builder = new StringBuilder();
-        toString(builder, new CacheImpl(), grammar);
+        toString(builder, new Cache(), grammar);
         return builder.toString();
     }
 
     @NotNull
     static String toString(@NotNull Token token) {
         final StringBuilder builder = new StringBuilder();
-        toString(builder, new CacheImpl(), token);
+        toString(builder, new Cache(), token);
         return builder.toString();
     }
 
     @NotNull
     static String toString(@NotNull Pattern pattern) {
         final StringBuilder builder = new StringBuilder();
-        toString(builder, new CacheImpl(), pattern);
+        toString(builder, new Cache(), pattern);
         return builder.toString();
     }
 
@@ -125,14 +125,7 @@ abstract class ToString {
         builder.append('}');
     }
 
-    private interface Cache {
-
-        boolean visited(@NotNull Object o);
-
-        void markVisited(@NotNull Object o);
-    }
-
-    private static class CacheImpl implements Cache {
+    private static class Cache {
 
         private final Set<Integer> cache = new HashSet<>(3);
 
@@ -141,12 +134,10 @@ abstract class ToString {
             return System.identityHashCode(o);
         }
 
-        @Override
         public boolean visited(@NotNull Object o) {
             return cache.contains(key(o));
         }
 
-        @Override
         public void markVisited(@NotNull Object o) {
             cache.add(key(o));
         }
