@@ -102,6 +102,10 @@ public class Prism4j {
         return entries;
     }
 
+    public void visit(@NotNull AbsVisitor visitor, @NotNull String text, @NotNull Grammar grammar) {
+        visitor.visit(tokenize(text, grammar));
+    }
+
     @Nullable
     public Grammar grammar(@NotNull String name) {
         return grammarLocator.grammar(this, name);
