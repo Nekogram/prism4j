@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AbsVisitor {
 
-    protected void visit(@NotNull List<? extends Prism4j.Node> nodes) {
+    public void visit(@NotNull List<? extends Prism4j.Node> nodes) {
         for (Prism4j.Node node : nodes) {
             if (node.isSyntax()) {
                 visitSyntax((Syntax) node);
