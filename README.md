@@ -100,7 +100,6 @@ In order to provide meta-information about a language which will be used to gene
   the `markup` will be returned.
 
 ```java
-
 @Aliases({"html", "xml", "mathml", "svg"})
 public class Prism_markup {
 }
@@ -109,7 +108,6 @@ public class Prism_markup {
 * `@Extend` annotation indicates if a language definition is a sibling of another one. `c`:
 
 ```java
-
 @Extend("clike")
 public class Prism_c {
 }
@@ -120,7 +118,6 @@ public class Prism_c {
   it's present, it will be modified. For example, `css`:
 
 ```java
-
 @Modify("markup")
 public class Prism_css {
 }
