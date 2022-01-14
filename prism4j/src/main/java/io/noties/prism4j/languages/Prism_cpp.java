@@ -47,11 +47,11 @@ public class Prism_cpp {
 
         GrammarUtils.insertBeforeToken(cpp, "keyword",
                 token("generic-function", pattern(compile("\\b(?!operator\\b)[a-z_]\\w*\\s*<(?:[^<>]|<[^<>])*>*>(?=\\s*\\()", CASE_INSENSITIVE),
-                        false, false, null,
-                        grammar("inside",
-                                token("function", pattern(compile("^\\w+"))),
-                                token("generic", pattern(compile("<[\\s\\S]+"),
-                                        false, false, "class-name", cpp)))
+                                false, false, null,
+                                grammar("inside",
+                                        token("function", pattern(compile("^\\w+"))),
+                                        token("generic", pattern(compile("<[\\s\\S]+"),
+                                                false, false, "class-name", cpp)))
                         )
                 )
         );
