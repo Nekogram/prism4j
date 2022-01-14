@@ -17,6 +17,7 @@
 ### Enhancements
 
 * Updated language definitions
+* Add support for Basic
 
 ## 2.1.1
 

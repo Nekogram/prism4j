@@ -95,6 +95,9 @@ public class DefaultGrammarLocator implements GrammarLocator {
     protected Grammar obtainGrammar(@NotNull Prism4j prism4j, @NotNull String name) {
         final Grammar grammar;
         switch (name) {
+            case "basic":
+                grammar = Prism_basic.create(prism4j);
+                break;
             case "brainfuck":
                 grammar = Prism_brainfuck.create(prism4j);
                 break;
@@ -196,7 +199,8 @@ public class DefaultGrammarLocator implements GrammarLocator {
     @Override
     @NotNull
     public HashSet<String> languages() {
-        final HashSet<String> set = new HashSet<>(26);
+        final HashSet<String> set = new HashSet<>(27);
+        set.add("basic");
         set.add("brainfuck");
         set.add("c");
         set.add("clike");
