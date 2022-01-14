@@ -291,10 +291,4 @@ public class Prism4j {
         boolean isSyntax();
     }
 
-    /**
-     * @see AbsVisitor
-     */
-    public interface Visitor {
-        void visit(@NotNull List<? extends Node> nodes);
-    }
 }
