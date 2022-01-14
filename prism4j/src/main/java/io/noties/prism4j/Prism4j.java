@@ -12,6 +12,10 @@ public class Prism4j {
 
     private final GrammarLocator grammarLocator;
 
+    public Prism4j() {
+        this(new DefaultGrammarLocator());
+    }
+
     public Prism4j(@NotNull GrammarLocator grammarLocator) {
         this.grammarLocator = grammarLocator;
     }
