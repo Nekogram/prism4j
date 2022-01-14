@@ -122,6 +122,9 @@ public class DefaultGrammarLocator implements GrammarLocator {
             case "css-extras":
                 grammar = Prism_css_extras.create(prism4j);
                 break;
+            case "csv":
+                grammar = Prism_csv.create(prism4j);
+                break;
             case "dart":
                 grammar = Prism_dart.create(prism4j);
                 break;
@@ -199,7 +202,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
     @Override
     @NotNull
     public HashSet<String> languages() {
-        final HashSet<String> set = new HashSet<>(27);
+        final HashSet<String> set = new HashSet<>(28);
         set.add("basic");
         set.add("brainfuck");
         set.add("c");
@@ -209,6 +212,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
         set.add("csharp");
         set.add("css");
         set.add("css-extras");
+        set.add("csv");
         set.add("dart");
         set.add("git");
         set.add("go");
