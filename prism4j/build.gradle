@@ -1,7 +1,11 @@
+import com.google.googlejavaformat.java.Formatter
+import com.google.googlejavaformat.java.FormatterException
+import com.google.googlejavaformat.java.JavaFormatterOptions
 import ix.Ix
 import org.apache.commons.io.FileUtils
 
 import java.nio.charset.StandardCharsets
+import java.util.regex.Pattern
 
 buildscript {
     repositories {
@@ -10,6 +14,7 @@ buildscript {
     dependencies {
         classpath 'com.github.akarnokd:ixjava:1.0.0'
         classpath 'commons-io:commons-io:2.11.0'
+        classpath 'com.google.googlejavaformat:google-java-format:1.7'
     }
 }
 
@@ -22,12 +27,10 @@ dependencies {
     testCompileOnly 'org.jetbrains:annotations:23.0.0'
 
     testImplementation 'junit:junit:4.13.2'
-    implementation 'commons-io:commons-io:2.11.0'
+    testImplementation 'commons-io:commons-io:2.11.0'
     testImplementation 'com.github.akarnokd:ixjava:1.0.0'
     testImplementation 'com.google.code.gson:gson:2.8.9'
     testImplementation 'net.javacrumbs.json-unit:json-unit:2.28.0'
-    implementation 'com.github.akarnokd:ixjava:1.0.0'
-    implementation 'com.google.googlejavaformat:google-java-format:1.7'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -93,4 +96,409 @@ task regenerateTests {
                         StandardCharsets.UTF_8
                 )
             }
+}
+
+// tasks and functions to regenerate DefaultGrammarLocator
+task regenerateDefaultGrammarLocator {
+    final long start = System.currentTimeMillis()
+
+    regenerate()
+
+    final long end = System.currentTimeMillis()
+
+    println("[prism4j] Recreation of DefaultGrammarLocator took: " + (end - start) + " ms")
+}
+
+void regenerate() {
+
+    final Map<String, LanguageInfo> languages = prepareLanguages()
+
+    final String template = grammarLocatorTemplate()
+    final String source = grammarLocatorSource(template, languages)
+
+    Writer writer = new FileWriter("prism4j/src/main/java/io/noties/prism4j/DefaultGrammarLocator.java")
+    writer.write(source)
+    writer.close()
+
+    FileUtils.writeStringToFile(
+            new File("prism4j/src/main/java/io/noties/prism4j/DefaultGrammarLocator.java"),
+            source,
+            StandardCharsets.UTF_8
+    )
+}
+
+Map<String, LanguageInfo> prepareLanguages() {
+
+    final List<String> names = allLanguages()
+
+    final int size = names.size()
+    final Map<String, LanguageInfo> languages = new LinkedHashMap<>(size)
+    for (String name : names) {
+        languageInfo(languages, name)
+    }
+
+    return languages
+}
+
+static List<String> allLanguages() {
+
+    final String[] list = new File("prism4j/src/main/java/io/noties/prism4j/languages/").list()
+    if (list == null || list.length < 1) {
+        throw new RuntimeException("Cannot not obtain language files")
+    }
+
+    return Ix.from(Arrays.asList(list))
+            .map { Pattern.compile("Prism_(\\w+)\\.java").matcher(it) }
+            .filter { it.matches() }
+            .map { it.group(1) }
+            .map { it.replace('_', '-') }
+            .toList() as List<String>
+}
+
+void languageInfo(Map<String, LanguageInfo> map, String name) {
+
+    if (map.containsKey(name)) {
+        return
+    }
+
+    // read info
+    final String source = FileUtils.readFileToString(new File(languageSourceFileName(name)), StandardCharsets.UTF_8)
+
+    final List<String> aliases = findAliasesInformation(source)
+    final String extend = findExtendInformation(source)
+    final List<String> modify = findModifyInformation(source)
+    final boolean modifyExtend = findModifyExtendInformation(source)
+
+    map.put(name, new LanguageInfo(name, aliases, extend, modify, modifyExtend, source))
+
+    if (extend != null) {
+        languageInfo(map, extend)
+    }
+}
+
+static String languageSourceFileName(String name) {
+    return String.format(Locale.US, "prism4j/src/main/java/io/noties/prism4j/languages/Prism_%1\$s.java", javaValidName(name))
+}
+
+static String grammarLocatorTemplate() {
+    return FileUtils.readFileToString(new File("prism4j/src/DefaultGrammarLocator.template.java"), StandardCharsets.UTF_8)
+}
+
+static String grammarLocatorSource(
+        String template,
+        Map<String, LanguageInfo> languages) {
+    final StringBuilder builder = new StringBuilder(template)
+    replaceTemplate(builder, "{{package-name}}", "io.noties.prism4j")
+    replaceTemplate(builder, "{{class-name}}", "DefaultGrammarLocator")
+    replaceTemplate(builder, "{{real-language-name}}", createRealLanguageName(languages))
+    replaceTemplate(builder, "{{obtain-grammar}}", createObtainGrammar(languages))
+    replaceTemplate(builder, "{{trigger-modify}}", createTriggerModify(languages))
+    replaceTemplate(builder, "{{languages}}", createLanguages(languages))
+    final Formatter formatter = new Formatter(
+            JavaFormatterOptions.builder()
+                    .style(JavaFormatterOptions.Style.AOSP)
+                    .build()
+    )
+    try {
+        return formatter.formatSource(builder.toString())
+    } catch (FormatterException e) {
+        System.out.printf("source: %n%s%n", builder)
+        throw new RuntimeException(e)
+    }
+}
+
+static void replaceTemplate(StringBuilder template, String name, String content) {
+    final int index = template.indexOf(name)
+    template.replace(index, index + name.length(), content)
+}
+
+// we must return a set of languageInfos here (so we do not copy language more than once
+// thus allowing multiple grammarLocators)
+
+static String createRealLanguageName(Map<String, LanguageInfo> languages) {
+    final StringBuilder builder = new StringBuilder()
+    for (Map.Entry<String, LanguageInfo> entry : languages.entrySet()) {
+        final List<String> aliases = entry.getValue().aliases
+        if (aliases != null
+                && aliases.size() > 0) {
+            for (String alias : aliases) {
+                builder.append("case \"")
+                        .append(alias)
+                        .append('\"')
+                        .append(':')
+                        .append('\n')
+            }
+            builder.append("out = \"")
+                    .append(entry.getKey())
+                    .append('\"')
+                    .append(';')
+                    .append('\n')
+                    .append("break;\n")
+        }
+    }
+
+    if (builder.length() > 0) {
+        builder.append("default:\n")
+                .append("out = name;\n")
+                .append("}\nreturn out;")
+        builder.insert(0, "final String out;\nswitch (name) {")
+        return builder.toString()
+    } else {
+        return "return name;"
+    }
+}
+
+static String createObtainGrammar(Map<String, LanguageInfo> languages) {
+    final StringBuilder builder = new StringBuilder()
+    builder
+            .append("final Prism4j.Grammar grammar;\n")
+            .append("switch(name) {\n")
+    Ix.from(languages.keySet())
+            .orderBy(new Comparator<String>() {
+                @Override
+                int compare(String o1, String o2) {
+                    return o1 <=> o2
+                }
+            })
+            .foreach {
+                builder.append("case \"")
+                        .append(it)
+                        .append("\":\n")
+                        .append("grammar = Prism_")
+                        .append(javaValidName(it))
+                        .append(".create(prism4j);\nbreak;\n")
+            }
+    builder.append("default:\ngrammar = null;\n}")
+            .append("return grammar;")
+    return builder.toString()
+}
+
+static String createTriggerModify(Map<String, LanguageInfo> languages) {
+
+    // so, create a map collection where each entry in `modify` is the key and languageInfo.name is value
+    final Map<String, List<LanguageInfo>> map = new HashMap<>(3)
+
+    List<String> modify
+
+    for (LanguageInfo info : languages.values()) {
+
+        modify = info.modify
+
+        if (modify != null
+                && modify.size() > 0) {
+
+            for (String name : modify) {
+                map.computeIfAbsent(name, { new ArrayList<>(3) }).add(info)
+            }
+        }
+    }
+
+    if (map.size() == 0) {
+        return ""
+    }
+
+    final StringBuilder builder = new StringBuilder()
+    builder.append("Prism4j.Grammar grammar = null;\n")
+    builder.append("switch(name){\n")
+    for (Map.Entry<String, List<LanguageInfo>> entry : map.entrySet()) {
+        //if (entry.getValue().modify != null
+        //        && entry.getValue().modify.size() > 0) {
+
+        builder.append("case \"")
+                .append(entry.getKey())
+                .append("\":\n")
+        if (entry.getValue().size() == 1 && entry.getValue()[0].modifyExtend) {
+            builder.append("grammar = ")
+        }
+        for (LanguageInfo lang : entry.getValue()) {
+            builder.append("prism4j.grammar(\"")
+                    .append(lang.name)
+                    .append("\");\n")
+        }
+        builder.append("break;\n")
+        //}
+    }
+    builder.append("}")
+    builder.append("return grammar;")
+    return builder.toString()
+}
+
+static String javaValidName(String name) {
+    return name.replaceAll("-", "_")
+}
+
+static String createLanguages(Map<String, LanguageInfo> languages) {
+
+    final StringBuilder builder = new StringBuilder()
+    final List<String> list = new ArrayList<>(languages.keySet())
+    list.sort(new Comparator<String>() {
+        @Override
+        int compare(String o1, String o2) {
+            return o1 <=> o2
+        }
+    })
+
+    builder.append("final HashSet<String> set = new HashSet<String>(")
+            .append(list.size())
+            .append(");\n")
+
+    for (String language : list) {
+        builder.append("set.add(\"").append(language).append("\");\n")
+    }
+
+    builder.append("return set;")
+
+    return builder.toString()
+}
+
+private static List<String> findAnnotationArrayInformation(String annotation, String source) {
+
+    final int start = source.indexOf(annotation)
+    if (start < 0) {
+        return null
+    }
+
+    final int end = source.indexOf(')', start)
+    if (end < 0) {
+        return null
+    }
+
+    final List<String> aliases = new ArrayList<>(3)
+
+    final StringBuilder builder = new StringBuilder()
+
+    char c
+
+    boolean insideString = false
+
+    for (i in start..<end) {
+        c = source.charAt(i)
+
+        if (Character.isWhitespace(c)) {
+            continue
+        }
+
+        if ('\"' == c.toString()) {
+            insideString = !insideString
+            if (!insideString) {
+                aliases.add(builder.toString())
+                builder.setLength(0)
+            }
+            continue
+        }
+
+        if (insideString) {
+            builder.append(c)
+        }
+    }
+
+    if (aliases.size() == 0) {
+        return null
+    } else {
+        return aliases
+    }
+}
+
+static String findExtendInformation(String source) {
+    final String annotation = "@Extend"
+    final int index = source.indexOf(annotation)
+    if (index < 0) {
+        return null
+    }
+
+    char c
+
+    final StringBuilder builder = new StringBuilder()
+
+    boolean insideString = false
+
+    for (i in (index + annotation.length())..<source.length()) {
+        //for (int i = index + annotation.length(); i < source.length(); i++) {
+
+        c = source.charAt(i)
+
+        if (Character.isWhitespace(c)) {
+            continue
+        }
+
+        if ('\"' == c.toString()) {
+            insideString = !insideString
+            if (!insideString) {
+                break
+            } else {
+                continue
+            }
+        }
+
+        if (insideString) {
+            builder.append(c)
+        }
+    }
+
+    if (builder.length() == 0) {
+        return null
+    } else {
+        return builder.toString()
+    }
+}
+
+static List<String> findAliasesInformation(String source) {
+    return findAnnotationArrayInformation("@Aliases", source)
+}
+
+static List<String> findModifyInformation(String source) {
+    return findAnnotationArrayInformation("@Modify", source)
+}
+
+static boolean findModifyExtendInformation(String source) {
+    final Pattern annotation = Pattern.compile("@Modify\\(value = (\\{|)((\"\\S+\")(,|))+(}|), extend = true\\)")
+    return annotation.matcher(source).find()
+}
+
+class LanguageInfo {
+
+    public final String name
+    public final List<String> aliases
+    public final String extend
+    public final List<String> modify
+    public final boolean modifyExtend
+    public final String source
+
+    LanguageInfo(
+            String name,
+            List<String> aliases,
+            String extend,
+            List<String> modify,
+            boolean modifyExtend,
+            String source
+    ) {
+        this.name = name
+        this.aliases = aliases
+        this.extend = extend
+        this.modify = modify
+        this.modifyExtend = modifyExtend
+        this.source = source
+    }
+
+    @Override
+    boolean equals(Object o) {
+        if (this == o) return true
+        if (o == null || getClass() != o.getClass()) return false
+
+        LanguageInfo that = (LanguageInfo) o
+
+        return name == that.name
+    }
+
+    @Override
+    int hashCode() {
+        return name.hashCode()
+    }
+
+    @Override
+    String toString() {
+        return "LanguageInfo{" +
+                "name='" + name + '\'' +
+                '}'
+    }
 }

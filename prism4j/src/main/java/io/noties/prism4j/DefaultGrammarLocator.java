@@ -4,7 +4,9 @@ import io.noties.prism4j.languages.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 public class DefaultGrammarLocator implements GrammarLocator {
 
@@ -24,7 +26,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
                 }
             };
 
-    private final Map<String, Prism4j.Grammar> cache = new HashMap<>(3);
+    private final HashMap<String, Prism4j.Grammar> cache = new HashMap<>(3);
 
     @Nullable
     @Override
@@ -59,8 +61,16 @@ public class DefaultGrammarLocator implements GrammarLocator {
     protected String realLanguageName(@NotNull String name) {
         final String out;
         switch (name) {
-            case "js":
-                out = "javascript";
+            case "dotnet":
+                out = "csharp";
+                break;
+            case "tex":
+            case "context":
+                out = "latex";
+                break;
+            case "kt":
+            case "kts":
+                out = "kotlin";
                 break;
             case "xml":
             case "html":
@@ -68,8 +78,11 @@ public class DefaultGrammarLocator implements GrammarLocator {
             case "svg":
                 out = "markup";
                 break;
-            case "dotnet":
-                out = "csharp";
+            case "webmanifest":
+                out = "json";
+                break;
+            case "js":
+                out = "javascript";
                 break;
             default:
                 out = name;
@@ -181,8 +194,8 @@ public class DefaultGrammarLocator implements GrammarLocator {
 
     @Override
     @NotNull
-    public Set<String> languages() {
-        final Set<String> set = new HashSet<String>(25);
+    public HashSet<String> languages() {
+        final HashSet<String> set = new HashSet<String>(26);
         set.add("brainfuck");
         set.add("c");
         set.add("clike");

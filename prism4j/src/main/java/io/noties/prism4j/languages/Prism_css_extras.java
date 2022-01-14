@@ -11,7 +11,7 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
-@Modify("css")
+@Modify(value = "css", extend = true)
 public class Prism_css_extras {
 
     @Nullable

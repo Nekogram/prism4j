@@ -9,7 +9,7 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
-@Aliases({"jsonp", "webmanifest"})
+@Aliases("webmanifest")
 public class Prism_json {
 
     @NotNull

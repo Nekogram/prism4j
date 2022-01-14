@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Modify {
     String[] value();
+
+    boolean extend() default false;
 }
