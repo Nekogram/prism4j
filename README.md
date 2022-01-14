@@ -10,9 +10,8 @@ were removed from the project to make it easier to use it (e.g. the `PrismBundle
 
 ## Usage
 
-```kotlin
-implementation "org.codeberg.qwerty287:Prism4j:${prism4j_version}"
-```
+if you are using any Maven-compatible build system, you can get this via
+[Jitpack](https://jitpack.io/#org.codeberg.qwerty287/Prism4j).
 
 ```java
 class Prism4jExample {
@@ -36,6 +35,8 @@ class Prism4jExample {
                 }
             };
             visitor.visit(nodes);
+            // instead, you could also use (same effect):
+            //prism4j.visit(visitor, code, "json");
         }
     }
 }
