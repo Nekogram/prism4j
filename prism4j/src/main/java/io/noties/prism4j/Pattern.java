@@ -3,20 +3,20 @@ package io.noties.prism4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PatternImpl implements Prism4j.Pattern {
+public class Pattern {
 
     private final java.util.regex.Pattern regex;
     private final boolean lookbehind;
     private final boolean greedy;
     private final String alias;
-    private final Prism4j.Grammar inside;
+    private final Grammar inside;
 
-    public PatternImpl(
+    public Pattern(
             @NotNull java.util.regex.Pattern regex,
             boolean lookbehind,
             boolean greedy,
             @Nullable String alias,
-            @Nullable Prism4j.Grammar inside) {
+            @Nullable Grammar inside) {
         this.regex = regex;
         this.lookbehind = lookbehind;
         this.greedy = greedy;
@@ -25,30 +25,25 @@ public class PatternImpl implements Prism4j.Pattern {
     }
 
     @NotNull
-    @Override
     public java.util.regex.Pattern regex() {
         return regex;
     }
 
-    @Override
     public boolean lookbehind() {
         return lookbehind;
     }
 
-    @Override
     public boolean greedy() {
         return greedy;
     }
 
     @Nullable
-    @Override
     public String alias() {
         return alias;
     }
 
     @Nullable
-    @Override
-    public Prism4j.Grammar inside() {
+    public Grammar inside() {
         return inside;
     }
 

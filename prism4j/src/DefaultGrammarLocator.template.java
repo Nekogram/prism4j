@@ -6,6 +6,7 @@ import io.noties.prism4j.languages.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class {{class-name}} implements GrammarLocator{
 
 @SuppressWarnings("ConstantConditions")
-private static final Prism4j.Grammar NULL=new Prism4j.Grammar(){
+private static final Grammar NULL=new Grammar("", new ArrayList<>()){
 @NotNull
 @Override
 public String name(){
@@ -22,20 +23,20 @@ public String name(){
 
 @NotNull
 @Override
-public List<Prism4j.Token>tokens(){
+public List<Token>tokens(){
         return null;
         }
         };
 
-private final HashMap<String, Prism4j.Grammar>cache=new HashMap<>(3);
+private final HashMap<String, Grammar>cache=new HashMap<>(3);
 
 @Nullable
 @Override
-public Prism4j.Grammar grammar(@NotNull Prism4j prism4j,@NotNull String language){
+public Grammar grammar(@NotNull Prism4j prism4j,@NotNull String language){
 
 final String name=realLanguageName(language);
 
-        Prism4j.Grammar grammar=cache.get(name);
+        Grammar grammar=cache.get(name);
         if(grammar!=null){
         if(NULL==grammar){
         grammar=null;
@@ -48,7 +49,7 @@ final String name=realLanguageName(language);
         cache.put(name,NULL);
         }else{
         cache.put(name,grammar);
-        Prism4j.Grammar grammarExtended=triggerModify(prism4j,name);
+        Grammar grammarExtended=triggerModify(prism4j,name);
         if(grammarExtended!=null){
         cache.put(name,grammarExtended);
         grammar=grammarExtended;
@@ -64,11 +65,11 @@ protected String realLanguageName(@NotNull String name){
         }
 
 @Nullable
-protected Prism4j.Grammar obtainGrammar(@NotNull Prism4j prism4j,@NotNull String name){
+protected Grammar obtainGrammar(@NotNull Prism4j prism4j,@NotNull String name){
         {{obtain-grammar}}
         }
 
-protected Prism4j.Grammar triggerModify(@NotNull Prism4j prism4j,@NotNull String name){
+protected Grammar triggerModify(@NotNull Prism4j prism4j,@NotNull String name){
         {{trigger-modify}}
         }
 

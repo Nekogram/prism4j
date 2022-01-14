@@ -5,10 +5,7 @@
 
 package io.noties.prism4j.languages;
 
-import io.noties.prism4j.DefaultGrammarLocator;
-import io.noties.prism4j.GrammarUtils;
-import io.noties.prism4j.Prism4j;
-import io.noties.prism4j.TestUtils;
+import io.noties.prism4j.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +45,7 @@ public class TestMarkupCss {
     @Test
     public void testClone() {
         final TestUtils.Case c = TestUtils.readCase(file);
-        final Prism4j.Grammar grammar = GrammarUtils.clone(Objects.requireNonNull(prism4j.grammar("markup")));
+        final Grammar grammar = GrammarUtils.clone(Objects.requireNonNull(prism4j.grammar("markup")));
         TestUtils.assertCase(c, prism4j.tokenize(c.input, grammar));
     }
 }

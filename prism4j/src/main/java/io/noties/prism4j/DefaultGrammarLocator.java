@@ -4,6 +4,7 @@ import io.noties.prism4j.languages.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.List;
 public class DefaultGrammarLocator implements GrammarLocator {
 
     @SuppressWarnings("ConstantConditions")
-    private static final Prism4j.Grammar NULL =
-            new Prism4j.Grammar() {
+    private static final Grammar NULL =
+            new Grammar("", new ArrayList<>()) {
                 @NotNull
                 @Override
                 public String name() {
@@ -21,20 +22,20 @@ public class DefaultGrammarLocator implements GrammarLocator {
 
                 @NotNull
                 @Override
-                public List<Prism4j.Token> tokens() {
+                public List<Token> tokens() {
                     return null;
                 }
             };
 
-    private final HashMap<String, Prism4j.Grammar> cache = new HashMap<>(3);
+    private final HashMap<String, Grammar> cache = new HashMap<>(3);
 
     @Nullable
     @Override
-    public Prism4j.Grammar grammar(@NotNull Prism4j prism4j, @NotNull String language) {
+    public Grammar grammar(@NotNull Prism4j prism4j, @NotNull String language) {
 
         final String name = realLanguageName(language);
 
-        Prism4j.Grammar grammar = cache.get(name);
+        Grammar grammar = cache.get(name);
         if (grammar != null) {
             if (NULL == grammar) {
                 grammar = null;
@@ -47,7 +48,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
             cache.put(name, NULL);
         } else {
             cache.put(name, grammar);
-            Prism4j.Grammar grammarExtended = triggerModify(prism4j, name);
+            Grammar grammarExtended = triggerModify(prism4j, name);
             if (grammarExtended != null) {
                 cache.put(name, grammarExtended);
                 grammar = grammarExtended;
@@ -91,8 +92,8 @@ public class DefaultGrammarLocator implements GrammarLocator {
     }
 
     @Nullable
-    protected Prism4j.Grammar obtainGrammar(@NotNull Prism4j prism4j, @NotNull String name) {
-        final Prism4j.Grammar grammar;
+    protected Grammar obtainGrammar(@NotNull Prism4j prism4j, @NotNull String name) {
+        final Grammar grammar;
         switch (name) {
             case "brainfuck":
                 grammar = Prism_brainfuck.create(prism4j);
@@ -178,8 +179,8 @@ public class DefaultGrammarLocator implements GrammarLocator {
         return grammar;
     }
 
-    protected Prism4j.Grammar triggerModify(@NotNull Prism4j prism4j, @NotNull String name) {
-        Prism4j.Grammar grammar = null;
+    protected Grammar triggerModify(@NotNull Prism4j prism4j, @NotNull String name) {
+        Grammar grammar = null;
         switch (name) {
             case "markup":
                 prism4j.grammar("css");
@@ -195,7 +196,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
     @Override
     @NotNull
     public HashSet<String> languages() {
-        final HashSet<String> set = new HashSet<String>(26);
+        final HashSet<String> set = new HashSet<>(26);
         set.add("brainfuck");
         set.add("c");
         set.add("clike");

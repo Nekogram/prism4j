@@ -13,7 +13,7 @@ import java.util.Set;
 public interface GrammarLocator {
 
     @Nullable
-    Prism4j.Grammar grammar(@NotNull Prism4j prism4j, @NotNull String language);
+    Grammar grammar(@NotNull Prism4j prism4j, @NotNull String language);
 
     /**
      * @return collection of languages included into this locator

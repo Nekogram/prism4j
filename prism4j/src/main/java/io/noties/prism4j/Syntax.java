@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SyntaxImpl implements Prism4j.Syntax {
+public class Syntax implements Prism4j.Node {
 
     private final String type;
     private final List<? extends Prism4j.Node> children;
@@ -14,7 +14,7 @@ public class SyntaxImpl implements Prism4j.Syntax {
     private final boolean greedy;
     private final boolean tokenized;
 
-    public SyntaxImpl(
+    public Syntax(
             @NotNull String type,
             @NotNull List<? extends Prism4j.Node> children,
             @Nullable String alias,
@@ -40,35 +40,29 @@ public class SyntaxImpl implements Prism4j.Syntax {
     }
 
     @NotNull
-    @Override
     public String type() {
         return type;
     }
 
     @NotNull
-    @Override
     public List<? extends Prism4j.Node> children() {
         return children;
     }
 
     @Nullable
-    @Override
     public String alias() {
         return alias;
     }
 
     @NotNull
-    @Override
     public String matchedString() {
         return matchedString;
     }
 
-    @Override
     public boolean greedy() {
         return greedy;
     }
 
-    @Override
     public boolean tokenized() {
         return tokenized;
     }

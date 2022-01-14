@@ -1,5 +1,6 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.annotations.Extend;
@@ -14,8 +15,8 @@ import static java.util.regex.Pattern.compile;
 public class Prism_scala {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
-        final Prism4j.Grammar scala = GrammarUtils.extend(
+    public static Grammar create(@NotNull Prism4j prism4j) {
+        final Grammar scala = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "java"),
                 "scala",
                 token -> {

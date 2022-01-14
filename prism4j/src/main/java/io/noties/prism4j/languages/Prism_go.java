@@ -1,7 +1,9 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,14 +17,14 @@ import static java.util.regex.Pattern.compile;
 public class Prism_go {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar go = GrammarUtils.extend(
+        final Grammar go = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "go",
                 new GrammarUtils.TokenFilter() {
                     @Override
-                    public boolean test(@NotNull Prism4j.Token token) {
+                    public boolean test(@NotNull Token token) {
                         return !"class-name".equals(token.name());
                     }
                 },

@@ -1,6 +1,7 @@
 package io.noties.prism4j.languages;
 
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.annotations.Aliases;
@@ -16,7 +17,7 @@ import static java.util.regex.Pattern.*;
 public class Prism_csharp {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar classNameInsidePunctuation = grammar("inside",
                 token("punctuation", pattern(compile("\\.")))

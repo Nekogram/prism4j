@@ -1,5 +1,6 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.annotations.Extend;
@@ -14,11 +15,11 @@ import static java.util.regex.Pattern.compile;
 public class Prism_cpp {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         String keywordPattern = "\\b(?:alignas|alignof|asm|auto|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|compl|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|final|float|for|friend|goto|if|import|inline|int|int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|long|module|mutable|namespace|new|noexcept|nullptr|operator|override|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while)\\b";
 
-        final Prism4j.Grammar cpp = GrammarUtils.extend(
+        final Grammar cpp = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "c"),
                 "cpp",
                 token("class-name",
@@ -58,7 +59,7 @@ public class Prism_cpp {
 
         GrammarUtils.insertBeforeToken(cpp, "operator", token("double-colon", pattern(compile("::"))));
 
-        final Prism4j.Grammar baseClause = GrammarUtils.clone(cpp);
+        final Grammar baseClause = GrammarUtils.clone(cpp);
         GrammarUtils.insertBeforeToken(baseClause, "operator", token("class-name", pattern(compile("\\b[a-z_]\\w*\\b(?!\\s*::)", CASE_INSENSITIVE), false, true)));
 
         GrammarUtils.insertBeforeToken(cpp, "class-name",

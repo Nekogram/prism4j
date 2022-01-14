@@ -12,27 +12,27 @@ abstract class ToString {
     }
 
     @NotNull
-    static String toString(@NotNull Prism4j.Grammar grammar) {
+    static String toString(@NotNull Grammar grammar) {
         final StringBuilder builder = new StringBuilder();
         toString(builder, new CacheImpl(), grammar);
         return builder.toString();
     }
 
     @NotNull
-    static String toString(@NotNull Prism4j.Token token) {
+    static String toString(@NotNull Token token) {
         final StringBuilder builder = new StringBuilder();
         toString(builder, new CacheImpl(), token);
         return builder.toString();
     }
 
     @NotNull
-    static String toString(@NotNull Prism4j.Pattern pattern) {
+    static String toString(@NotNull Pattern pattern) {
         final StringBuilder builder = new StringBuilder();
         toString(builder, new CacheImpl(), pattern);
         return builder.toString();
     }
 
-    private static void toString(@NotNull StringBuilder builder, @NotNull Cache cache, @NotNull Prism4j.Grammar grammar) {
+    private static void toString(@NotNull StringBuilder builder, @NotNull Cache cache, @NotNull Grammar grammar) {
 
         builder
                 .append("Grammar{id=0x")
@@ -47,7 +47,7 @@ abstract class ToString {
             cache.markVisited(grammar);
             builder.append(",tokens=[");
             boolean first = true;
-            for (Prism4j.Token token : grammar.tokens()) {
+            for (Token token : grammar.tokens()) {
                 if (first) {
                     first = false;
                 } else {
@@ -61,7 +61,7 @@ abstract class ToString {
         builder.append('}');
     }
 
-    private static void toString(@NotNull StringBuilder builder, @NotNull Cache cache, @NotNull Prism4j.Token token) {
+    private static void toString(@NotNull StringBuilder builder, @NotNull Cache cache, @NotNull Token token) {
 
         builder
                 .append("Token{id=0x")
@@ -76,7 +76,7 @@ abstract class ToString {
             cache.markVisited(token);
             builder.append(",patterns=[");
             boolean first = true;
-            for (Prism4j.Pattern pattern : token.patterns()) {
+            for (Pattern pattern : token.patterns()) {
                 if (first) {
                     first = false;
                 } else {
@@ -89,7 +89,7 @@ abstract class ToString {
         builder.append('}');
     }
 
-    private static void toString(@NotNull StringBuilder builder, @NotNull Cache cache, @NotNull Prism4j.Pattern pattern) {
+    private static void toString(@NotNull StringBuilder builder, @NotNull Cache cache, @NotNull Pattern pattern) {
 
         builder
                 .append("Pattern{id=0x")
@@ -115,7 +115,7 @@ abstract class ToString {
                 builder.append(",alias=\"").append(pattern.alias()).append('\"');
             }
 
-            final Prism4j.Grammar inside = pattern.inside();
+            final Grammar inside = pattern.inside();
             if (inside != null) {
                 builder.append(",inside=");
                 toString(builder, cache, inside);

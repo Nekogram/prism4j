@@ -8,166 +8,125 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-abstract class Cloner {
+class Cloner {
 
-    @NotNull
-    static Cloner create() {
-        return new Impl();
+    public static Cloner create() {
+        return new Cloner();
     }
 
     @NotNull
-    abstract Prism4j.Grammar clone(@NotNull Prism4j.Grammar grammar);
+    Grammar clone(@NotNull Grammar grammar) {
+        return clone(new Context(), grammar);
+    }
 
     @NotNull
-    abstract Prism4j.Token clone(@NotNull Prism4j.Token token);
+    Token clone(@NotNull Token token) {
+        return clone(new Context(), token);
+    }
 
     @NotNull
-    abstract Prism4j.Pattern clone(@NotNull Prism4j.Pattern pattern);
+    Pattern clone(@NotNull Pattern pattern) {
+        return clone(new Context(), pattern);
+    }
 
-    static class Impl extends Cloner {
+    @NotNull
+    private Grammar clone(@NotNull Context context, @NotNull Grammar grammar) {
 
-        @NotNull
-        @Override
-        Prism4j.Grammar clone(@NotNull Prism4j.Grammar grammar) {
-            return clone(new ContextImpl(), grammar);
-        }
-
-        @NotNull
-        @Override
-        Prism4j.Token clone(@NotNull Prism4j.Token token) {
-            return clone(new ContextImpl(), token);
-        }
-
-        @NotNull
-        @Override
-        Prism4j.Pattern clone(@NotNull Prism4j.Pattern pattern) {
-            return clone(new ContextImpl(), pattern);
-        }
-
-        @NotNull
-        private Prism4j.Grammar clone(@NotNull Context context, @NotNull Prism4j.Grammar grammar) {
-
-            Prism4j.Grammar clone = context.grammar(grammar);
-            if (clone != null) {
-                return clone;
-            }
-
-            final List<Prism4j.Token> tokens = grammar.tokens();
-            final List<Prism4j.Token> out = new ArrayList<>(tokens.size());
-
-            clone = new GrammarImpl(grammar.name(), out);
-            context.save(grammar, clone);
-
-            for (Prism4j.Token token : tokens) {
-                out.add(clone(context, token));
-            }
-
+        Grammar clone = context.grammar(grammar);
+        if (clone != null) {
             return clone;
         }
 
-        @NotNull
-        private Prism4j.Token clone(@NotNull Context context, @NotNull Prism4j.Token token) {
+        final List<Token> tokens = grammar.tokens();
+        final List<Token> out = new ArrayList<>(tokens.size());
 
-            Prism4j.Token clone = context.token(token);
-            if (clone != null) {
-                return clone;
-            }
+        clone = new Grammar(grammar.name(), out);
+        context.save(grammar, clone);
 
-            final List<Prism4j.Pattern> patterns = token.patterns();
-            final List<Prism4j.Pattern> out = new ArrayList<>(patterns.size());
+        for (Token token : tokens) {
+            out.add(clone(context, token));
+        }
 
-            clone = new TokenImpl(token.name(), out);
-            context.save(token, clone);
+        return clone;
+    }
 
-            for (Prism4j.Pattern pattern : patterns) {
-                out.add(clone(context, pattern));
-            }
+    @NotNull
+    private Token clone(@NotNull Context context, @NotNull Token token) {
 
+        Token clone = context.token(token);
+        if (clone != null) {
             return clone;
         }
 
-        @NotNull
-        private Prism4j.Pattern clone(@NotNull Context context, @NotNull Prism4j.Pattern pattern) {
+        final List<Pattern> patterns = token.patterns();
+        final List<Pattern> out = new ArrayList<>(patterns.size());
 
-            Prism4j.Pattern clone = context.pattern(pattern);
-            if (clone != null) {
-                return clone;
-            }
+        clone = new Token(token.name(), out);
+        context.save(token, clone);
 
-            final Prism4j.Grammar inside = pattern.inside();
+        for (Pattern pattern : patterns) {
+            out.add(clone(context, pattern));
+        }
 
-            clone = new PatternImpl(
-                    pattern.regex(),
-                    pattern.lookbehind(),
-                    pattern.greedy(),
-                    pattern.alias(),
-                    inside != null ? clone(context, inside) : null
-            );
+        return clone;
+    }
 
-            context.save(pattern, clone);
+    @NotNull
+    private Pattern clone(@NotNull Context context, @NotNull Pattern pattern) {
 
+        Pattern clone = context.pattern(pattern);
+        if (clone != null) {
             return clone;
         }
 
-        interface Context {
+        final Grammar inside = pattern.inside();
 
-            @Nullable
-            Prism4j.Grammar grammar(@NotNull Prism4j.Grammar origin);
+        clone = new Pattern(
+                pattern.regex(),
+                pattern.lookbehind(),
+                pattern.greedy(),
+                pattern.alias(),
+                inside != null ? clone(context, inside) : null
+        );
 
-            @Nullable
-            Prism4j.Token token(@NotNull Prism4j.Token origin);
+        context.save(pattern, clone);
 
-            @Nullable
-            Prism4j.Pattern pattern(@NotNull Prism4j.Pattern origin);
+        return clone;
+    }
 
+    private static class Context {
 
-            void save(@NotNull Prism4j.Grammar origin, @NotNull Prism4j.Grammar clone);
+        private final Map<Integer, Object> cache = new HashMap<>(3);
 
-            void save(@NotNull Prism4j.Token origin, @NotNull Prism4j.Token clone);
-
-            void save(@NotNull Prism4j.Pattern origin, @NotNull Prism4j.Pattern clone);
+        private static int key(@NotNull Object o) {
+            return System.identityHashCode(o);
         }
 
-        private static class ContextImpl implements Context {
+        @Nullable
+        public Grammar grammar(@NotNull Grammar origin) {
+            return (Grammar) cache.get(key(origin));
+        }
 
-            private final Map<Integer, Object> cache = new HashMap<>(3);
+        @Nullable
+        public Token token(@NotNull Token origin) {
+            return (Token) cache.get(key(origin));
+        }
 
-            private static int key(@NotNull Object o) {
-                return System.identityHashCode(o);
-            }
+        @Nullable
+        public Pattern pattern(@NotNull Pattern origin) {
+            return (Pattern) cache.get(key(origin));
+        }
 
-            @Nullable
-            @Override
-            public Prism4j.Grammar grammar(@NotNull Prism4j.Grammar origin) {
-                return (Prism4j.Grammar) cache.get(key(origin));
-            }
+        public void save(@NotNull Grammar origin, @NotNull Grammar clone) {
+            cache.put(key(origin), clone);
+        }
 
-            @Nullable
-            @Override
-            public Prism4j.Token token(@NotNull Prism4j.Token origin) {
-                return (Prism4j.Token) cache.get(key(origin));
-            }
+        public void save(@NotNull Token origin, @NotNull Token clone) {
+            cache.put(key(origin), clone);
+        }
 
-            @Nullable
-            @Override
-            public Prism4j.Pattern pattern(@NotNull Prism4j.Pattern origin) {
-                return (Prism4j.Pattern) cache.get(key(origin));
-            }
-
-            @Override
-            public void save(@NotNull Prism4j.Grammar origin, @NotNull Prism4j.Grammar clone) {
-                cache.put(key(origin), clone);
-            }
-
-            @Override
-            public void save(@NotNull Prism4j.Token origin, @NotNull Prism4j.Token clone) {
-                cache.put(key(origin), clone);
-            }
-
-            @Override
-            public void save(@NotNull Prism4j.Pattern origin, @NotNull Prism4j.Pattern clone) {
-                cache.put(key(origin), clone);
-            }
+        public void save(@NotNull Pattern origin, @NotNull Pattern clone) {
+            cache.put(key(origin), clone);
         }
     }
 }

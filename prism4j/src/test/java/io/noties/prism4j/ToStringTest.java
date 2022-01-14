@@ -10,7 +10,7 @@ public class ToStringTest {
         final GrammarLocator locator = new DefaultGrammarLocator();
         final Prism4j prism4j = new Prism4j(locator);
 
-        Prism4j.Grammar grammar;
+        Grammar grammar;
 
         for (String language : locator.languages()) {
             grammar = prism4j.grammar(language);

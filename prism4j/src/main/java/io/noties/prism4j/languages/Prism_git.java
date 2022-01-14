@@ -1,5 +1,6 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ import static java.util.regex.Pattern.compile;
 public class Prism_git {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
         return grammar("git",
                 token("comment", pattern(compile("^#.*", MULTILINE))),
                 token("deleted", pattern(compile("^[-–].*", MULTILINE))),

@@ -251,7 +251,7 @@ static String createRealLanguageName(Map<String, LanguageInfo> languages) {
 static String createObtainGrammar(Map<String, LanguageInfo> languages) {
     final StringBuilder builder = new StringBuilder()
     builder
-            .append("final Prism4j.Grammar grammar;\n")
+            .append("final Grammar grammar;\n")
             .append("switch(name) {\n")
     Ix.from(languages.keySet())
             .orderBy(new Comparator<String>() {
@@ -298,7 +298,7 @@ static String createTriggerModify(Map<String, LanguageInfo> languages) {
     }
 
     final StringBuilder builder = new StringBuilder()
-    builder.append("Prism4j.Grammar grammar = null;\n")
+    builder.append("Grammar grammar = null;\n")
     builder.append("switch(name){\n")
     for (Map.Entry<String, List<LanguageInfo>> entry : map.entrySet()) {
         //if (entry.getValue().modify != null
@@ -338,7 +338,7 @@ static String createLanguages(Map<String, LanguageInfo> languages) {
         }
     })
 
-    builder.append("final HashSet<String> set = new HashSet<String>(")
+    builder.append("final HashSet<String> set = new HashSet<>(")
             .append(list.size())
             .append(");\n")
 

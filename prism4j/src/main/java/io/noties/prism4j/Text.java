@@ -2,11 +2,11 @@ package io.noties.prism4j;
 
 import org.jetbrains.annotations.NotNull;
 
-public class TextImpl implements Prism4j.Text {
+public class Text implements Prism4j.Node {
 
     private final String literal;
 
-    public TextImpl(@NotNull String literal) {
+    public Text(@NotNull String literal) {
         this.literal = literal;
     }
 
@@ -21,7 +21,6 @@ public class TextImpl implements Prism4j.Text {
     }
 
     @NotNull
-    @Override
     public String literal() {
         return literal;
     }

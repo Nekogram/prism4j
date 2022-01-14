@@ -1,5 +1,6 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +11,7 @@ import static java.util.regex.Pattern.*;
 public class Prism_yaml {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
         return grammar("yaml",
                 token("scalar", pattern(
                         compile("([\\-:]\\s*(?:![^\\s]+)?[ \\t]*[|>])[ \\t]*(?:((?:\\r?\\n|\\r)[ \\t]+)[^\\r\\n]+(?:\\2[^\\r\\n]+)*)"),

@@ -1,7 +1,9 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Modify;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +23,7 @@ public abstract class Prism_css {
     }
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar grammar = grammar(
                 "css",

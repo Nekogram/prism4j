@@ -1,6 +1,8 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
+import io.noties.prism4j.Pattern;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +15,7 @@ import static java.util.regex.Pattern.compile;
 public class Prism_dart {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Pattern[] keywords = {
                 pattern(compile("\\b(?:async|sync|yield)\\*")),
@@ -21,7 +23,7 @@ public class Prism_dart {
         };
         final Grammar classNameInside = grammar("inside", token("namespace", pattern(compile("^[a-z]\\w*(?:\\s*\\.\\s*[a-z]\\w*)*(?:\\s*\\.)?"), false, false, null, grammar("inside", token("punctuation", pattern(compile("\\.")))))));
         final Pattern className = pattern(compile("(^|[^\\w.])(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"), true, false, null, classNameInside);
-        final Prism4j.Grammar dart = GrammarUtils.extend(
+        final Grammar dart = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "dart",
                 token("class-name",

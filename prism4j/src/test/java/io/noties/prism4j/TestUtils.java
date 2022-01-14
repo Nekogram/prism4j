@@ -87,13 +87,13 @@ public abstract class TestUtils {
         // root array
         final JsonArray array = new JsonArray();
         for (Prism4j.Node node : nodes) {
-            if (node instanceof Prism4j.Text) {
-                final String literal = ((Prism4j.Text) node).literal();
+            if (node instanceof Text) {
+                final String literal = ((Text) node).literal();
                 if (literal.trim().length() != 0) {
                     array.add(literal);
                 }
             } else {
-                final Prism4j.Syntax syntax = (Prism4j.Syntax) node;
+                final Syntax syntax = (Syntax) node;
                 final JsonArray inner = new JsonArray();
                 inner.add(syntax.type());
                 if (syntax.tokenized()) {

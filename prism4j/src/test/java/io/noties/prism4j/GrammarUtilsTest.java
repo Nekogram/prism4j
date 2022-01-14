@@ -21,7 +21,7 @@ public class GrammarUtilsTest {
         Ix.from(grammarLocator.languages())
                 .orderBy(s -> s)
                 .foreach(s -> {
-                    final Prism4j.Grammar grammar = prism4j.grammar(s);
+                    final Grammar grammar = prism4j.grammar(s);
                     if (grammar != null) {
                         System.err.printf("cloning language: %s%n", s);
                         GrammarUtils.clone(grammar);

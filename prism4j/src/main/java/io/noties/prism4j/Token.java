@@ -4,25 +4,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class TokenImpl implements Prism4j.Token {
+public class Token {
 
     private final String name;
-    private final List<Prism4j.Pattern> patterns;
+    private final List<Pattern> patterns;
 
-    public TokenImpl(@NotNull String name, @NotNull List<Prism4j.Pattern> patterns) {
+    public Token(@NotNull String name, @NotNull List<Pattern> patterns) {
         this.name = name;
         this.patterns = patterns;
     }
 
     @NotNull
-    @Override
     public String name() {
         return name;
     }
 
     @NotNull
-    @Override
-    public List<Prism4j.Pattern> patterns() {
+    public List<Pattern> patterns() {
         return patterns;
     }
 

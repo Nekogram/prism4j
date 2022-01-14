@@ -25,32 +25,32 @@ public class Prism4j {
      */
     @NotNull
     public static Grammar grammar(@NotNull String name, @NotNull List<Token> tokens) {
-        return new GrammarImpl(name, tokens);
+        return new Grammar(name, tokens);
     }
 
     @NotNull
     public static Grammar grammar(@NotNull String name, Token... tokens) {
-        return new GrammarImpl(name, ArrayUtils.toList(tokens));
+        return new Grammar(name, ArrayUtils.toList(tokens));
     }
 
     @NotNull
     public static Token token(@NotNull String name, @NotNull List<Pattern> patterns) {
-        return new TokenImpl(name, patterns);
+        return new Token(name, patterns);
     }
 
     @NotNull
     public static Token token(@NotNull String name, Pattern... patterns) {
-        return new TokenImpl(name, ArrayUtils.toList(patterns));
+        return new Token(name, ArrayUtils.toList(patterns));
     }
 
     @NotNull
     public static Pattern pattern(@NotNull java.util.regex.Pattern regex) {
-        return new PatternImpl(regex, false, false, null, null);
+        return new Pattern(regex, false, false, null, null);
     }
 
     @NotNull
     public static Pattern pattern(@NotNull java.util.regex.Pattern regex, boolean lookbehind) {
-        return new PatternImpl(regex, lookbehind, false, null, null);
+        return new Pattern(regex, lookbehind, false, null, null);
     }
 
     @NotNull
@@ -58,7 +58,7 @@ public class Prism4j {
             @NotNull java.util.regex.Pattern regex,
             boolean lookbehind,
             boolean greedy) {
-        return new PatternImpl(regex, lookbehind, greedy, null, null);
+        return new Pattern(regex, lookbehind, greedy, null, null);
     }
 
     @NotNull
@@ -67,7 +67,7 @@ public class Prism4j {
             boolean lookbehind,
             boolean greedy,
             @Nullable String alias) {
-        return new PatternImpl(regex, lookbehind, greedy, alias, null);
+        return new Pattern(regex, lookbehind, greedy, alias, null);
     }
 
     @NotNull
@@ -77,7 +77,7 @@ public class Prism4j {
             boolean greedy,
             @Nullable String alias,
             @Nullable Grammar inside) {
-        return new PatternImpl(regex, lookbehind, greedy, alias, inside);
+        return new Pattern(regex, lookbehind, greedy, alias, inside);
     }
 
     private static boolean isSyntaxNode(@NotNull Node node) {
@@ -91,7 +91,7 @@ public class Prism4j {
     @NotNull
     public List<Node> tokenize(@NotNull String text, @NotNull Grammar grammar) {
         final List<Node> entries = new ArrayList<>(3);
-        entries.add(new TextImpl(text));
+        entries.add(new Text(text));
         if (text.length() > 0) {
             matchGrammar(text, entries, grammar, 0, 0, false, null);
         }
@@ -226,7 +226,7 @@ public class Prism4j {
                         final String before = str.substring(0, from);
                         i += 1;
                         position += before.length();
-                        entries.add(i2++, new TextImpl(before));
+                        entries.add(i2++, new Text(before));
                     }
 
                     final List<? extends Node> tokenEntries;
@@ -235,10 +235,10 @@ public class Prism4j {
                     if (hasInside) {
                         tokenEntries = tokenize(match, inside);
                     } else {
-                        tokenEntries = Collections.singletonList(new TextImpl(match));
+                        tokenEntries = Collections.singletonList(new Text(match));
                     }
 
-                    entries.add(i2++, new SyntaxImpl(
+                    entries.add(i2++, new Syntax(
                             token.name(),
                             tokenEntries,
                             pattern.alias(),
@@ -250,7 +250,7 @@ public class Prism4j {
                     // important thing here (famous off-by one error) to check against full length (not `length - 1`)
                     if (to < str.length()) {
                         final String after = str.substring(to);
-                        entries.add(i2, new TextImpl(after));
+                        entries.add(i2, new Text(after));
                     }
 
                     if (deleteCount != 1) {
@@ -263,42 +263,6 @@ public class Prism4j {
                 }
             }
         }
-    }
-
-
-    public interface Grammar {
-
-        @NotNull
-        String name();
-
-        // should mention that returned array is mutable
-        @NotNull
-        List<Token> tokens();
-    }
-
-    public interface Token {
-
-        @NotNull
-        String name();
-
-        @NotNull
-        List<Pattern> patterns();
-    }
-
-    public interface Pattern {
-
-        @NotNull
-        java.util.regex.Pattern regex();
-
-        boolean lookbehind();
-
-        boolean greedy();
-
-        @Nullable
-        String alias();
-
-        @Nullable
-        Grammar inside();
     }
 
     /**
@@ -321,39 +285,6 @@ public class Prism4j {
          * @return a boolean indicating if this node is an instance of {@link Syntax}
          */
         boolean isSyntax();
-    }
-
-    public interface Text extends Node {
-
-        @NotNull
-        String literal();
-    }
-
-    public interface Syntax extends Node {
-
-        @NotNull
-        String type();
-
-        @NotNull
-        List<? extends Node> children();
-
-        @Nullable
-        String alias();
-
-        @NotNull
-        String matchedString();
-
-        boolean greedy();
-
-        /**
-         * The main aim for this flag is to be able to properly construct simplified
-         * array of tokens during tests. If it\'s set to true, then children will be
-         * inside another array. Otherwise they will be _flattened_ into the same array
-         * as token type information
-         *
-         * @return a flag indicating if children of this node were tokenized
-         */
-        boolean tokenized();
     }
 
     /**

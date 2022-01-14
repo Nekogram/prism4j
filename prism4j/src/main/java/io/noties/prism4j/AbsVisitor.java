@@ -10,15 +10,15 @@ public abstract class AbsVisitor implements Prism4j.Visitor {
     public void visit(@NotNull List<? extends Prism4j.Node> nodes) {
         for (Prism4j.Node node : nodes) {
             if (node.isSyntax()) {
-                visitSyntax((Prism4j.Syntax) node);
+                visitSyntax((Syntax) node);
             } else {
-                visitText((Prism4j.Text) node);
+                visitText((Text) node);
             }
         }
     }
 
-    protected abstract void visitText(@NotNull Prism4j.Text text);
+    protected abstract void visitText(@NotNull Text text);
 
     // do not forget to call visit(syntax.children()) inside
-    protected abstract void visitSyntax(@NotNull Prism4j.Syntax syntax);
+    protected abstract void visitSyntax(@NotNull Syntax syntax);
 }

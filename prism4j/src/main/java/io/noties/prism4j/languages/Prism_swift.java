@@ -1,7 +1,9 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +19,7 @@ import static java.util.regex.Pattern.compile;
 public class Prism_swift {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar swift = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),

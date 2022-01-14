@@ -1,5 +1,6 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.annotations.Extend;
@@ -15,9 +16,9 @@ import static java.util.regex.Pattern.compile;
 public class Prism_groovy {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Prism4j.Grammar groovy = GrammarUtils.extend(
+        final Grammar groovy = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "groovy",
                 token("keyword", pattern(compile("\\b(?:as|def|in|abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|trait|transient|try|void|volatile|while)\\b"))),

@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
-import io.noties.prism4j.GrammarUtils;
-import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.*;
 import io.noties.prism4j.annotations.Modify;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +14,7 @@ import static java.util.regex.Pattern.compile;
 public class Prism_css_extras {
 
     @Nullable
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar css = prism4j.grammar("css");
 

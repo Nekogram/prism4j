@@ -4,25 +4,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GrammarImpl implements Prism4j.Grammar {
+public class Grammar {
 
     private final String name;
-    private final List<Prism4j.Token> tokens;
+    private final List<Token> tokens;
 
-    public GrammarImpl(@NotNull String name, @NotNull List<Prism4j.Token> tokens) {
+    public Grammar(@NotNull String name, @NotNull List<Token> tokens) {
         this.name = name;
         this.tokens = tokens;
     }
 
     @NotNull
-    @Override
     public String name() {
         return name;
     }
 
     @NotNull
-    @Override
-    public List<Prism4j.Token> tokens() {
+    public List<Token> tokens() {
         return tokens;
     }
 

@@ -1,7 +1,9 @@
 package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +17,7 @@ import static java.util.regex.Pattern.*;
 public class Prism_c {
 
     @NotNull
-    public static Prism4j.Grammar create(@NotNull Prism4j prism4j) {
+    public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Token commentToken = token("comment", pattern(compile("//(?:[^\\r\\n\\\\]|\\\\(?:\\r\\n?|\\n|(?![\\r\\n])))*|/\\*[\\s\\S]*?(?:\\*/|$)"), false, true));
         final Grammar c = GrammarUtils.extend(
