@@ -32,7 +32,7 @@ public class Prism_javascript {
                         null,
                         grammar("inside", token("punctuation", pattern(compile("[.\\\\]"))))
                 ), pattern(compile("(^|[^$\\w\\xA0-\\uFFFF])(?!\\s)[_$A-Z\\xA0-\\uFFFF](?:(?!\\s)[$\\w\\xA0-\\uFFFF])*(?=\\.(?:prototype|constructor))"), true)),
-                token("keyword", pattern(compile("((?:^|})\\s*)catch\\b"), true), pattern(compile("(^|[^.]|\\.\\.\\.\\s*)\\b(?:as|assert(?=\\s*\\{)|async(?=\\s*(?:function\\b|\\(|[$\\w\\xA0-\\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\\s*(?:\\{|$))|for|from(?=\\s*(?:['\"]|$))|function|(?:get|set)(?=\\s*(?:[#\\[$\\w\\xA0-\\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\\b"), true)),
+                token("keyword", pattern(compile("((?:^|\\})\\s*)catch\\b"), true), pattern(compile("(^|[^.]|\\.\\.\\.\\s*)\\b(?:as|assert(?=\\s*\\{)|async(?=\\s*(?:function\\b|\\(|[$\\w\\xA0-\\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\\s*(?:\\{|$))|for|from(?=\\s*(?:['\"]|$))|function|(?:get|set)(?=\\s*(?:[#\\[$\\w\\xA0-\\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\\b"), true)),
                 token("function", pattern(compile("#?(?!\\s)[_$a-zA-Z\\xA0-\\uFFFF](?:(?!\\s)[$\\w\\xA0-\\uFFFF])*(?=\\s*(?:\\.\\s*(?:apply|bind|call)\\s*)?\\()"))),
                 token("number", pattern(compile("(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])"), true)),
                 token("operator", pattern(compile("--|\\+\\+|\\*\\*=?|=>|&&=?|\\|\\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\\.{3}|\\?\\?=?|\\?\\.?|[~:]")))
@@ -40,7 +40,7 @@ public class Prism_javascript {
 
         GrammarUtils.insertBeforeToken(js, "keyword",
                 token("regex", pattern(
-                        compile("((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*]|\\\\.|[^/\\\\\\[\\r\\n])+/[dgimyus]{0,7}(?=(?:\\s|\\/\\*(?:[^*]|\\*(?!\\/))*\\*\\/)*(?:$|[\\r\\n,.;:})\\]]|//))"),
+                        compile("((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*]|\\\\.|[^/\\\\\\[\\r\\n])+/[dgimyus]{0,7}(?=(?:\\s|\\/\\*(?:[^*]|\\*(?!\\/))*\\*\\/)*(?:$|[\\r\\n,.;:\\})\\]]|//))"),
                         true,
                         true,
                         null,
@@ -75,7 +75,7 @@ public class Prism_javascript {
                 token(
                         "template-string",
                         pattern(
-                                compile("`(?:\\\\[\\s\\S]|\\$\\{(?:[^{}]|\\{(?:[^{}]|\\{[^}]*\\})*\\})+\\}|(?!\\$\\{)[^\\\\`])*`"),
+                                compile("`(?:\\\\[\\s\\S]|\\$\\{(?:[^{\\}]|\\{(?:[^{\\}]|\\{[^\\}]*\\})*\\})+\\}|(?!\\$\\{)[^\\\\`])*`"),
                                 false,
                                 true,
                                 null,
@@ -96,13 +96,13 @@ public class Prism_javascript {
         final Grammar insideInterpolation;
         {
             final List<Token> tokens = new ArrayList<>(js.tokens().size() + 1);
-            tokens.add(token("interpolation-punctuation", pattern(compile("^\\$\\{|}$"), false, false, "punctuation")));
+            tokens.add(token("interpolation-punctuation", pattern(compile("^\\$\\{|\\}$"), false, false, "punctuation")));
             tokens.addAll(js.tokens());
             insideInterpolation = grammar("inside", tokens);
         }
 
         interpolation.patterns().add(
-                pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$\\{(?:[^{}]|\\{(?:[^{}]|\\{[^}]*})*})+}"), true, false, null, insideInterpolation)
+                pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$\\{(?:[^{\\}]|\\{(?:[^{\\}]|\\{[^\\}]*\\})*\\})+\\}"), true, false, null, insideInterpolation)
         );
 
         final Grammar markup = prism4j.grammar("markup");
@@ -110,7 +110,7 @@ public class Prism_javascript {
             GrammarUtils.insertBeforeToken(markup, "tag",
                     token(
                             "script", pattern(
-                                    compile("(<script[\\s\\S]*?>)[\\s\\S]*?(?=<\\/script>)", CASE_INSENSITIVE),
+                                    compile("(<script[\\s\\S]*?>)[\\s\\S]*?(?=</script>)", CASE_INSENSITIVE),
                                     true,
                                     true,
                                     "language-javascript",

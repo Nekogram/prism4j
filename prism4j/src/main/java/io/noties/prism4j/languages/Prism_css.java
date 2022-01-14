@@ -45,7 +45,7 @@ public abstract class Prism_css {
                         "url",
                         pattern(compile("url\\((?:([\"'])(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1|.*?)\\)", CASE_INSENSITIVE))
                 ),
-                token("selector", pattern(compile("[^{}\\s][^{};]*?(?=\\s*\\{)"))),
+                token("selector", pattern(compile("[^{\\}\\s][^{\\};]*?(?=\\s*\\{)"))),
                 token(
                         "string",
                         pattern(compile("(\"|')(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1"), false, true)
@@ -56,7 +56,7 @@ public abstract class Prism_css {
                 ),
                 token("important", pattern(compile("\\B!important\\b", CASE_INSENSITIVE))),
                 token("function", pattern(compile("[-a-z0-9]+(?=\\()", CASE_INSENSITIVE))),
-                token("punctuation", pattern(compile("[(){};:]")))
+                token("punctuation", pattern(compile("[(){\\};:]")))
         );
 
         // can we maybe add some helper to specify simplified location?

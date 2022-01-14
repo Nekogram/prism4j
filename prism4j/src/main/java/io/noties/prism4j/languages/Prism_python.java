@@ -44,7 +44,7 @@ public class Prism_python {
                         compile("(?:\\b(?=\\d)|\\B(?=\\.))(?:0[bo])?(?:(?:\\d|0x[\\da-f])[\\da-f]*\\.?\\d*|\\.\\d+)(?:e[+-]?\\d+)?j?\\b", CASE_INSENSITIVE)
                 )),
                 token("operator", pattern(compile("[-+%=]=?|!=|\\*\\*?=?|\\/\\/?=?|<[<=>]?|>[=>]?|[&|^~]|\\b(?:or|and|not)\\b"))),
-                token("punctuation", pattern(compile("[{}\\[\\];(),.:]")))
+                token("punctuation", pattern(compile("[{\\}\\[\\];(),.:]")))
         );
     }
 }

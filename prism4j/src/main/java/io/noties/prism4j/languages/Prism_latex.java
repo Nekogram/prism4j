@@ -47,11 +47,11 @@ public class Prism_latex {
                         )
                 ),
                 token("keyword", pattern(
-                        compile("(\\\\(?:begin|end|ref|cite|label|usepackage|documentclass)(?:\\[[^\\]]+\\])?\\{)[^}]+(?=\\})"),
+                        compile("(\\\\(?:begin|end|ref|cite|label|usepackage|documentclass)(?:\\[[^\\]]+\\])?\\{)[^\\}]+(?=\\})"),
                         true
                 )),
                 token("url", pattern(
-                        compile("(\\\\url\\{)[^}]+(?=\\})"),
+                        compile("(\\\\url\\{)[^\\}]+(?=\\})"),
                         true
                 )),
                 token("headline", pattern(
@@ -66,7 +66,7 @@ public class Prism_latex {
                         false,
                         "selector"
                 )),
-                token("punctuation", pattern(compile("[\\[\\]{}&]")))
+                token("punctuation", pattern(compile("[\\[\\]{\\}&]")))
         );
     }
 }

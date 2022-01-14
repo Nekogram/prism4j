@@ -30,10 +30,10 @@ public class Prism_makefile {
                         false,
                         null,
                         grammar("inside",
-                                token("variable", pattern(compile("\\$+(?:[^(){}:#=\\s]+|(?=[({]))")))
+                                token("variable", pattern(compile("\\$+(?:[^(){\\}:#=\\s]+|(?=[({]))")))
                         )
                 )),
-                token("variable", pattern(compile("\\$+(?:[^(){}:#=\\s]+|\\([@*%<^+?][DF]\\)|(?=[({]))"))),
+                token("variable", pattern(compile("\\$+(?:[^(){\\}:#=\\s]+|\\([@*%<^+?][DF]\\)|(?=[({]))"))),
                 token("keyword",
                         pattern(compile("-include\\b|\\b(?:define|else|endef|endif|export|ifn?def|ifn?eq|include|override|private|sinclude|undefine|unexport|vpath)\\b")),
                         pattern(
@@ -42,7 +42,7 @@ public class Prism_makefile {
                         )
                 ),
                 token("operator", pattern(compile("(?:::|[?:+!])?=|[|@]"))),
-                token("punctuation", pattern(compile("[:;(){}]")))
+                token("punctuation", pattern(compile("[:;(){\\}]")))
         );
     }
 }

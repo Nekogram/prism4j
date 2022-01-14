@@ -42,7 +42,7 @@ public class Prism_groovy {
                         )
                 ),
                 token("punctuation",
-                        pattern(compile("\\.+|[{}\\[\\];(),:$]"))
+                        pattern(compile("\\.+|[{\\}\\[\\];(),:$]"))
                 )
         );
 

@@ -69,8 +69,8 @@ public class Prism_kotlin {
 
         GrammarUtils.insertBeforeToken(kotlin, "string",
                 token("string-literal",
-                        pattern(compile("\"\"\"(?:[^$]|\\$(?:(?!\\{)|\\{[^{}]*\\}))*?\"\"\""), false, false, "multiline", grammar("inside", token("interpolation", pattern(compile("\\$(?:[a-z_]\\w*|\\{[^{}]*\\})", Pattern.CASE_INSENSITIVE), false, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+"))))),
-                        pattern(compile("\"(?:[^\"\\\\\\r\\n$]|\\\\.|\\$(?:(?!\\{)|\\{[^{}]*\\}))*\""), false, false, "singleline", grammar("inside", token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:[a-z_]\\w*|\\{[^{}]*\\})", Pattern.CASE_INSENSITIVE), true, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+")))))
+                        pattern(compile("\"\"\"(?:[^$]|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*?\"\"\""), false, false, "multiline", grammar("inside", token("interpolation", pattern(compile("\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), false, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+"))))),
+                        pattern(compile("\"(?:[^\"\\\\\\r\\n$]|\\\\.|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*\""), false, false, "singleline", grammar("inside", token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), true, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+")))))
                 ),
                 token("char", pattern(compile("'(?:[^'\\\\\\r\\n]|\\\\(?:.|u[a-fA-F0-9]{0,4}))'"), false, true))
         );
@@ -84,31 +84,6 @@ public class Prism_kotlin {
         GrammarUtils.insertBeforeToken(kotlin, "function",
                 token("label", pattern(compile("\\b\\w+@|@\\w+\\b"), false, false, "symbol"))
         );
-
-        /*final Token string = GrammarUtils.findToken(kotlin, "string");
-        final Token rawString = GrammarUtils.findToken(kotlin, "raw-string");
-
-        if (string != null
-                && rawString != null) {
-
-            final Pattern stringPattern = string.patterns().get(0);
-            final Pattern rawStringPattern = rawString.patterns().get(0);
-
-            string.patterns().add(
-                    pattern(stringPattern.regex(), stringPattern.lookbehind(), stringPattern.greedy(), stringPattern.alias(), interpolationInside)
-            );
-
-            rawString.patterns().add(
-                    pattern(rawStringPattern.regex(), rawStringPattern.lookbehind(), rawStringPattern.greedy(), rawStringPattern.alias(), interpolationInside)
-            );
-
-            string.patterns().remove(0);
-            rawString.patterns().remove(0);
-
-        } else {
-            throw new RuntimeException("Unexpected state, cannot find `string` and/or `raw-string` tokens " +
-                    "inside kotlin grammar");
-        }*/
 
         return kotlin;
     }

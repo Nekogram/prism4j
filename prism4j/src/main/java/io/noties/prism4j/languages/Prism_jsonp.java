@@ -14,7 +14,7 @@ public class Prism_jsonp {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
         Grammar grammar = GrammarUtils.extend(GrammarUtils.require(prism4j, "clike"), "json",
-                token("puctuation", pattern(compile("[{}\\[\\]();,.]"))));
+                token("puctuation", pattern(compile("[{\\}\\[\\]();,.]"))));
         GrammarUtils.insertBeforeToken(grammar, "punctuation",
                 token("function", pattern(compile("[_$a-zA-Z\\xA0-\\uFFFF][$\\w\\xA0-\\uFFFF]*(?=\\s*\\()"))));
         return grammar;

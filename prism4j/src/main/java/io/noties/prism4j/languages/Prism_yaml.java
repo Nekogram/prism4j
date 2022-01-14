@@ -21,7 +21,7 @@ public class Prism_yaml {
                 )),
                 token("comment", pattern(compile("#.*"))),
                 token("key", pattern(
-                        compile("(\\s*(?:^|[:\\-,\\[{\\r\\n?])[ \\t]*(?:![^\\s]+)?[ \\t]*)[^\\r\\n{\\[\\]},#\\s]+?(?=\\s*:\\s)"),
+                        compile("(\\s*(?:^|[:\\-,\\[{\\r\\n?])[ \\t]*(?:![^\\s]+)?[ \\t]*)[^\\r\\n{\\[\\]\\},#\\s]+?(?=\\s*:\\s)"),
                         true,
                         false,
                         "atrule"
@@ -61,7 +61,7 @@ public class Prism_yaml {
                 )),
                 token("tag", pattern(compile("![^\\s]+"))),
                 token("important", pattern(compile("[&*][\\w]+"))),
-                token("punctuation", pattern(compile("---|[:\\[\\]{}\\-,|>?]|\\.\\.\\.")))
+                token("punctuation", pattern(compile("---|[:\\[\\]{\\}\\-,|>?]|\\.\\.\\.")))
         );
     }
 }

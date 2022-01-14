@@ -63,7 +63,7 @@ public class Prism_cpp {
         GrammarUtils.insertBeforeToken(baseClause, "operator", token("class-name", pattern(compile("\\b[a-z_]\\w*\\b(?!\\s*::)", CASE_INSENSITIVE), false, true)));
 
         GrammarUtils.insertBeforeToken(cpp, "class-name",
-                token("base-clause", pattern(compile("(\\b(?:class|struct)\\s+\\w+\\s*:\\s*)[^;{}\"']+?(?=\\s*[;{])"), true, true, null, baseClause))
+                token("base-clause", pattern(compile("(\\b(?:class|struct)\\s+\\w+\\s*:\\s*)[^;{\\}\"']+?(?=\\s*[;{])"), true, true, null, baseClause))
         );
 
         return cpp;

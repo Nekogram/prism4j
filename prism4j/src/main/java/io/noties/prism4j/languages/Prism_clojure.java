@@ -17,7 +17,7 @@ public class Prism_clojure {
                 token("comment", pattern(compile(";+.*"), false, true)),
                 token("string", pattern(compile("\"(?:[^\"\\\\]|\\\\.)*\""), false, true)),
                 token("char", pattern(compile("\\\\\\w+"))),
-                token("symbol", pattern(compile("(^|[\\s()\\[\\]{},])::?[\\w*+!?'<>=/.-]+"), true)),
+                token("symbol", pattern(compile("(^|[\\s()\\[\\]{\\},])::?[\\w*+!?'<>=/.-]+"), true)),
                 token("operator", pattern(compile("(?:::|[:|'])\\b[a-z][\\w*+!?-]*\\b", CASE_INSENSITIVE))),
                 token("keyword",
                         pattern(
@@ -29,7 +29,7 @@ public class Prism_clojure {
                 token("number", pattern(compile("(^|[^\\w$@])(?:\\d+(?:[/.]\\d+)?(?:e[+-]?\\d+)?|0x[a-f0-9]+|[1-9]\\d?r[a-z0-9]+)[lmn]?(?![\\w$@])", CASE_INSENSITIVE), true)),
                 token("function", pattern(compile("((?:^|[^'])\\()[\\w*+!?'<>=/.-]+(?=[\\s)]|$)"), true)),
                 token("operator", pattern(compile("[#@^`~]"))),
-                token("punctuation", pattern(compile("[{}\\[\\](),]")))
+                token("punctuation", pattern(compile("[{\\}\\[\\](),]")))
         );
     }
 }

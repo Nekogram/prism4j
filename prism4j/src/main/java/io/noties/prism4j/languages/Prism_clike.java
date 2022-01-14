@@ -49,7 +49,7 @@ public abstract class Prism_clike {
                         pattern(compile("\\b0x[\\da-f]+\\b|(?:\\b\\d+(?:\\.\\d*)?|\\B\\.\\d+)(?:e[+-]?\\d+)?", Pattern.CASE_INSENSITIVE))
                 ),
                 token("operator", pattern(compile("[<>]=?|[!=]=?=?|--?|\\+\\+?|&&?|\\|\\|?|[?*/~^%]"))),
-                token("punctuation", pattern(compile("[{}\\[\\];(),.:]")))
+                token("punctuation", pattern(compile("[{\\}\\[\\];(),.:]")))
         );
     }
 }

@@ -36,7 +36,7 @@ public class Prism_dart {
 
         GrammarUtils.insertBeforeToken(dart, "string",
                 token("string-literal", pattern(compile("r?(?:(\"\"\"|''')[\\s\\S]*?\\1|([\"'])(?:\\\\.|(?!\\2)[^\\\\\\r\\n])*\\2(?!\\2))"), false, true, null, grammar("inside",
-                        token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:\\w+|\\{(?:[^{}]|\\{[^{}]*\\})*\\})"), true, false, null,
+                        token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:\\w+|\\{(?:[^{\\}]|\\{[^{}]*\\})*\\})"), true, false, null,
                                 grammar("inside", token("punctuation", pattern(compile("^\\$\\{?|\\}$"))),
                                         token("expression", pattern(compile("[\\s\\S]+"), false, false, null, dart))
                                 ))), token("string", pattern(compile("[\\s\\S]+"))))))

@@ -21,7 +21,7 @@ public class Prism_json {
                 token("string", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?!\\s*:)"), false, true)),
                 token("comment", pattern(compile("//.*|/\\*[\\s\\S]*?(?:\\*/|$)"), false, true)),
                 token("number", pattern(compile("-?\\b\\d+(?:\\.\\d+)?(?:e[+-]?\\d+)?\\b", CASE_INSENSITIVE))),
-                token("punctuation", pattern(compile("[{}\\[\\],]"))),
+                token("punctuation", pattern(compile("[{\\}\\[\\],]"))),
                 // not sure about this one...
                 token("operator", pattern(compile(":"))),
                 token("boolean", pattern(compile("\\b(?:true|false)\\b"))),

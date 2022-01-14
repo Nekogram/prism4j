@@ -45,12 +45,12 @@ public class Prism_scala {
 
         GrammarUtils.insertBeforeToken(scala, "triple-quoted-string",
                 token("string-interpolation",
-                        pattern(compile("\\b[a-z]\\w*(?:\"\"\"(?:[^$]|\\$(?:[^{]|\\{(?:[^{}]|\\{[^{}]*\\})*\\}))*?\"\"\"|\"(?:[^$\"\\r\\n]|\\$(?:[^{]|\\{(?:[^{}]|\\{[^{}]*\\})*\\}))*\")", CASE_INSENSITIVE),
+                        pattern(compile("\\b[a-z]\\w*(?:\"\"\"(?:[^$]|\\$(?:[^{]|\\{(?:[^{\\}]|\\{[^{\\}]*\\})*\\}))*?\"\"\"|\"(?:[^$\"\\r\\n]|\\$(?:[^{]|\\{(?:[^{\\}]|\\{[^{}]*\\})*\\}))*\")", CASE_INSENSITIVE),
                                 false, true, null, grammar("inside",
                                         token("id", pattern(compile("^\\w+"), false, true, "function")),
                                         token("escape", pattern(compile("\\\\\\$\"|\\$[$\"]"), false, true, "symbol")),
                                         token("interpolation",
-                                                pattern(compile("\\$(?:\\w+|\\{(?:[^{}]|\\{[^{}]*\\})*\\})"), false, true, null,
+                                                pattern(compile("\\$(?:\\w+|\\{(?:[^{\\}]|\\{[^{\\}]*\\})*\\})"), false, true, null,
                                                         grammar("inside",
                                                                 token("punctuation", pattern(compile("^\\$\\{?|\\}$"))),
                                                                 token("expression", pattern(compile("[\\s\\S]+"), false, false, null, scala))
