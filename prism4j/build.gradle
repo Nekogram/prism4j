@@ -183,8 +183,6 @@ static String grammarLocatorSource(
         String template,
         Map<String, LanguageInfo> languages) {
     final StringBuilder builder = new StringBuilder(template)
-    replaceTemplate(builder, "{{package-name}}", "io.noties.prism4j")
-    replaceTemplate(builder, "{{class-name}}", "DefaultGrammarLocator")
     replaceTemplate(builder, "{{real-language-name}}", createRealLanguageName(languages))
     replaceTemplate(builder, "{{obtain-grammar}}", createObtainGrammar(languages))
     replaceTemplate(builder, "{{trigger-modify}}", createTriggerModify(languages))
