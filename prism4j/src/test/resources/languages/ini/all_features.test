@@ -1,0 +1,33 @@
+[header]
+key=value
+key2 = value2
+key3 = val=test
+; comment
+"key=test" =    withtab
+
+----------------------------------------------------
+
+[
+    ["header", [
+        ["punctuation", "["],
+        ["section-name", "header"],
+        ["punctuation", "]"]
+    ]],
+    ["key", "key"],
+    ["punctuation", "="],
+    ["value", ["value"]],
+    ["key", "key2"],
+    ["punctuation", "="],
+    ["value", ["value2"]],
+    ["key", "key3"],
+    ["punctuation", "="],
+    ["value", ["val=test"]],
+    ["comment", "; comment"],
+    ["key", "\"key"],
+    ["punctuation", "="],
+    ["value", ["test\" =    withtab"]]
+]
+
+----------------------------------------------------
+
+Tests with an example.
