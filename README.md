@@ -57,6 +57,7 @@ In order to simplify adding language definitions to your project, Prism4j has so
 * `go`
 * `groovy` (no string interpolation)
 * `haxe`
+* `ini`
 * `java`
 * `javascript` (`js`)
 * `json` (`webmanifest`)
@@ -102,7 +103,6 @@ In order to provide meta-information about a language which will be used to gene
   the `markup` will be returned.
 
 ```java
-
 @Aliases({"html", "xml", "mathml", "svg"})
 public class Prism_markup {
 }
@@ -115,7 +115,6 @@ public class Prism_markup {
   example). For example, `css`:
 
 ```java
-
 @Modify("markup")
 public class Prism_css {
 }

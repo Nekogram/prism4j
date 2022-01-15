@@ -22,6 +22,7 @@
 * Updated language definitions
 * Add support for Basic
 * Add support for Haxe
+* Add support for INI
 
 ## 2.1.1
 
