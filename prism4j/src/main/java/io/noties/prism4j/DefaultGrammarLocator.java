@@ -137,6 +137,9 @@ public class DefaultGrammarLocator implements GrammarLocator {
             case "groovy":
                 grammar = Prism_groovy.create(prism4j);
                 break;
+            case "haxe":
+                grammar = Prism_haxe.create(prism4j);
+                break;
             case "java":
                 grammar = Prism_java.create(prism4j);
                 break;
@@ -202,7 +205,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
     @Override
     @NotNull
     public HashSet<String> languages() {
-        final HashSet<String> set = new HashSet<>(28);
+        final HashSet<String> set = new HashSet<>(29);
         set.add("basic");
         set.add("brainfuck");
         set.add("c");
@@ -217,6 +220,7 @@ public class DefaultGrammarLocator implements GrammarLocator {
         set.add("git");
         set.add("go");
         set.add("groovy");
+        set.add("haxe");
         set.add("java");
         set.add("javascript");
         set.add("json");

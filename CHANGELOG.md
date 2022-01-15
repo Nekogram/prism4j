@@ -8,7 +8,7 @@
   * The integrated `DefaultGrammarLocator` provides a `GrammarLocator` created by the same mechanism and supports all
   languages currently supported by Prism4j
 * Removed Gradle/Maven modules
-  * There is only module, `prism4j`, which contains all the classes (an annotation processor is no longer required due
+  * There is only one module, `prism4j`, which contains all the classes (an annotation processor is no longer required due
   to the removal of the `PrismBundler`)
 * Rename `AbsVisitor` -> `Visitor`, old `Prism4j.Visitor` was removed
 * Internal change, but if you used the `Prism4j.*` interfaces, they were removed, and you'll have to replace them
@@ -18,6 +18,7 @@
 
 * Updated language definitions
 * Add support for Basic
+* Add support for Haxe
 
 ## 2.1.1
 

@@ -21,8 +21,8 @@ public abstract class Prism_clike {
                 "clike",
                 token(
                         "comment",
-                        pattern(compile("(^|[^\\\\])\\/\\*[\\s\\S]*?(?:\\*\\/|$)"), true, true),
-                        pattern(compile("(^|[^\\\\:])\\/\\/.*"), true, true)
+                        pattern(compile("(^|[^\\\\])/\\*[\\s\\S]*?(?:\\*/|$)"), true, true),
+                        pattern(compile("(^|[^\\\\:])//.*"), true, true)
                 ),
                 token(
                         "string",
