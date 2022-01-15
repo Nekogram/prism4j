@@ -5,7 +5,8 @@ import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
-import static io.noties.prism4j.Prism4j.*;
+import static io.noties.prism4j.Prism4j.pattern;
+import static io.noties.prism4j.Prism4j.token;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
