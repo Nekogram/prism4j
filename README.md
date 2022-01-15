@@ -62,7 +62,7 @@ In order to simplify adding language definitions to your project, Prism4j has so
 * `json` (`webmanifest`)
 * `jsonp`
 * `kotlin`
-* `latex`
+* `latex` (`tex`, `context`)
 * `makefile`
 * `markdown`
 * `markup` (`xml`, `html`, `mathml`, `svg`)
@@ -95,38 +95,31 @@ simple naming convention: `Prism_{real_language_name}.java`. So, a definition fo
 You can mostly copy definitions and regular expressions from [PrismJS](https://github.com/PrismJS/prism).
 
 In order to provide meta-information about a language which will be used to generate the `DefaultGrammarLocator` use the
-`@Aliases`, `@Extend` and `@Modify` annotations:
+`@Aliases` and `@Modify` annotations:
 
 * `@Aliases` specifies what aliases a language has. For example `markup` language has
   these: `@Aliases({"html", "xml", "mathml", "svg"})`. So when a `GrammarLocator` will be asked for a `svg` language
   the `markup` will be returned.
 
 ```java
+
 @Aliases({"html", "xml", "mathml", "svg"})
 public class Prism_markup {
 }
 ```
 
-* `@Extend` annotation indicates if a language definition is a sibling of another one. `c`:
-
-```java
-@Extend("clike")
-public class Prism_c {
-}
-```
-
 * `@Modify` annotation makes sure that if a language definition modifies another one, modified language will be
   processed before returning to a caller. This does not include a language that is being modified to a project. But if
-  it's present, it will be modified. For example, `css`:
+  it's present, it will be modified. `@Modify` accepts an array of language names and a boolean value which should be
+  added if the language is built on top of another language and should replace this language (see `css-extras` as
+  example). For example, `css`:
 
 ```java
+
 @Modify("markup")
 public class Prism_css {
 }
 ```
-
-`@Modify` accepts an array of language names and a boolean value which should be added if the language is built on top
-of another language and should replace this language (see `css-extras` as example).
 
 ---
 

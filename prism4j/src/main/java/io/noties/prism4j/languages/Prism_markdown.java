@@ -4,7 +4,6 @@ import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
-import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +12,6 @@ import static java.util.regex.Pattern.MULTILINE;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
-@Extend("markup")
 public class Prism_markdown {
 
     @NotNull

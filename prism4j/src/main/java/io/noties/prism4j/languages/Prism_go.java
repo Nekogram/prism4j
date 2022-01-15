@@ -4,7 +4,6 @@ import io.noties.prism4j.Grammar;
 import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
-import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
 
 import static io.noties.prism4j.Prism4j.pattern;
@@ -13,7 +12,6 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
-@Extend("clike")
 public class Prism_go {
 
     @NotNull

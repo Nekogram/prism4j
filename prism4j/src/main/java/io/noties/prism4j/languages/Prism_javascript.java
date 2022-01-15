@@ -5,7 +5,6 @@ import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Aliases;
-import io.noties.prism4j.annotations.Extend;
 import io.noties.prism4j.annotations.Modify;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +17,6 @@ import static java.util.regex.Pattern.*;
 @SuppressWarnings("unused")
 @Aliases("js")
 @Modify("markup")
-@Extend("clike")
 public class Prism_javascript {
 
     @NotNull

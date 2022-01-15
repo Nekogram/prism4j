@@ -5,7 +5,6 @@ import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Aliases;
-import io.noties.prism4j.annotations.Extend;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
 @Aliases({"kt", "kts"})
-@Extend("clike")
 public class Prism_kotlin {
 
     @NotNull

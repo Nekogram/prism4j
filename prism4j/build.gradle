@@ -165,15 +165,10 @@ void languageInfo(Map<String, LanguageInfo> map, String name) {
     final String source = FileUtils.readFileToString(new File(languageSourceFileName(name)), StandardCharsets.UTF_8)
 
     final List<String> aliases = findAliasesInformation(source)
-    final String extend = findExtendInformation(source)
     final List<String> modify = findModifyInformation(source)
     final boolean modifyExtend = findModifyExtendInformation(source)
 
-    map.put(name, new LanguageInfo(name, aliases, extend, modify, modifyExtend, source))
-
-    if (extend != null) {
-        languageInfo(map, extend)
-    }
+    map.put(name, new LanguageInfo(name, aliases, modify, modifyExtend, source))
 }
 
 static String languageSourceFileName(String name) {
@@ -399,49 +394,6 @@ private static List<String> findAnnotationArrayInformation(String annotation, St
     }
 }
 
-static String findExtendInformation(String source) {
-    final String annotation = "@Extend"
-    final int index = source.indexOf(annotation)
-    if (index < 0) {
-        return null
-    }
-
-    char c
-
-    final StringBuilder builder = new StringBuilder()
-
-    boolean insideString = false
-
-    for (i in (index + annotation.length())..<source.length()) {
-        //for (int i = index + annotation.length(); i < source.length(); i++) {
-
-        c = source.charAt(i)
-
-        if (Character.isWhitespace(c)) {
-            continue
-        }
-
-        if ('\"' == c.toString()) {
-            insideString = !insideString
-            if (!insideString) {
-                break
-            } else {
-                continue
-            }
-        }
-
-        if (insideString) {
-            builder.append(c)
-        }
-    }
-
-    if (builder.length() == 0) {
-        return null
-    } else {
-        return builder.toString()
-    }
-}
-
 static List<String> findAliasesInformation(String source) {
     return findAnnotationArrayInformation("@Aliases", source)
 }
@@ -459,7 +411,6 @@ class LanguageInfo {
 
     public final String name
     public final List<String> aliases
-    public final String extend
     public final List<String> modify
     public final boolean modifyExtend
     public final String source
@@ -467,14 +418,12 @@ class LanguageInfo {
     LanguageInfo(
             String name,
             List<String> aliases,
-            String extend,
             List<String> modify,
             boolean modifyExtend,
             String source
     ) {
         this.name = name
         this.aliases = aliases
-        this.extend = extend
         this.modify = modify
         this.modifyExtend = modifyExtend
         this.source = source
