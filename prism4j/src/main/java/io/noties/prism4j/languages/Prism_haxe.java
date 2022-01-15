@@ -41,7 +41,7 @@ public class Prism_haxe {
                 token("regex", pattern(compile("~/(?:[^/\\\\\\r\\n]|\\\\.)+/[a-z]*"), false, true, null,
                         grammar("inside",
                                 token("regex-flags", pattern(compile("\\b[a-z]+$"))),
-                                token("regex-source", pattern(compile("^(~/)[\\s\\S]+(?=/$)"), true, false, "language-regex" /* TODO check regex language (here and js) */)),
+                                token("regex-source", pattern(compile("^(~/)[\\s\\S]+(?=/$)"), true, false, "language-regex", GrammarUtils.require(prism4j, "regex"))),
                                 token("regex-delimiter", pattern(compile("^~/|/$")))
                         )
                 ))

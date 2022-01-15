@@ -19,44 +19,72 @@ yield /regex/;
 [
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "foo bar"],
+		["regex-source", ["foo bar"]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "foo"],
+		["regex-source", ["foo"]],
 		["regex-delimiter", "/"],
 		["regex-flags", "gimyus"]
 	]],
 	["punctuation", ","],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "[\\[\\]]{2,4}(?:foo)*"],
+		["regex-source", [
+		    ["char-class", [
+		        ["char-class-punctuation", "["],
+		            ["special-escape", "\\["],
+		            ["special-escape", "\\]"],
+		            ["char-class-punctuation", "]"]
+		        ]
+		    ],
+		    ["quantifier", "{2,4}"],
+		    ["group", ["(?:"]],
+		    "foo",
+		    ["group", ")"],
+		    ["quantifier", "*"]]
+		],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "foo\"test\"bar"],
+		["regex-source", ["foo\"test\"bar"]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "foo\\/"],
+		["regex-source", [
+		    "foo",
+		    ["escape","\\/"]
+		]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "[]"],
+		["regex-source", [
+		    ["char-class", [
+		        ["char-class-punctuation","["],
+		        ["char-class-punctuation","]"]
+		    ]]
+		]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "[\\]/]"],
+		["regex-source", [
+		    ["char-class", [
+		        ["char-class-punctuation", "["],
+		        ["special-escape", "\\]"],
+		        "/",
+		        ["char-class-punctuation", "]"]
+		    ]]
+		]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
@@ -68,13 +96,13 @@ yield /regex/;
 	["punctuation", ";"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", " '1' '2' '3' '4' '5' "],
+		["regex-source", [" '1' '2' '3' '4' '5' "]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", "["],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "foo"],
+		["regex-source", ["foo"]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", "]"],
@@ -84,7 +112,7 @@ yield /regex/;
 	["operator", "="],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "regex"],
+		["regex-source", ["regex"]],
 		["regex-delimiter", "/"],
 		["regex-flags", "m"]
 	]],
@@ -96,26 +124,26 @@ yield /regex/;
 	["operator", "?"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "regex"],
+		["regex-source", ["regex"]],
 		["regex-delimiter", "/"]
 	]],
 	["operator", ":"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "another one"],
+		["regex-source", ["another one"]],
 		["regex-delimiter", "/"]
 	]],
 	["keyword", "return"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "regex"],
+		["regex-source", ["regex"]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"],
 	["keyword", "yield"],
 	["regex", [
 		["regex-delimiter", "/"],
-		["regex-source", "regex"],
+		["regex-source", ["regex"]],
 		["regex-delimiter", "/"]
 	]],
 	["punctuation", ";"]
