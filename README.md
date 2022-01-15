@@ -56,6 +56,7 @@ In order to simplify adding language definitions to your project, Prism4j has so
 * `git`
 * `go`
 * `groovy` (no string interpolation)
+* `haxe`
 * `java`
 * `javascript` (`js`)
 * `json` (`webmanifest`)
