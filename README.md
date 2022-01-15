@@ -68,6 +68,7 @@ In order to simplify adding language definitions to your project, Prism4j has so
 * `markdown`
 * `markup` (`xml`, `html`, `mathml`, `svg`)
 * `python`
+* `regex`
 * `scala`
 * `sql`
 * `swift`
