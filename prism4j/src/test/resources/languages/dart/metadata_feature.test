@@ -1,6 +1,6 @@
 @deprecated
 @override
-@ToDo('seth', 'make this do something')
+@NotToDo('seth', 'make this do something')
 
 @DataTable("sale_orders")
 class SaleOrder {
@@ -37,7 +37,7 @@ class DataColumn {
 
 	["metadata", "@override"],
 
-	["metadata", "@ToDo"],
+	["metadata", "@NotToDo"],
 	["punctuation", "("],
 	["string-literal", [
 		["string", "'seth'"]

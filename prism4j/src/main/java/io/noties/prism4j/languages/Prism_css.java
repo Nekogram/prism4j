@@ -15,10 +15,6 @@ import static java.util.regex.Pattern.compile;
 @Modify("markup")
 public class Prism_css {
 
-    // todo: really important one..
-    // before a language is requested (fro example css)
-    // it won't be initialized (so we won't modify markup to highlight css) before it was requested...
-
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 

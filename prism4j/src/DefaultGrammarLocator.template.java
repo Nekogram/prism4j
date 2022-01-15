@@ -15,6 +15,26 @@ import java.util.List;
 
 public class DefaultGrammarLocator implements GrammarLocator{
 
+
+        public DefaultGrammarLocator() {
+                this(false, null);
+        }
+
+        /**
+         * Constructor to allow initialization of all languages before requesting them. If you do not
+         * want to initialize them, please use {@link #DefaultGrammarLocator()}.
+         *
+         * @param initLanguages set this to true or use {@link #DefaultGrammarLocator()}
+         * @param prism4j the {@link Prism4j} object
+         */
+        public DefaultGrammarLocator(boolean initLanguages, @Nullable Prism4j prism4j) {
+                if (initLanguages && prism4j != null) {
+                        for (String i : languages()) {
+                                grammar(prism4j, i);
+                        }
+                }
+        }
+
 @SuppressWarnings("ConstantConditions")
 private static final Grammar NULL=new Grammar("", new ArrayList<>()){
 @NotNull
