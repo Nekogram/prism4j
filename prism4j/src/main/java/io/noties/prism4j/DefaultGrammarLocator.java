@@ -108,6 +108,9 @@ public class DefaultGrammarLocator implements GrammarLocator {
             case "js":
                 out = "javascript";
                 break;
+            case "yml":
+                out = "yaml";
+                break;
             default:
                 out = name;
         }

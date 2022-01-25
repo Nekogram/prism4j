@@ -2,28 +2,44 @@ package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
 import io.noties.prism4j.Prism4j;
+import io.noties.prism4j.annotations.Aliases;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.regex.Pattern;
 
 import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.*;
 
 @SuppressWarnings("unused")
+@Aliases("yml")
 public class Prism_yaml {
+
+    private final static String anchorOrAlias = "[*&][^\\s\\[\\]{\\},]+";
+    private final static String tag = "!(?:<[\\w\\-%#;/?:@&=+$,.!~*'()\\[\\]]+>|(?:[a-zA-Z\\d-]*!)?[\\w\\-%#;/?:@&=+$.~*'()]+)?";
+    private final static String properties = "(?:" + tag + "(?:[ \\t]+" + anchorOrAlias + ")?|" + anchorOrAlias + "(?:[ \\t]+" + tag + ")?)";
+
+    private static Pattern createValuePattern(String value, int flags) {
+        final String pattern = "([:\\-,\\[{]\\s*(?:\\s" + properties + "[ \\t]+)?)(?:" + value + ")(?=[ \\t]*(?:$|,|]|\\}|(?:[\\r\\n]\\s*)?#))";
+        return compile(pattern, flags);
+    }
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
+        final String plainKey = "(?:[^\\s\\x00-\\x08\\x0e-\\x1f!\"#%&'*,\\-:>?@\\[\\]`{|\\}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|[?:-][^\\s\\x00-\\x08\\x0e-\\x1f,\\[\\]{\\}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff])(?:[ \\t]*(?:(?![#:])[^\\s\\x00-\\x08\\x0e-\\x1f,\\[\\]{}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|:[^\\s\\x00-\\x08\\x0e-\\x1f,\\[\\]{\\}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]))*";
+        final String string = "\"(?:[^\"\\\\\\r\\n]|\\\\.)*\"|'(?:[^'\\\\\\r\\n]|\\\\.)*'";
+
         return grammar("yaml",
                 token("scalar", pattern(
-                        compile("([\\-:]\\s*(?:![^\\s]+)?[ \\t]*[|>])[ \\t]*(?:((?:\\r?\\n|\\r)[ \\t]+)[^\\r\\n]+(?:\\2[^\\r\\n]+)*)"),
+                        compile("([\\-:]\\s*(?:\\s" + properties + "[ \\t]+)?[|>])[ \\t]*(?:((?:\\r?\\n|\\r)[ \\t]+)\\S[^\\r\\n]*(?:\\2[^\\r\\n]+)*)"),
                         true,
                         false,
                         "string"
                 )),
                 token("comment", pattern(compile("#.*"))),
                 token("key", pattern(
-                        compile("(\\s*(?:^|[:\\-,\\[{\\r\\n?])[ \\t]*(?:![^\\s]+)?[ \\t]*)[^\\r\\n{\\[\\]\\},#\\s]+?(?=\\s*:\\s)"),
+                        compile("((?:^|[:\\-,\\[{\\r\\n?])[ \\t]*(?:" + properties + "[ \\t]+)?)(?:" + plainKey + "|" + string + ")(?=\\s*:\\s)"),
                         true,
-                        false,
+                        true,
                         "atrule"
                 )),
                 token("directive", pattern(
@@ -33,35 +49,36 @@ public class Prism_yaml {
                         "important"
                 )),
                 token("datetime", pattern(
-                        compile("([:\\-,\\[{]\\s*(?:![^\\s]+)?[ \\t]*)(?:\\d{4}-\\d\\d?-\\d\\d?(?:[tT]|[ \\t]+)\\d\\d?:\\d{2}:\\d{2}(?:\\.\\d*)?[ \\t]*(?:Z|[-+]\\d\\d?(?::\\d{2})?)?|\\d{4}-\\d{2}-\\d{2}|\\d\\d?:\\d{2}(?::\\d{2}(?:\\.\\d*)?)?)(?=[ \\t]*(?:$|,|]|\\}))", MULTILINE),
+                        createValuePattern("\\d{4}-\\d\\d?-\\d\\d?(?:[tT]|[ \\t]+)\\d\\d?:\\d{2}:\\d{2}(?:\\.\\d*)?(?:[ \\t]*(?:Z|[-+]\\d\\d?(?::\\d{2})?))?|\\d{4}-\\d{2}-\\d{2}|\\d\\d?:\\d{2}(?::\\d{2}(?:\\.\\d*)?)?", MULTILINE),
                         true,
                         false,
                         "number"
                 )),
                 token("boolean", pattern(
-                        compile("([:\\-,\\[{]\\s*(?:![^\\s]+)?[ \\t]*)(?:true|false)[ \\t]*(?=$|,|]|\\})", MULTILINE | CASE_INSENSITIVE),
+                        createValuePattern("true|false", MULTILINE | CASE_INSENSITIVE),
                         true,
                         false,
                         "important"
                 )),
                 token("null", pattern(
-                        compile("([:\\-,\\[{]\\s*(?:![^\\s]+)?[ \\t]*)(?:null|~)[ \\t]*(?=$|,|]|\\})", MULTILINE | CASE_INSENSITIVE),
+                        createValuePattern("null|~", MULTILINE | CASE_INSENSITIVE),
                         true,
                         false,
                         "important"
                 )),
                 token("string", pattern(
-                        compile("([:\\-,\\[{]\\s*(?:![^\\s]+)?[ \\t]*)(\"|')(?:(?!\\2)[^\\\\\\r\\n]|\\\\.)*\\2(?=[ \\t]*(?:$|,|]|\\}))", MULTILINE),
+                        createValuePattern(string, MULTILINE),
                         true,
                         true
                 )),
                 token("number", pattern(
-                        compile("([:\\-,\\[{]\\s*(?:![^\\s]+)?[ \\t]*)[+-]?(?:0x[\\da-f]+|0o[0-7]+|(?:\\d+\\.?\\d*|\\.?\\d+)(?:e[+-]?\\d+)?|\\.inf|\\.nan)[ \\t]*(?=$|,|]|\\})", MULTILINE | CASE_INSENSITIVE),
+                        createValuePattern("[+-]?(?:0x[\\da-f]+|0o[0-7]+|(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:e[+-]?\\d+)?|\\.inf|\\.nan)", MULTILINE | CASE_INSENSITIVE),
                         true
                 )),
-                token("tag", pattern(compile("![^\\s]+"))),
-                token("important", pattern(compile("[&*][\\w]+"))),
+                token("tag", pattern(compile(tag))),
+                token("important", pattern(compile(anchorOrAlias))),
                 token("punctuation", pattern(compile("---|[:\\[\\]{\\}\\-,|>?]|\\.\\.\\.")))
         );
+
     }
 }
