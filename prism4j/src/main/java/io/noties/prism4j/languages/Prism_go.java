@@ -20,21 +20,24 @@ public class Prism_go {
         final Grammar go = GrammarUtils.extend(
                 GrammarUtils.require(prism4j, "clike"),
                 "go",
-                new GrammarUtils.TokenFilter() {
-                    @Override
-                    public boolean test(@NotNull Token token) {
-                        return !"class-name".equals(token.name());
-                    }
-                },
-                token("keyword", pattern(compile("\\b(?:break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go(?:to)?|if|import|interface|map|package|range|return|select|struct|switch|type|var)\\b"))),
-                token("boolean", pattern(compile("\\b(?:_|iota|nil|true|false)\\b"))),
-                token("operator", pattern(compile("[*\\/%^!=]=?|\\+[=+]?|-[=-]?|\\|[=|]?|&(?:=|&|\\^=?)?|>(?:>=?|=)?|<(?:<=?|=|-)?|:=|\\.\\.\\."))),
-                token("number", pattern(compile("(?:\\b0x[a-f\\d]+|(?:\\b\\d+\\.?\\d*|\\B\\.\\d+)(?:e[-+]?\\d+)?)i?", CASE_INSENSITIVE))),
+                token -> !"class-name".equals(token.name()),
                 token("string", pattern(
-                        compile("([\"'`])(\\\\[\\s\\S]|(?!\\1)[^\\\\])*\\1"),
+                        compile("(^|[^\\\\])\"(?:\\\\.|[^\"\\\\\\r\\n])*\"|`[^`]*`"),
                         false,
                         true
-                ))
+                )),
+                token("keyword", pattern(compile("\\b(?:break|case|chan|const|continue|default|defer|else|fallthrough|for|func|go(?:to)?|if|import|interface|map|package|range|return|select|struct|switch|type|var)\\b"))),
+                token("boolean", pattern(compile("\\b(?:_|iota|nil|true|false)\\b"))),
+                token("number",
+                        pattern(compile("\\b0(?:b[01_]+|o[0-7_]+)i?\\b", CASE_INSENSITIVE)),
+                        pattern(compile("\\b0x(?:[a-f\\d_]+(?:\\.[a-f\\d_]*)?|\\.[a-f\\d_]+)(?:p[+-]?\\d+(?:_\\d+)*)?i?(?!\\w)", CASE_INSENSITIVE)),
+                        pattern(compile("(?:\\b\\d[\\d_]*(?:\\.[\\d_]*)?|\\B\\.\\d[\\d_]*)(?:e[+-]?[\\d_]+)?i?(?!\\w)", CASE_INSENSITIVE))
+                ),
+                token("operator", pattern(compile("[*\\/%^!=]=?|\\+[=+]?|-[=-]?|\\|[=|]?|&(?:=|&|\\^=?)?|>(?:>=?|=)?|<(?:<=?|=|-)?|:=|\\.\\.\\.")))
+        );
+
+        GrammarUtils.insertBeforeToken(go, "string",
+                token("char", pattern(compile("'(?:\\\\.|[^'\\\\\\r\\n]){0,10}'"), false, true))
         );
 
         // clike doesn't have builtin
