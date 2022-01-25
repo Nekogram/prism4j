@@ -23,24 +23,27 @@ public class Prism_makefile {
                         false,
                         true
                 )),
-                token("builtin", pattern(compile("\\.[A-Z][^:#=\\s]+(?=\\s*:(?!=))"))),
-                token("symbol", pattern(
+                token("builtin-target",
+                        pattern(compile("\\.[A-Z][^:#=\\s]+(?=\\s*:(?!=))"), false, false, "builtin")
+                ),
+                token("target", pattern(
                         compile("^[^:=\\r\\n]+(?=\\s*:(?!=))", MULTILINE),
                         false,
                         false,
-                        null,
+                        "symbol",
                         grammar("inside",
                                 token("variable", pattern(compile("\\$+(?:[^(){\\}:#=\\s]+|(?=[({]))")))
                         )
                 )),
                 token("variable", pattern(compile("\\$+(?:[^(){\\}:#=\\s]+|\\([@*%<^+?][DF]\\)|(?=[({]))"))),
                 token("keyword",
-                        pattern(compile("-include\\b|\\b(?:define|else|endef|endif|export|ifn?def|ifn?eq|include|override|private|sinclude|undefine|unexport|vpath)\\b")),
-                        pattern(
+                        pattern(compile("-include\\b|\\b(?:define|else|endef|endif|export|ifn?def|ifn?eq|include|override|private|sinclude|undefine|unexport|vpath)\\b"))
+                       /* pattern(
                                 compile("(\\()(?:addsuffix|abspath|and|basename|call|dir|error|eval|file|filter(?:-out)?|findstring|firstword|flavor|foreach|guile|if|info|join|lastword|load|notdir|or|origin|patsubst|realpath|shell|sort|strip|subst|suffix|value|warning|wildcard|word(?:s|list)?)(?=[ \\t])"),
                                 true
-                        )
+                        )*/
                 ),
+                token("function", pattern(compile("(\\()(?:abspath|addsuffix|and|basename|call|dir|error|eval|file|filter(?:-out)?|findstring|firstword|flavor|foreach|guile|if|info|join|lastword|load|notdir|or|origin|patsubst|realpath|shell|sort|strip|subst|suffix|value|warning|wildcard|word(?:list|s)?)(?=[ \\t])"), true)),
                 token("operator", pattern(compile("(?:::|[?:+!])?=|[|@]"))),
                 token("punctuation", pattern(compile("[:;(){\\}]")))
         );

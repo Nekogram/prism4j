@@ -5,12 +5,17 @@ $(foo):
 ----------------------------------------------------
 
 [
-	["symbol", ["edit "]], ["punctuation", ":"],
-	["symbol", ["%oo"]], ["punctuation", ":"],
-	["symbol", [
+	["target", ["edit "]],
+	["punctuation", ":"],
+
+	["target", ["%oo"]],
+	["punctuation", ":"],
+
+	["target", [
 		["variable", "$"],
 		"(foo)"
-	]], ["punctuation", ":"]
+	]],
+	["punctuation", ":"]
 ]
 
 ----------------------------------------------------

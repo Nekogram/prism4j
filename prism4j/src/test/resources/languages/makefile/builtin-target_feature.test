@@ -5,9 +5,9 @@
 ----------------------------------------------------
 
 [
-	["builtin", ".PHONY"], ["punctuation", ":"],
-	["builtin", ".DELETE_ON_ERROR"], ["punctuation", ":"],
-	["builtin", ".SECONDEXPANSION"], ["punctuation", ":"]
+	["builtin-target", ".PHONY"], ["punctuation", ":"],
+	["builtin-target", ".DELETE_ON_ERROR"], ["punctuation", ":"],
+	["builtin-target", ".SECONDEXPANSION"], ["punctuation", ":"]
 ]
 
 ----------------------------------------------------
