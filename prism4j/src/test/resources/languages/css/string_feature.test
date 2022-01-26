@@ -16,7 +16,3 @@ bar'
     ["string", "\"foo /* bar\""],
     ["comment", "/* and out */"]
 ]
-
-----------------------------------------------------
-
-Checks for single-quoted and double-quoted strings.

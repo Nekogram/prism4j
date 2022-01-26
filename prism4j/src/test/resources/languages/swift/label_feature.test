@@ -22,7 +22,3 @@ gameLoop: while square != finalSquare {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for labels.

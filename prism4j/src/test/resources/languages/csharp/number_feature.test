@@ -11,7 +11,3 @@
 	["number", "0xbabe"],
 	["number", "0XBABE"]
 ]
-
-----------------------------------------------------
-
-Checks for decimal and hexadecimal numbers.

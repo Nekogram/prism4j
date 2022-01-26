@@ -104,7 +104,3 @@ console.log(`This is ${it.with({ type: false })}!`)
 		["template-punctuation", "`"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for single-line and multi-line template strings.

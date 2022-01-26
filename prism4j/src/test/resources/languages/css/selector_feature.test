@@ -19,7 +19,3 @@ bar{
 	["selector", ["foo,\r\nbar"]],
 	["punctuation", "{"]
 ]
-
-----------------------------------------------------
-
-Checks for single-line and multi-line selectors.

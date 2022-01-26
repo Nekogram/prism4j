@@ -17,7 +17,3 @@ foo.var.new;
 	"new",
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for properties which have the same name as keywords. See #1807.

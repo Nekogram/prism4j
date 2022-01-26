@@ -33,7 +33,3 @@ public class SomeClass : BaseClass {}
 	["punctuation", "{"],
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for class names. See #1365

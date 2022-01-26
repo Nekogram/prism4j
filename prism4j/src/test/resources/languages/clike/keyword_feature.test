@@ -24,7 +24,3 @@ break; continue;
 	["keyword", "break"], ["punctuation", ";"],
 	["keyword", "continue"], ["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

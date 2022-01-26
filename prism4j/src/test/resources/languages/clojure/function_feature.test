@@ -11,7 +11,3 @@
 	["comment", "; not a function"],
 	"\n'", ["punctuation", "("], "a b c", ["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

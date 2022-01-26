@@ -39,7 +39,3 @@ class SomeClass: SomeSuperclass {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

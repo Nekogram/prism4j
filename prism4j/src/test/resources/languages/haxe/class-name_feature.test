@@ -256,7 +256,3 @@ class Game {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

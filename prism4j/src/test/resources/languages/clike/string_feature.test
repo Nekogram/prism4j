@@ -24,8 +24,3 @@ bar'
 	["string", "'foo // bar'"],
 	["comment", "//comment"]
 ]
-
-----------------------------------------------------
-
-Checks for empty strings, single-line strings and
-multi-line strings, both single-quoted and double-quoted.

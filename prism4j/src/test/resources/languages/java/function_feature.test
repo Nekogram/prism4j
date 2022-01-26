@@ -25,7 +25,3 @@ Bar::foo;
 	["function", "foo"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

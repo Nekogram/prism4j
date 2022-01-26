@@ -15,7 +15,3 @@ bar.png")
 	["url", "url('foo\\\nbar.png')"],
 	["url", "url(\"foo\\\nbar.png\")"]
 ]
-
-----------------------------------------------------
-
-Checks for url(), unquoted, single-quoted and double-quoted.

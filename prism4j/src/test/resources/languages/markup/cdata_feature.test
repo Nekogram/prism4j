@@ -9,7 +9,3 @@ foo bar baz
 	["cdata", "<![CDATA[ foo bar baz ]]>"],
 	["cdata", "<![CDATA[\nfoo bar baz\n]]>"]
 ]
-
-----------------------------------------------------
-
-Checks for CDATA sections, single-line and multi-line.

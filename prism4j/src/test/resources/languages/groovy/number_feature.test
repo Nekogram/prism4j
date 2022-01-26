@@ -37,7 +37,3 @@
 	["number", "42g"], ["number", "42l"], ["number", "42i"],
 	["number", "42d"], ["number", "42f"]
 ]
-
-----------------------------------------------------
-
-Checks for binary, hexadecimal and decimal numbers.

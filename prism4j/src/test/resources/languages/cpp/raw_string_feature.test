@@ -12,7 +12,3 @@ R"(foo)"R"(bar)"
 	["raw-string", "R\"(foo)\""],
 	["raw-string", "R\"(bar)\""]
 ]
-
-----------------------------------------------------
-
-Checks for the C++11 raw string feature

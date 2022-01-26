@@ -250,7 +250,3 @@ assert.equal(foo, bar);
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

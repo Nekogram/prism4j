@@ -47,7 +47,3 @@ catch (bar)
 	]],
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

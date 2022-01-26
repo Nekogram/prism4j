@@ -11,7 +11,3 @@ bar: false
 	["key", "bar"], ["punctuation", ":"],
 	["boolean", "false"]
 ]
-
-----------------------------------------------------
-
-Checks for booleans.

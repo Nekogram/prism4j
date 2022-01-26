@@ -40,8 +40,3 @@
 		["punctuation", ";"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for at-rules.
-Also checks for LESS variables.

@@ -8,7 +8,3 @@
 	["entity", "&#x26f5;"],
 	["entity", "&#160;"]
 ]
-
-----------------------------------------------------
-
-Checks for HTML/XML character entity references.

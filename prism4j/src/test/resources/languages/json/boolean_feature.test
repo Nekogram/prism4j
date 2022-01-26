@@ -7,7 +7,3 @@ false
 	["boolean", "true"],
 	["boolean", "false"]
 ]
-
-----------------------------------------------------
-
-Checks for booleans.

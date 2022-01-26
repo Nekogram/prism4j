@@ -88,5 +88,3 @@
 	["number", ".12345E+5i"],
 	["number", "0x1p-2i"], ["comment", "// == 0x1p-2 * 1i == 0.25i"]
 ]
-----------------------------------------------------
-Checks for integers, floats and imaginary numbers.

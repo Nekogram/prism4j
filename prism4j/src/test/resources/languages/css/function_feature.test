@@ -36,7 +36,3 @@ filter: opacity(alpha=0);
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

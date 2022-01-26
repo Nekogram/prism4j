@@ -10,7 +10,3 @@ ${4+2}
 	["number", "4"], ["operator", "+"], ["number", "2"],
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for reification.

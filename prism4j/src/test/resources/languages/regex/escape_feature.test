@@ -36,7 +36,3 @@
 	["special-escape", "\\["],
 	["special-escape", "\\]"]
 ]
-
-----------------------------------------------------
-
-Checks for escapes.

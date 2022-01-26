@@ -22,7 +22,3 @@ baz
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "lstlisting"], ["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for verbatim environment.

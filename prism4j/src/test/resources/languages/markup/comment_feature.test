@@ -10,7 +10,3 @@ baz -->
 	["comment", "<!-- foo bar -->"],
 	["comment", "<!-- foo bar\nbaz -->"]
 ]
-
-----------------------------------------------------
-
-Checks for empty comment, single-line comment and multi-line comment.

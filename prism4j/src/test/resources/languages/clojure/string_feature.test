@@ -12,7 +12,3 @@ string"
 	["string", "\"multi-line\nstring\""],
 	["char", "\\NewLine"]
 ]
-
-----------------------------------------------------
-
-Checks for strings.

@@ -189,7 +189,3 @@ tagb: !!tagb *tag-b
 	["punctuation", ":"],
 	["important", "*a1"]
 ]
-
-----------------------------------------------------
-
-Checks for anchors and aliases.

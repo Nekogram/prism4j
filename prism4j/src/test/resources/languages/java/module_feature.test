@@ -141,7 +141,3 @@ module com.js.prism {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for module definition.

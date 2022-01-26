@@ -17,7 +17,3 @@ $(foo):
 	]],
 	["punctuation", ":"]
 ]
-
-----------------------------------------------------
-
-Checks for targets, optionally containing interpolation.

@@ -92,7 +92,3 @@ class Foo extends foo.bar.Foo {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

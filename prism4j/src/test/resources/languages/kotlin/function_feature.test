@@ -19,7 +19,3 @@ list.`take 1` {}
     ["function", "`take 1`"], ["punctuation", "{"], ["punctuation", "}"],
     ["function", "`make fun`"], ["punctuation", "("], ["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

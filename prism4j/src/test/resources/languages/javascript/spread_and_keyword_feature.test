@@ -39,7 +39,3 @@ console.log([...new Set(numbers)])
 	["punctuation", "]"],
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for the spread operator followed by a keyword.

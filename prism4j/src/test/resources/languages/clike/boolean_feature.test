@@ -6,7 +6,3 @@ true; false;
 	["boolean", "true"], ["punctuation", ";"],
 	["boolean", "false"], ["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for booleans.

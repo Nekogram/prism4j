@@ -53,8 +53,3 @@ bar"""
 	["string", "'''foo\n/* comment */\nbar'''"],
 	["string", "\"\"\"foo\n// comment\nbar\"\"\""]
 ]
-
-----------------------------------------------------
-
-Checks for single quoted, triple single quoted, double quoted,
-triple double quoted, slashy and dollar slashy strings.

@@ -115,7 +115,3 @@ set(foo);
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for getters and setters.

@@ -52,7 +52,3 @@ class Foo {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for the private field syntax.

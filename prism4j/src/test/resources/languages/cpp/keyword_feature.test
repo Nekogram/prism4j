@@ -187,7 +187,3 @@ uint64_t
 	["keyword", "uint32_t"],
 	["keyword", "uint64_t"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

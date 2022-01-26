@@ -97,7 +97,3 @@ while;
 	["keyword", "var"], ["punctuation", ";"],
 	["keyword", "while"], ["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for keywords.

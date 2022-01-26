@@ -45,7 +45,3 @@
 		["char-class-punctuation", "]"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for character ranges in sets.

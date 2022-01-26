@@ -48,7 +48,3 @@ void while with yield
 	["keyword", "throw"], ["keyword", "try"], ["keyword", "typedef"], ["keyword", "var"],
 	["keyword", "void"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

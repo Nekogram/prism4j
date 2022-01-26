@@ -29,7 +29,3 @@ var while with yield
 	["keyword", "trait"], ["keyword", "try"], ["keyword", "type"], ["keyword", "val"],
 	["keyword", "var"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"]
 ]
-
-----------------------------------------------------
-
-Checks for keywords.

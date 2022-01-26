@@ -16,7 +16,3 @@ try { } catch (e) { } finally { }
 	["punctuation", "{"],
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for try statements.

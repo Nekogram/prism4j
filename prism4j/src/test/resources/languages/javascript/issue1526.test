@@ -29,7 +29,3 @@ fetch('some-resource.json')
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for catch function which is not a keyword. See #1526

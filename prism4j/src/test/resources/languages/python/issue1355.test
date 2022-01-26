@@ -18,7 +18,3 @@ print('"trigger="#T'+str(3))
 	["punctuation", ")"],
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for comment-like substrings. See #1355

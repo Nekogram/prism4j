@@ -7,7 +7,3 @@
 	["shebang", "#!foobar"],
 	["shebang", "#!/usr/bin/env groovy"]
 ]
-
-----------------------------------------------------
-
-Check for shebang comments.

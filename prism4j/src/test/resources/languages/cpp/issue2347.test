@@ -68,7 +68,3 @@ void MainWindow::changeWindowTitle()
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Tests for issue #2347.

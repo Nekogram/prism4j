@@ -73,7 +73,3 @@ recover
 	["builtin", "real"],
 	["builtin", "recover"]
 ]
-
-----------------------------------------------------
-
-Checks for all builtins.

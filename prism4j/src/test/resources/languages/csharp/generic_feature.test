@@ -28,7 +28,3 @@ method<int, char>();
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for generic methods

@@ -13,7 +13,3 @@
 	["string", "'fo\\'obar'"],
 	["string", "\"fo\\\" # comment obar\""]
 ]
-
-----------------------------------------------------
-
-Checks for strings.

@@ -28,7 +28,3 @@ void Foo(Bar bar, Baz baz)
 	" baz",
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

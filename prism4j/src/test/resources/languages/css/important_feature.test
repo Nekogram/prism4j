@@ -17,7 +17,3 @@ padding: 10px 20px 30px !important;
     ["important", "!important"],
     ["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for !important rule.

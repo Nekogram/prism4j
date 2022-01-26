@@ -33,7 +33,3 @@
 	["function", "\\subsubsubparagraph"], ["punctuation", "{"],
 	["headline", "Foobar"], ["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for headlines.

@@ -32,7 +32,3 @@ fooBar.bind(thisArg);
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for supposed function variables based on standard function invocations or modifications.

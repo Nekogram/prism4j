@@ -13,7 +13,3 @@
 	["pointer", "<"], ["decrement", "-"], ["operator", ","],
 	["branching", "]"]
 ]
-
-----------------------------------------------------
-
-Checks for all patterns.

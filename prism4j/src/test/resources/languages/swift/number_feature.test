@@ -19,7 +19,3 @@
 	["number", "0b0000_1111"],
 	["number", "0o147_654"]
 ]
-
-----------------------------------------------------
-
-Checks for decimal, hexadecimal, octal and binary numbers.

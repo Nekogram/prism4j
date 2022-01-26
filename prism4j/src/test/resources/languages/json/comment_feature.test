@@ -21,7 +21,3 @@
 	["string", "\"*/\""],
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for single-line and multi-line comments.

@@ -91,7 +91,3 @@ std::make_unique<service::UniqueMap>(std::move(entries));
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

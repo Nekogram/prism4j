@@ -11,7 +11,3 @@
 	["string", "''"],
 	["string", "'bar'"]
 ]
-
-----------------------------------------------------
-
-Checks for double-quoted and single-quoted strings.

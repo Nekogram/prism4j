@@ -157,7 +157,3 @@ switch(foo) {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Check for properties.

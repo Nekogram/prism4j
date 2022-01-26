@@ -25,7 +25,3 @@ times:
 	["punctuation", "-"],
 	["datetime", "10:53:20.53"]
 ]
-
-----------------------------------------------------
-
-Checks for dates, times and datetimes.

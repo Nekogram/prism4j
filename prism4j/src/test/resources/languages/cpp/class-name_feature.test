@@ -52,7 +52,3 @@ void Foo<int>::bar() {}
 	["punctuation", "{"],
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

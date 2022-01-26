@@ -85,7 +85,3 @@ class Foo with ns.Bar {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks class names and generics

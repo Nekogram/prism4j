@@ -23,7 +23,3 @@ nonlocal
 	["keyword", "try"], ["keyword", "while"], ["keyword", "with"], ["keyword", "yield"],
 	["keyword", "nonlocal"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

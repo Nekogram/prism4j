@@ -65,7 +65,3 @@ class Main {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for preprocessor directives.

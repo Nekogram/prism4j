@@ -15,7 +15,3 @@ baz'''
 	["triple-quoted-string", "'''foobar'''"],
 	["triple-quoted-string", "'''fo'o\n#bar\nbaz'''"]
 ]
-
-----------------------------------------------------
-
-Checks for triple-quoted strings.

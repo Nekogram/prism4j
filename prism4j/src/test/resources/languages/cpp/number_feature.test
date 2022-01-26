@@ -58,7 +58,3 @@
 	["number", "1.602'176'565e-19"],
 	["number", "0b010'01010"]
 ]
-
-----------------------------------------------------
-
-Checks for binary, decimal, and hexadecimal numbers.

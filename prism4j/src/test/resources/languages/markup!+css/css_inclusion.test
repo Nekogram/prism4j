@@ -65,7 +65,3 @@ foo {
 		["punctuation", ">"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for CSS usage inside Markup, using <style> tag and style attribute.

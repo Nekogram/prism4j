@@ -44,7 +44,3 @@ foobar;
 	["comment", ";foobar"],
 	"\nfoo#bar\nfoobar#\nfoo;bar\nfoobar;"
 ]
-
-----------------------------------------------------
-
-Checks for comments.

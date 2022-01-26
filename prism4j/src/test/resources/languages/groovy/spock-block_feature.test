@@ -19,7 +19,3 @@ where:
 	["spock-block", "expect:"],
 	["spock-block", "where:"]
 ]
-
-----------------------------------------------------
-
-Checks for all spock blocks.

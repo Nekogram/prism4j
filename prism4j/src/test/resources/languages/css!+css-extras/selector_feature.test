@@ -52,7 +52,3 @@ div[foo="bar"] {
 		["attribute", "[foo=\"bar\"]"]
 	]], ["punctuation", "{"]
 ]
-
-----------------------------------------------------
-
-Checks for pseudo-elements, pseudo-classes, classes and ids inside selectors.

@@ -26,6 +26,7 @@
   * CSV
   * Haxe
   * INI
+  * Regex
 
 ## 2.1.1
 

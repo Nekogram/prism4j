@@ -13,7 +13,3 @@ kFoo_bar
 	["constant", "kAb"],
 	["constant", "kFoo_bar"]
 ]
-
-----------------------------------------------------
-
-Checks for constants.

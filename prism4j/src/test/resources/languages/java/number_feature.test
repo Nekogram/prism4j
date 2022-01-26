@@ -54,7 +54,3 @@
 
 	["number", "0b1_1_1_1__0_0_0_0"]
 ]
-
-----------------------------------------------------
-
-Checks for binary, hexadecimal and decimal numbers.

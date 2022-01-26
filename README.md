@@ -126,8 +126,8 @@ public class Prism_css {
 After you are done (haha!) with a language definition please make sure that you also move test cases
 from [PrismJS](https://github.com/PrismJS/prism) for the project (for newly added language of course). Thankfully just a
 byte of work required here as the test module understands native format of _prism-js_ test cases (that are ending
-with `*.test`). Some PrismJS tests have a test description below the actual test data. If you copy any test without
-adding this description, Prism4j will throw an `ArrayOutOfBoundsException`. Please inspect the test folder for further
+with `*.test`). Some PrismJS tests have a test description below the actual test data. If you copy any test with
+this description, remove the description, otherwise Prism4j will throw an `RuntimeException`. Please inspect the test folder for further
 info. In short: copy test cases from PrismJS project (the whole folder for specific language)
 into `prism4j/src/test/resources/languages/` folder.
 

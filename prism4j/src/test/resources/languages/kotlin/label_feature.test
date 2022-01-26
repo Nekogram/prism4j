@@ -9,7 +9,3 @@ return@forEach
 	["keyword", "break"], ["label", "@loop"],
 	["keyword", "return"], ["label", "@forEach"]
 ]
-
-----------------------------------------------------
-
-Checks for labels.

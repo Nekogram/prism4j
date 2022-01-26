@@ -180,7 +180,3 @@ a = function () {}, b = () => {}
 	["punctuation", "{"],
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for variables obviously containing functions.

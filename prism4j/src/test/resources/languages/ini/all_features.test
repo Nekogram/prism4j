@@ -27,7 +27,3 @@ key3 = val=test
     ["punctuation", "="],
     ["value", ["test\" =    withtab"]]
 ]
-
-----------------------------------------------------
-
-Tests with an example.

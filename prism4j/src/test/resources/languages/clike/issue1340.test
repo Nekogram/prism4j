@@ -7,7 +7,3 @@
 [
 	["comment", "/*\n//\n*/"]
 ]
-
-----------------------------------------------------
-
-Non-regression test for inline comments inside multiline comments. See #1340

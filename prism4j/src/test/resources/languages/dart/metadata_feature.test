@@ -142,7 +142,3 @@ class DataColumn {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for metadata.

@@ -53,15 +53,14 @@ public abstract class TestUtils {
         }
 
         final String[] split = raw.split(DELIMITER);
-        if (split.length < 2) {
+        if (split.length != 2) {
             throw new RuntimeException("Test file seems to have wrong delimiter, file: " + file);
         }
 
         final String input = split[0].trim();
         final JsonArray simplifiedOutput = GSON.fromJson(split[1].trim(), JsonArray.class);
-        final String description = split[2].trim();
 
-        return new Case(input, simplifiedOutput, description);
+        return new Case(input, simplifiedOutput, file);
     }
 
     public static void assertCase(@NotNull Case c, @NotNull List<? extends Prism4j.Node> nodes) {

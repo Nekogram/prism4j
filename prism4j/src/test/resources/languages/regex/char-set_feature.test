@@ -15,7 +15,3 @@
 	["char-set", "\\p{ASCII}"],
 	["char-set", "\\P{ASCII}"]
 ]
-
-----------------------------------------------------
-
-Checks for character classes.

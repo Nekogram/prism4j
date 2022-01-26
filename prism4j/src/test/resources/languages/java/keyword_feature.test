@@ -57,7 +57,3 @@ sealed non-sealed permits
     ["keyword", "yield"],
     ["keyword", "sealed"], ["keyword", "non-sealed"], ["keyword", "permits"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

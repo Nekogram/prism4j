@@ -131,7 +131,3 @@ while
 	["keyword", "where"],
 	["keyword", "while"]
 ]
-
-----------------------------------------------------
-
-Checks for keywords.

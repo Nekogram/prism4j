@@ -15,7 +15,3 @@
 	["annotation", "@file:JvmName"],
 	["annotation", "@set:[Inject VisibleForTesting]"]
 ]
-
-----------------------------------------------------
-
-Checks for annotations.

@@ -10,7 +10,3 @@ bar */
 	["comment", "/**/"],
 	["comment", "/* foo\nbar */"]
 ]
-
-----------------------------------------------------
-
-Checks for single-line and multi-line comments.

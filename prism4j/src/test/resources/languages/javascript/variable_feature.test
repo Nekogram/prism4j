@@ -9,7 +9,3 @@ let async = true;
 	["boolean", "true"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for variables with special names.

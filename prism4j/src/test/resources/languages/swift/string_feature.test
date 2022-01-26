@@ -115,5 +115,3 @@ Here are three more double quotes: """
 		["string", ".\"#"]
 	]]
 ]
-----------------------------------------------------
-Checks for strings and string interpolation.

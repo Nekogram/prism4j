@@ -46,7 +46,3 @@ String empty = """
 	["triple-quoted-string", "\"\"\"\n\"\"\""],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for strings.

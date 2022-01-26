@@ -33,7 +33,3 @@ UCASE(
 	["function", "SUM"], ["punctuation", "("],
 	["function", "UCASE"], ["punctuation", "("]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

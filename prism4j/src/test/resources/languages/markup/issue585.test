@@ -56,8 +56,3 @@
 		["punctuation", ">"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for tags, attributes and namespaces containing unicode characters.
-See #585 for details.

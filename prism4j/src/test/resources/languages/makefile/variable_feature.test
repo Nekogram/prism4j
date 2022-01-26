@@ -13,7 +13,3 @@ $(2)
 	["variable", "$"], ["punctuation", "("], "foobar", ["punctuation", ")"],
 	["variable", "$"], ["punctuation", "("], "2", ["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for variables.

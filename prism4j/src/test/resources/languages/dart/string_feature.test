@@ -89,8 +89,3 @@ bar'''
 		["string", " chips\""]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for single quoted and double quoted strings,
-multi-line strings and "raw" strings.

@@ -11,7 +11,3 @@
 	["comment", "#   (use \"git reset HEAD <file>...\" to unstage)"],
 	["comment", "#"]
 ]
-
-----------------------------------------------------
-
-Checks for comments.

@@ -124,7 +124,3 @@ public:
 	["punctuation", "}"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Test for issues reported in #3042.

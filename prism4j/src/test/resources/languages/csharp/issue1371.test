@@ -142,7 +142,3 @@ class Works : LandAnimal {
 	["punctuation", ")"],
 	["punctuation", "]"]
 ]
-
-----------------------------------------------------
-
-Checks for various cases of class names. See #1371

@@ -126,7 +126,3 @@ b\end{gather}
 	["function", "\\end"], ["punctuation", "{"],
 	["keyword", "gather"], ["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for equations.

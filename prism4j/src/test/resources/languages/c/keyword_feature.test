@@ -29,7 +29,3 @@ union unsigned void volatile while
 	["keyword", "switch"], ["keyword", "typedef"],
 	["keyword", "union"], ["keyword", "unsigned"], ["keyword", "void"], ["keyword", "volatile"], ["keyword", "while"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

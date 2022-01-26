@@ -40,7 +40,3 @@ _foo[bar](baz)_
 		["punctuation", "_"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for italic. Also tests for inclusion of url.

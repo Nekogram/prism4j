@@ -9,7 +9,3 @@ nil
 	["boolean", "true"],
 	["boolean", "nil"]
 ]
-
-----------------------------------------------------
-
-Checks for booleans.

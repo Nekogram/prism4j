@@ -103,7 +103,3 @@ subscript(index: Int) -> Int {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

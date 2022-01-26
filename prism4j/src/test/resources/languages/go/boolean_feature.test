@@ -13,7 +13,3 @@ false
 	["boolean", "true"],
 	["boolean", "false"]
 ]
-
-----------------------------------------------------
-
-Checks for all boolean values.

@@ -25,7 +25,3 @@
 	["inserted", "+      }"],
 	["inserted", "+"]
 ]
-
-----------------------------------------------------
-
-Checks for inserted and deleted lines in git diff output.

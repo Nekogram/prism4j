@@ -35,7 +35,3 @@ function identity<T>(arg:T):T {
 
 	["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

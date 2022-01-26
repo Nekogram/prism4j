@@ -80,7 +80,3 @@ foo({ y: fun() })
 	["punctuation", "}"],
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for functions. Also checks for unicode characters in identifiers.

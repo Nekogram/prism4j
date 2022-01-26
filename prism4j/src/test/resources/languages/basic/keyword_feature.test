@@ -207,7 +207,3 @@ WRITE
 	["keyword", "WHILE"],
 	["keyword", "WRITE"]
 ]
-
-----------------------------------------------------
-
-Checks for keywords.

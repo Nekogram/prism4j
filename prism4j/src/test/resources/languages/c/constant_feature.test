@@ -31,7 +31,3 @@ stderr
 	["constant", "stdout"],
 	["constant", "stderr"]
 ]
-
-----------------------------------------------------
-
-Checks for all constants.

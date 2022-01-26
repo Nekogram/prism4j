@@ -17,7 +17,3 @@ f42()
 	["punctuation", "("],
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

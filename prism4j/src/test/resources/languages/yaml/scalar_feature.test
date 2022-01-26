@@ -17,7 +17,3 @@ bar: |
 	["punctuation", "|"],
 	["scalar", "\n\tFoo bar\n\tbaz"]
 ]
-
-----------------------------------------------------
-
-Checks for scalars.

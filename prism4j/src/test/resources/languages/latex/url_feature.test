@@ -6,7 +6,3 @@
 	["function", "\\url"], ["punctuation", "{"],
 	["url", "http://prismjs.com"], ["punctuation", "}"]
 ]
-
-----------------------------------------------------
-
-Checks for URLs.

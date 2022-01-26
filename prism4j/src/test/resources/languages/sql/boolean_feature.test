@@ -9,7 +9,3 @@ NULL
 	["boolean", "FALSE"],
 	["boolean", "NULL"]
 ]
-
-----------------------------------------------------
-
-Checks for booleans.

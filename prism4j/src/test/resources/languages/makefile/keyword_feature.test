@@ -35,5 +35,3 @@ vpath
 	["keyword", "unexport"],
 	["keyword", "vpath"]
 ]
-----------------------------------------------------
-Checks for keywords.

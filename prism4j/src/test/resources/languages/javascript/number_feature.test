@@ -117,8 +117,3 @@ abc0b0101n;
 	"\nabc0xFFn", ["punctuation", ";"],
 	"\nabc0b0101n", ["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for decimal numbers, binary numbers, octal numbers, hexadecimal numbers.
-Also checks for keywords representing numbers.

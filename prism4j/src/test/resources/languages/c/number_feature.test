@@ -35,7 +35,3 @@
 	["number", "42l"],
 	["number", "42L"]
 ]
-
-----------------------------------------------------
-
-Checks for decimal numbers and hexadecimal numbers.

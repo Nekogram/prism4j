@@ -5,8 +5,3 @@
 [
 	["string", "@\"file:///\""]
 ]
-
-----------------------------------------------------
-
-Checks that three slashes inside a string do not break highlighting.
-See #1091.

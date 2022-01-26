@@ -15,7 +15,3 @@ hello the-world: 23
     ["key", "\"\\\"foo# : {}[]\""], ["punctuation", ":"], ["number", "23"],
     ["key", "'\\'foo# : {}[]'"], ["punctuation", ":"], ["number", "23"]
 ]
-
-----------------------------------------------------
-
-Checks for keys.

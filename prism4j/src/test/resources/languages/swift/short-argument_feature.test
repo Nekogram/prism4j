@@ -18,7 +18,3 @@ reversedNames = names.sorted(by: { $0 > $1 } )
 	["punctuation", "}"],
 	["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for short arguments.

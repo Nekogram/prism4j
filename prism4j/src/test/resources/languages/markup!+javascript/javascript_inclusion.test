@@ -80,7 +80,3 @@
         ["punctuation", ">"]
     ]]
 ]
-
-----------------------------------------------------
-
-Checks for Javascript usage inside Markup, using <script> tags.

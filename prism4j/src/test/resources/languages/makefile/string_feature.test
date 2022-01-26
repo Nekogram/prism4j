@@ -17,7 +17,3 @@ bar'
 	["string", "\"foo\\\nbar\""],
 	["string", "'foo\\\nbar'"]
 ]
-
-----------------------------------------------------
-
-Checks for single-quoted and double-quoted strings.

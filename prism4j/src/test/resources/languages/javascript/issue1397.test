@@ -17,7 +17,3 @@
 		["template-punctuation", "`"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for nested template strings. See #1397

@@ -74,8 +74,3 @@
 	]],
 	"\n<div"
 ]
-
-----------------------------------------------------
-
-Checks for empty tags, tags that span multiple lines and namespaces in tag names.
-Also checks that unclosed tags (e.g. "<div") are not highlighted.

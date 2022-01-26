@@ -29,7 +29,3 @@
     ["preprocessor", ["#", ["directive", "undef"]]],
     ["preprocessor", ["#", ["directive", "warning"]]]
 ]
-
-----------------------------------------------------
-
-Checks for preprocessor directives.

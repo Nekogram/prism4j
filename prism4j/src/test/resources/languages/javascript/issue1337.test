@@ -5,7 +5,3 @@
 [
 	["comment", "// gulp.watch('./src/**/*.js', ['move']);"]
 ]
-
-----------------------------------------------------
-
-Checks for multi-line comment inside single-line comment. See #1337

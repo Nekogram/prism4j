@@ -175,5 +175,3 @@ willSet
 	["keyword", "while"],
 	["keyword", "willSet"]
 ]
-----------------------------------------------------
-Checks for all keywords.

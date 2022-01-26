@@ -9,7 +9,3 @@ class _
 	["keyword", "class"], ["class-name", "foobar_42"],
 	["keyword", "class"], ["class-name", "_"]
 ]
-
-----------------------------------------------------
-
-Checks for class names.

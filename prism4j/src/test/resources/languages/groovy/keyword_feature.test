@@ -55,7 +55,3 @@ try void volatile while
 	["keyword", "transient"],
 	["keyword", "try"], ["keyword", "void"], ["keyword", "volatile"], ["keyword", "while"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

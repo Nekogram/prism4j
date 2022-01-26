@@ -24,7 +24,3 @@ fooBar.prototype.bar;
     "bar",
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for supposed function variables based on standard function invocations or modifications.

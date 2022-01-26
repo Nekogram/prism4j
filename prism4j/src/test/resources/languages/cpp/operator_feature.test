@@ -67,7 +67,3 @@ and and_eq bitand bitor not not_eq or or_eq xor xor_eq
 	["operator", "xor"],
 	["operator", "xor_eq"]
 ]
-
-----------------------------------------------------
-
-Checks for all operators.

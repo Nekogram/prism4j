@@ -64,7 +64,3 @@ __foo[bar](baz)__
 		["punctuation", "__"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for bold. Also tests for inclusion of italic and url.

@@ -9,7 +9,3 @@
 [
 	["comment", "/*\n * ([{}])\n * //  <= double slash comment\n * ([{}]) <= punctuation\n */"]
 ]
-
-----------------------------------------------------
-
-Checks for single-line comment inside multi-line comment. See #1340

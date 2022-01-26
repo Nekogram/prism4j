@@ -9,7 +9,3 @@
 	["blockquote", ">>"], " foo\n",
 	["blockquote", "> >"], " foo"
 ]
-
-----------------------------------------------------
-
-Checks for blockquotes.

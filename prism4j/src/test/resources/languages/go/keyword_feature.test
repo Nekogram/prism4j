@@ -53,7 +53,3 @@ var
 	["keyword", "type"],
 	["keyword", "var"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords

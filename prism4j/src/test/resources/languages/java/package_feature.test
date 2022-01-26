@@ -111,7 +111,3 @@ import static java.lang.Math.*;
 	"*",
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for packages.

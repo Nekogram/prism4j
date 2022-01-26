@@ -203,7 +203,3 @@ yield
 	["keyword", "while"],
 	["keyword", "yield"]
 ]
-
-----------------------------------------------------
-
-Checks for all keywords.

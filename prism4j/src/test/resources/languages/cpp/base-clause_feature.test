@@ -111,7 +111,3 @@ class service : private Transport // comment
 	["punctuation", "}"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for the base clauses of classes and structs.

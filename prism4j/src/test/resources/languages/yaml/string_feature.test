@@ -23,7 +23,3 @@ bar: 'bar' # foo
     ["key", "bar"], ["punctuation", ":"],
     ["string", "'bar'"], ["comment", "# foo"]
 ]
-
-----------------------------------------------------
-
-Checks for strings.

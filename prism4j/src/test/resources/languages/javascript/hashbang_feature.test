@@ -21,7 +21,3 @@ console.log(1);
 	["punctuation", ")"],
 	["punctuation", ";"]
 ]
-
-----------------------------------------------------
-
-Checks for a Hashbang.

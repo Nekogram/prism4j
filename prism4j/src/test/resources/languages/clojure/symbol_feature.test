@@ -9,7 +9,3 @@
 	["symbol", ":foo/bar-baz"],
 	["symbol", "::foo"]
 ]
-
-----------------------------------------------------
-
-Checks for symbols.

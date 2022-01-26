@@ -169,7 +169,3 @@
 	["punctuation", "("], ["keyword", "true?"],         ["punctuation", ")"],
 	["punctuation", "("], ["keyword", "zero?"],         ["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for keywords.

@@ -20,7 +20,3 @@
 	["comment", "/*\n * comment\n */"],
 	["comment", "/* open-ended comment"]
 ]
-
-----------------------------------------------------
-
-Checks for comments.

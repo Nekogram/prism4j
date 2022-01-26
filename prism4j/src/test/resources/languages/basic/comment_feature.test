@@ -7,7 +7,3 @@ REM Foobar
 	["comment", ["! Foobar"]],
 	["comment", [["keyword", "REM"], " Foobar"]]
 ]
-
-----------------------------------------------------
-
-Checks for comments.

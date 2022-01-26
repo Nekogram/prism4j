@@ -11,7 +11,3 @@ def foo_ ()
 	["keyword", "def"], ["function", "_"], ["punctuation", "("],
 	["keyword", "def"], ["function", "foo_"], ["punctuation", "("], ["punctuation", ")"]
 ]
-
-----------------------------------------------------
-
-Checks for functions.

@@ -10,7 +10,3 @@ bar
 	["comment", "# foobar"],
 	["comment", "# foo \\\nbar"]
 ]
-
-----------------------------------------------------
-
-Checks for comments.

@@ -11,8 +11,3 @@
 		["punctuation", ">"]
 	]]
 ]
-
-----------------------------------------------------
-
-Checks for tag names containing dots.
-See #888 for details.

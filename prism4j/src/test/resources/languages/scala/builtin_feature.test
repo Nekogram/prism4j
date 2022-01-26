@@ -11,7 +11,3 @@ AnyVal Unit Nothing
 	["builtin", "Float"], ["builtin", "Char"], ["builtin", "Any"], ["builtin", "AnyRef"],
 	["builtin", "AnyVal"], ["builtin", "Unit"], ["builtin", "Nothing"]
 ]
-
-----------------------------------------------------
-
-Checks for builtins.
