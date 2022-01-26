@@ -15,7 +15,7 @@ public class Prism_scala {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
         final Grammar scala = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "java"),
+                prism4j.requireGrammar("java"),
                 "scala",
                 token -> {
                     final String name = token.name();

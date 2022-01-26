@@ -104,7 +104,7 @@ public class Prism4j {
 
     @NotNull
     public List<Node> tokenize(@NotNull String text, @NotNull String languageName) {
-        return tokenize(text, GrammarUtils.require(this, languageName));
+        return tokenize(text, requireGrammar(languageName));
     }
 
     public void visit(@NotNull Visitor visitor, @NotNull String text, @NotNull Grammar grammar) {
@@ -112,12 +112,21 @@ public class Prism4j {
     }
 
     public void visit(@NotNull Visitor visitor, @NotNull String text, @NotNull String languageName) {
-        visit(visitor, text, GrammarUtils.require(this, languageName));
+        visit(visitor, text, requireGrammar(languageName));
     }
 
     @Nullable
     public Grammar grammar(@NotNull String name) {
         return grammarLocator.grammar(this, name);
+    }
+
+    @NotNull
+    public Grammar requireGrammar(@NotNull String name) {
+        final Grammar grammar = grammar(name);
+        if (grammar == null) {
+            throw new NullPointerException("Requested language is not found: " + name);
+        }
+        return grammar;
     }
 
     private void matchGrammar(

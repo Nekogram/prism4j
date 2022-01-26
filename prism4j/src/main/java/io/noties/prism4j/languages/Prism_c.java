@@ -19,7 +19,7 @@ public class Prism_c {
 
         final Token commentToken = token("comment", pattern(compile("//(?:[^\\r\\n\\\\]|\\\\(?:\\r\\n?|\\n|(?![\\r\\n])))*|/\\*[\\s\\S]*?(?:\\*/|$)"), false, true));
         final Grammar c = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "clike"),
+                prism4j.requireGrammar("clike"),
                 "c",
                 token -> {
                     final String name = token.name();
@@ -46,7 +46,7 @@ public class Prism_c {
                                         pattern(
                                                 compile("^(#\\s*include\\s*)<[^>]+>"),
                                                 true),
-                                        Objects.requireNonNull(GrammarUtils.findToken(GrammarUtils.require(prism4j, "clike"), "string")).patterns().get(0)),
+                                        Objects.requireNonNull(GrammarUtils.findToken(prism4j.requireGrammar("clike"), "string")).patterns().get(0)),
                                 commentToken,
                                 token("macro-name",
                                         pattern(compile("(^#\\s*define\\s+)\\w+\\b(?!\\()", CASE_INSENSITIVE), true),

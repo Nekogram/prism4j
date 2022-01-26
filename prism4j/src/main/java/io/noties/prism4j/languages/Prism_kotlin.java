@@ -23,7 +23,7 @@ public class Prism_kotlin {
     public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar kotlin = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "clike"),
+                prism4j.requireGrammar("clike"),
                 "kotlin",
                 token -> !"class-name".equals(token.name()),
                 token(

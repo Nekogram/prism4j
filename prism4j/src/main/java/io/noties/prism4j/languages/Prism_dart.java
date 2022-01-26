@@ -22,7 +22,7 @@ public class Prism_dart {
         final Grammar classNameInside = grammar("inside", token("namespace", pattern(compile("^[a-z]\\w*(?:\\s*\\.\\s*[a-z]\\w*)*(?:\\s*\\.)?"), false, false, null, grammar("inside", token("punctuation", pattern(compile("\\.")))))));
         final Pattern className = pattern(compile("(^|[^\\w.])(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"), true, false, null, classNameInside);
         final Grammar dart = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "clike"),
+                prism4j.requireGrammar("clike"),
                 "dart",
                 token("class-name",
                         className,

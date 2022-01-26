@@ -235,15 +235,6 @@ public abstract class GrammarUtils {
         return new Grammar(name, out);
     }
 
-    @NotNull
-    public static Grammar require(@NotNull Prism4j prism4j, @NotNull String name) {
-        final Grammar grammar = prism4j.grammar(name);
-        if (grammar == null) {
-            throw new IllegalStateException("Unexpected state, requested language is not found: " + name);
-        }
-        return grammar;
-    }
-
     /**
      * Used when extending an existing grammar to filter out tokens that should not be cloned.
      *

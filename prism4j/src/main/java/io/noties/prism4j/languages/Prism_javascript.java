@@ -22,7 +22,7 @@ public class Prism_javascript {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar js = GrammarUtils.extend(GrammarUtils.require(prism4j, "clike"), "javascript",
+        final Grammar js = GrammarUtils.extend(prism4j.requireGrammar("clike"), "javascript",
                 token("class-name", pattern(
                         compile("(\\b(?:class|interface|extends|implements|trait|instanceof|new)\\s+)[\\w.\\\\]+"),
                         true,
@@ -43,7 +43,7 @@ public class Prism_javascript {
                         true,
                         null,
                         grammar("inside",
-                                token("regex-source", pattern(compile("^(/)[\\s\\S]+(?=/[a-z]*$)"), true, false, "language-regex", GrammarUtils.require(prism4j, "regex"))),
+                                token("regex-source", pattern(compile("^(/)[\\s\\S]+(?=/[a-z]*$)"), true, false, "language-regex", prism4j.requireGrammar("regex"))),
                                 token("regex-delimiter", pattern(compile("^/|/$"))),
                                 token("regex-flags", pattern(compile("[a-z]+$")))
                         )

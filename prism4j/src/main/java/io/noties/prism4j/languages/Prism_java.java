@@ -30,7 +30,7 @@ public class Prism_java {
                 )
         );
 
-        final Grammar java = GrammarUtils.extend(GrammarUtils.require(prism4j, "clike"), "java",
+        final Grammar java = GrammarUtils.extend(prism4j.requireGrammar("clike"), "java",
                 token("string", pattern(compile("(^|[^\\\\])\"(?:\\\\.|[^\"\\\\\\r\\n])*\""), true, true)),
                 token("class-name", className, pattern(compile(classNamePrefix + "[A-Z]\\w*(?=\\s+\\w+\\s*[;,=()])"), true, false, null, className.inside())),
                 keyword,

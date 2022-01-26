@@ -18,7 +18,7 @@ public class Prism_markdown {
     public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar markdown = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "markup"),
+                prism4j.requireGrammar("markup"),
                 "markdown"
         );
 

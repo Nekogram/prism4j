@@ -18,7 +18,7 @@ public class Prism_go {
     public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar go = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "clike"),
+                prism4j.requireGrammar("clike"),
                 "go",
                 token -> !"class-name".equals(token.name()),
                 token("string", pattern(

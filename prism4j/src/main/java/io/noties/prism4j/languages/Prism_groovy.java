@@ -17,7 +17,7 @@ public class Prism_groovy {
     public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Grammar groovy = GrammarUtils.extend(
-                GrammarUtils.require(prism4j, "clike"),
+                prism4j.requireGrammar("clike"),
                 "groovy",
                 token("keyword", pattern(compile("\\b(?:as|def|in|abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|trait|transient|try|void|volatile|while)\\b"))),
                 token("string",

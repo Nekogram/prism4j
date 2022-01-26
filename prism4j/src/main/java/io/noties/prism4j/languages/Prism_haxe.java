@@ -13,7 +13,7 @@ import static java.util.regex.Pattern.compile;
 public class Prism_haxe {
 
     public static Grammar create(@NotNull Prism4j prism4j) {
-        final Grammar haxe = GrammarUtils.extend(GrammarUtils.require(prism4j, "clike"), "haxe",
+        final Grammar haxe = GrammarUtils.extend(prism4j.requireGrammar("clike"), "haxe",
                 token("string",
                         pattern(compile("\"(?:[^\"\\\\]|\\\\[\\s\\S])*\""), false, true)
                 ),
@@ -41,7 +41,7 @@ public class Prism_haxe {
                 token("regex", pattern(compile("~/(?:[^/\\\\\\r\\n]|\\\\.)+/[a-z]*"), false, true, null,
                         grammar("inside",
                                 token("regex-flags", pattern(compile("\\b[a-z]+$"))),
-                                token("regex-source", pattern(compile("^(~/)[\\s\\S]+(?=/$)"), true, false, "language-regex", GrammarUtils.require(prism4j, "regex"))),
+                                token("regex-source", pattern(compile("^(~/)[\\s\\S]+(?=/$)"), true, false, "language-regex", prism4j.requireGrammar("regex"))),
                                 token("regex-delimiter", pattern(compile("^~/|/$")))
                         )
                 ))
