@@ -30,7 +30,7 @@ public class Prism_java {
                 )
         );
 
-        final Grammar java = GrammarUtils.extend(prism4j.requireGrammar("clike"), "java",
+        final Grammar java = prism4j.requireGrammar("clike").extend("java",
                 token("string", pattern(compile("(^|[^\\\\])\"(?:\\\\.|[^\"\\\\\\r\\n])*\""), true, true)),
                 token("class-name", className, pattern(compile(classNamePrefix + "[A-Z]\\w*(?=\\s+\\w+\\s*[;,=()])"), true, false, null, className.inside())),
                 keyword,
@@ -42,12 +42,12 @@ public class Prism_java {
                 ))
         );
 
-        GrammarUtils.insertBeforeToken(java, "string",
+        java.insertBeforeToken("string",
                 token("triple-quoted-string", pattern(compile("\"\"\"[ \\t]*[\\r\\n](?:(?:\"|\"\")?(?:\\\\.|[^\"\\\\]))*\"\"\""), false, true, "string")),
                 token("char", pattern(compile("'(?:\\\\.|[^'\\\\\\r\\n]){1,6}'"), false, true))
         );
 
-        GrammarUtils.insertBeforeToken(java, "class-name",
+        java.insertBeforeToken("class-name",
                 token("annotation", pattern(
                         compile("(^|[^.])@\\w+(?:\\s*\\.\\s*\\w+)*"),
                         true,

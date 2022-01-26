@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Aliases;
@@ -22,7 +21,7 @@ public class Prism_javascript {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar js = GrammarUtils.extend(prism4j.requireGrammar("clike"), "javascript",
+        final Grammar js = prism4j.requireGrammar("clike").extend("javascript",
                 token("class-name", pattern(
                         compile("(\\b(?:class|interface|extends|implements|trait|instanceof|new)\\s+)[\\w.\\\\]+"),
                         true,
@@ -36,7 +35,7 @@ public class Prism_javascript {
                 token("operator", pattern(compile("--|\\+\\+|\\*\\*=?|=>|&&=?|\\|\\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\\.{3}|\\?\\?=?|\\?\\.?|[~:]")))
         );
 
-        GrammarUtils.insertBeforeToken(js, "keyword",
+        js.insertBeforeToken("keyword",
                 token("regex", pattern(
                         compile("((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*]|\\\\.|[^/\\\\\\[\\r\\n])+/[dgimyus]{0,7}(?=(?:\\s|\\/\\*(?:[^*]|\\*(?!\\/))*\\*\\/)*(?:$|[\\r\\n,.;:\\})\\]]|//))"),
                         true,
@@ -68,7 +67,7 @@ public class Prism_javascript {
 
         final Token interpolation = token("interpolation");
 
-        GrammarUtils.insertBeforeToken(js, "string",
+        js.insertBeforeToken("string",
                 token("hashbang", pattern(compile("^#!.*"), false, true, "comment")),
                 token(
                         "template-string",
@@ -88,7 +87,7 @@ public class Prism_javascript {
                 token("string-property", pattern(compile("((?:^|[,{])[ \\t]*)([\"'])(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\2)[^\\\\\\r\\n])*\\2(?=\\s*:)", MULTILINE), true, true, "property"))
         );
 
-        GrammarUtils.insertBeforeToken(js, "operator", token("literal-property",
+        js.insertBeforeToken("operator", token("literal-property",
                 pattern(compile("((?:^|[,{])[ \\t]*)(?!\\s)[_$a-zA-Z\\xA0-\\uFFFF](?:(?!\\s)[$\\w\\xA0-\\uFFFF])*(?=\\s*:)", MULTILINE), true, false, "property")));
 
         final Grammar insideInterpolation;
@@ -105,7 +104,7 @@ public class Prism_javascript {
 
         final Grammar markup = prism4j.grammar("markup");
         if (markup != null) {
-            GrammarUtils.insertBeforeToken(markup, "tag",
+            markup.insertBeforeToken("tag",
                     token(
                             "script", pattern(
                                     compile("(<script[\\s\\S]*?>)[\\s\\S]*?(?=</script>)", CASE_INSENSITIVE),

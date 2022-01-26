@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,8 +13,7 @@ public class Prism_scala {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        final Grammar scala = GrammarUtils.extend(
-                prism4j.requireGrammar("java"),
+        final Grammar scala = prism4j.requireGrammar("java").extend(
                 "scala",
                 token -> {
                     final String name = token.name();
@@ -37,11 +35,11 @@ public class Prism_scala {
                 token("symbol", pattern(compile("'[^\\d\\s\\\\]\\w*")))
         );
 
-        GrammarUtils.insertBeforeToken(scala, "number",
+        scala.insertBeforeToken("number",
                 token("builtin", pattern(compile("\\b(?:String|Int|Long|Short|Byte|Boolean|Double|Float|Char|Any|AnyRef|AnyVal|Unit|Nothing)\\b")))
         );
 
-        GrammarUtils.insertBeforeToken(scala, "triple-quoted-string",
+        scala.insertBeforeToken("triple-quoted-string",
                 token("string-interpolation",
                         pattern(compile("\\b[a-z]\\w*(?:\"\"\"(?:[^$]|\\$(?:[^{]|\\{(?:[^{\\}]|\\{[^{\\}]*\\})*\\}))*?\"\"\"|\"(?:[^$\"\\r\\n]|\\$(?:[^{]|\\{(?:[^{\\}]|\\{[^{}]*\\})*\\}))*\")", CASE_INSENSITIVE),
                                 false, true, null, grammar("inside",

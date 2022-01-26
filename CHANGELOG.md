@@ -11,18 +11,21 @@
     * There is only one module, `prism4j`, which contains all the classes (an annotation processor is no longer required
       due to the removal of the `PrismBundler`)
 * Rename `AbsVisitor` -> `Visitor`, old `Prism4j.Visitor` was removed
-* Internal change
+* Internal changes:
     * `Prism4j.*` interfaces were removed, and you'll have to replace them if you used them
       (you can extend `Grammar`, `Pattern`, `Syntax`, `Text`, `Token` and `Visitor`, they provide the same functions)
     * the language annotation `@Extend` was removed because `DefaultGrammarLocator` always ships with every language (
       not necessary to add it manually)
+    * various methods were removed from `GrammarUtils` and added to `Grammar` and `Prism4j`
 
 ### Enhancements
 
 * Updated language definitions
-* Add support for Basic
-* Add support for Haxe
-* Add support for INI
+* New languages:
+  * Basic
+  * CSV
+  * Haxe
+  * INI
 
 ## 2.1.1
 

@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Pattern;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
@@ -21,8 +20,7 @@ public class Prism_dart {
         };
         final Grammar classNameInside = grammar("inside", token("namespace", pattern(compile("^[a-z]\\w*(?:\\s*\\.\\s*[a-z]\\w*)*(?:\\s*\\.)?"), false, false, null, grammar("inside", token("punctuation", pattern(compile("\\.")))))));
         final Pattern className = pattern(compile("(^|[^\\w.])(?:[a-z]\\w*\\s*\\.\\s*)*(?:[A-Z]\\w*\\s*\\.\\s*)*[A-Z](?:[\\d_A-Z]*[a-z]\\w*)?\\b"), true, false, null, classNameInside);
-        final Grammar dart = GrammarUtils.extend(
-                prism4j.requireGrammar("clike"),
+        final Grammar dart = prism4j.requireGrammar("clike").extend(
                 "dart",
                 token("class-name",
                         className,
@@ -32,7 +30,7 @@ public class Prism_dart {
                 token("operator", pattern(compile("\\bis!|\\b(?:as|is)\\b|\\+\\+|--|&&|\\|\\||<<=?|>>=?|~(?:\\/=?)?|[+\\-*\\/%&^|=!<>]=?|\\?")))
         );
 
-        GrammarUtils.insertBeforeToken(dart, "string",
+        dart.insertBeforeToken("string",
                 token("string-literal", pattern(compile("r?(?:(\"\"\"|''')[\\s\\S]*?\\1|([\"'])(?:\\\\.|(?!\\2)[^\\\\\\r\\n])*\\2(?!\\2))"), false, true, null, grammar("inside",
                         token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:\\w+|\\{(?:[^{\\}]|\\{[^{}]*\\})*\\})"), true, false, null,
                                 grammar("inside", token("punctuation", pattern(compile("^\\$\\{?|\\}$"))),
@@ -44,11 +42,11 @@ public class Prism_dart {
                 )*/
         );
 
-        GrammarUtils.insertBeforeToken(dart, "class-name",
+        dart.insertBeforeToken("class-name",
                 token("metadata", pattern(compile("@\\w+"), false, false, "function"))
         );
 
-        GrammarUtils.insertBeforeToken(dart, "class-name", token("generics", pattern(compile("<(?:[\\w\\s,.&?]|<(?:[\\w\\s,.&?]|<(?:[\\w\\s,.&?]|<[\\w\\s,.&?]*>)*>)*>)*>"), false, false, null, grammar("inside",
+        dart.insertBeforeToken("class-name", token("generics", pattern(compile("<(?:[\\w\\s,.&?]|<(?:[\\w\\s,.&?]|<(?:[\\w\\s,.&?]|<[\\w\\s,.&?]*>)*>)*>)*>"), false, false, null, grammar("inside",
                 token("class-name", className),
                 token("keyword", keywords),
                 token("punctuation", pattern(compile("[<>(),.:]"))),

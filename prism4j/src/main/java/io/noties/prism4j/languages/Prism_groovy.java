@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,8 +15,7 @@ public class Prism_groovy {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar groovy = GrammarUtils.extend(
-                prism4j.requireGrammar("clike"),
+        final Grammar groovy = prism4j.requireGrammar("clike").extend(
                 "groovy",
                 token("keyword", pattern(compile("\\b(?:as|def|in|abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|goto|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|trait|transient|try|void|volatile|while)\\b"))),
                 token("string",
@@ -44,7 +42,7 @@ public class Prism_groovy {
                 )
         );
 
-        GrammarUtils.insertBeforeToken(groovy, "string",
+        groovy.insertBeforeToken("string",
                 token("shebang", pattern(
                         compile("#!.+"),
                         false,
@@ -53,13 +51,13 @@ public class Prism_groovy {
                 ))
         );
 
-        GrammarUtils.insertBeforeToken(groovy, "punctuation",
+        groovy.insertBeforeToken("punctuation",
                 token("spock-block", pattern(
                         compile("\\b(?:setup|given|when|then|and|cleanup|expect|where):")
                 ))
         );
 
-        GrammarUtils.insertBeforeToken(groovy, "function",
+        groovy.insertBeforeToken("function",
                 token("annotation", pattern(
                         compile("(^|[^.])@\\w+"),
                         true,

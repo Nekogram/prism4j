@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +49,7 @@ public class Prism_swift {
                 token("punctuation", pattern(compile("[{\\}\\[\\]();,.:\\\\]")))
         );
 
-        GrammarUtils.insertBeforeToken(swift, "directive",
+        swift.insertBeforeToken("directive",
                 token("string-literal",
                         pattern(
                                 compile("(^|[^\"#])(?:\"(?:\\\\(?:\\((?:[^()]|\\([^()]*\\))*\\)|\\r\\n|[^(])|[^\\\\\\r\\n\"])*\"|\"\"\"(?:\\\\(?:\\((?:[^()]|\\([^()]*\\))*\\)|[^(])|[^\\\\\"]|\"(?!\"\"))*\"\"\")(?![\"#])"),

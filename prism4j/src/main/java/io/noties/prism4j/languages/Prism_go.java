@@ -1,9 +1,7 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
-import io.noties.prism4j.Token;
 import org.jetbrains.annotations.NotNull;
 
 import static io.noties.prism4j.Prism4j.pattern;
@@ -17,8 +15,7 @@ public class Prism_go {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar go = GrammarUtils.extend(
-                prism4j.requireGrammar("clike"),
+        final Grammar go = prism4j.requireGrammar("clike").extend(
                 "go",
                 token -> !"class-name".equals(token.name()),
                 token("string", pattern(
@@ -36,12 +33,12 @@ public class Prism_go {
                 token("operator", pattern(compile("[*\\/%^!=]=?|\\+[=+]?|-[=-]?|\\|[=|]?|&(?:=|&|\\^=?)?|>(?:>=?|=)?|<(?:<=?|=|-)?|:=|\\.\\.\\.")))
         );
 
-        GrammarUtils.insertBeforeToken(go, "string",
+        go.insertBeforeToken("string",
                 token("char", pattern(compile("'(?:\\\\.|[^'\\\\\\r\\n]){0,10}'"), false, true))
         );
 
         // clike doesn't have builtin
-        GrammarUtils.insertBeforeToken(go, "boolean",
+        go.insertBeforeToken("boolean",
                 token("builtin", pattern(compile("\\b(?:bool|byte|complex(?:64|128)|error|float(?:32|64)|rune|string|u?int(?:8|16|32|64)?|uintptr|append|cap|close|complex|copy|delete|imag|len|make|new|panic|print(?:ln)?|real|recover)\\b")))
         );
 

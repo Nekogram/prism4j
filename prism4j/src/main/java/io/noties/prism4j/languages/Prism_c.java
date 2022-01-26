@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +17,7 @@ public class Prism_c {
     public static Grammar create(@NotNull Prism4j prism4j) {
 
         final Token commentToken = token("comment", pattern(compile("//(?:[^\\r\\n\\\\]|\\\\(?:\\r\\n?|\\n|(?![\\r\\n])))*|/\\*[\\s\\S]*?(?:\\*/|$)"), false, true));
-        final Grammar c = GrammarUtils.extend(
-                prism4j.requireGrammar("clike"),
+        final Grammar c = prism4j.requireGrammar("clike").extend(
                 "c",
                 token -> {
                     final String name = token.name();
@@ -34,7 +32,7 @@ public class Prism_c {
                 token("operator", pattern(compile(">>=?|<<=?|->|([-+&|:])\\1|[?:~]|[-+*/%&|^!=<>]=?")))
         );
 
-        GrammarUtils.insertBeforeToken(c, "string",
+        c.insertBeforeToken("string",
                 token("char", pattern(compile("'(?:\\\\(?:\\r\\n|[\\s\\S])|[^'\\\\\\r\\n]){0,32}'"))),
                 token("macro", pattern(
                         compile("(^[\\t ]*)#\\s*[a-z](?:[^\\r\\n\\\\/]|/(?!\\*)|/\\*(?:[^*]|\\*(?!/))*\\*/|\\\\(?:\\r\\n|[\\s\\S]))*", CASE_INSENSITIVE | MULTILINE),
@@ -46,7 +44,7 @@ public class Prism_c {
                                         pattern(
                                                 compile("^(#\\s*include\\s*)<[^>]+>"),
                                                 true),
-                                        Objects.requireNonNull(GrammarUtils.findToken(prism4j.requireGrammar("clike"), "string")).patterns().get(0)),
+                                        Objects.requireNonNull(prism4j.requireGrammar("clike").findToken("string")).patterns().get(0)),
                                 commentToken,
                                 token("macro-name",
                                         pattern(compile("(^#\\s*define\\s+)\\w+\\b(?!\\()", CASE_INSENSITIVE), true),

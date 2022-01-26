@@ -20,7 +20,7 @@ public class Prism_css_extras {
 
         if (css != null) {
 
-            final Token selector = GrammarUtils.findToken(css, "selector");
+            final Token selector = css.findToken("selector");
             if (selector != null) {
                 final Pattern pattern = pattern(
                         compile("[^{}\\s][^{}]*(?=\\s*\\{)"),
@@ -39,7 +39,7 @@ public class Prism_css_extras {
                 selector.patterns().add(pattern);
             }
 
-            GrammarUtils.insertBeforeToken(css, "function",
+            css.insertBeforeToken("function",
                     token("hexcode", pattern(compile("#[\\da-f]{3,8}", CASE_INSENSITIVE))),
                     token("entity", pattern(compile("\\\\[\\da-fA-F]{1,8}", CASE_INSENSITIVE))),
                     token("number", pattern(compile("(-|)[\\d%.]+(px|)")))

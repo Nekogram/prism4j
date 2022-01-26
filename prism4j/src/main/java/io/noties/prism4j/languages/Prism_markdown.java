@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +16,7 @@ public class Prism_markdown {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar markdown = GrammarUtils.extend(
-                prism4j.requireGrammar("markup"),
+        final Grammar markdown = prism4j.requireGrammar("markup").extend(
                 "markdown"
         );
 
@@ -49,7 +47,7 @@ public class Prism_markdown {
                 )
         ));
 
-        GrammarUtils.insertBeforeToken(markdown, "prolog",
+        markdown.insertBeforeToken("prolog",
                 token("blockquote", pattern(compile("^>(?:[\\t ]*>)*", MULTILINE))),
                 token("code",
                         pattern(compile("^(?: {4}|\\t).+", MULTILINE), false, false, "keyword"),
@@ -100,8 +98,8 @@ public class Prism_markdown {
                 url
         );
 
-        add(GrammarUtils.findFirstInsideGrammar(bold), url, italic);
-        add(GrammarUtils.findFirstInsideGrammar(italic), url, bold);
+        add(Grammar.findFirstInsideGrammar(bold), url, italic);
+        add(Grammar.findFirstInsideGrammar(italic), url, bold);
 
         return markdown;
     }

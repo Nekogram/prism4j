@@ -17,8 +17,7 @@ public class Prism_cpp {
 
         String keywordPattern = "\\b(?:alignas|alignof|asm|auto|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|compl|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|final|float|for|friend|goto|if|import|inline|int|int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|long|module|mutable|namespace|new|noexcept|nullptr|operator|override|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while)\\b";
 
-        final Grammar cpp = GrammarUtils.extend(
-                prism4j.requireGrammar("c"),
+        final Grammar cpp = prism4j.requireGrammar("c").extend(
                 "cpp",
                 token("class-name",
                         pattern(compile("(\\b(?:class|concept|enum|struct|typename)\\s+)(?!" + keywordPattern + ")\\w+"), true),
@@ -31,11 +30,11 @@ public class Prism_cpp {
                 token("operator", pattern(compile(">>=?|<<=?|->|--|\\+\\+|&&|\\|\\||[?:~]|<=>|[-+*/%&|^!=<>]=?|\\b(?:and|and_eq|bitand|bitor|not|not_eq|or|or_eq|xor|xor_eq)\\b")))
         );
 
-        GrammarUtils.insertBeforeToken(cpp, "function",
+        cpp.insertBeforeToken("function",
                 token("boolean", pattern(compile("\\b(?:true|false)\\b")))
         );
 
-        GrammarUtils.insertBeforeToken(cpp, "string",
+        cpp.insertBeforeToken("string",
                 token("module", pattern(
                         compile("(\\b(?:module|import)\\s+)(?:\"(?:\\\\(?:\\r\\n|[\\s\\S])|[^\"\\\\\\r\\n])*\"|<[^<>\\r\\n]*>|\\b(?!" + keywordPattern + ")\\w+(?:\\s*\\.\\s*\\w+)*\\b(?:\\s*:\\s*\\b(?!" + keywordPattern + ")\\w+(?:\\s*\\.\\s*\\w+)*\\b)?|:\\s*\\b(?!" + keywordPattern + ")\\w+(?:\\s*\\.\\s*\\w+)*\\b)"),
                         true, true, null,
@@ -44,7 +43,7 @@ public class Prism_cpp {
                 token("raw-string", pattern(compile("R\"([^()\\\\ ]{0,16})\\([\\s\\S]*?\\)\\1\""), false, true, "string"))
         );
 
-        GrammarUtils.insertBeforeToken(cpp, "keyword",
+        cpp.insertBeforeToken("keyword",
                 token("generic-function", pattern(compile("\\b(?!operator\\b)[a-z_]\\w*\\s*<(?:[^<>]|<[^<>])*>*>(?=\\s*\\()", CASE_INSENSITIVE),
                                 false, false, null,
                                 grammar("inside",
@@ -55,12 +54,12 @@ public class Prism_cpp {
                 )
         );
 
-        GrammarUtils.insertBeforeToken(cpp, "operator", token("double-colon", pattern(compile("::"))));
+        cpp.insertBeforeToken("operator", token("double-colon", pattern(compile("::"))));
 
         final Grammar baseClause = GrammarUtils.clone(cpp);
-        GrammarUtils.insertBeforeToken(baseClause, "operator", token("class-name", pattern(compile("\\b[a-z_]\\w*\\b(?!\\s*::)", CASE_INSENSITIVE), false, true)));
+        baseClause.insertBeforeToken("operator", token("class-name", pattern(compile("\\b[a-z_]\\w*\\b(?!\\s*::)", CASE_INSENSITIVE), false, true)));
 
-        GrammarUtils.insertBeforeToken(cpp, "class-name",
+        cpp.insertBeforeToken("class-name",
                 token("base-clause", pattern(compile("(\\b(?:class|struct)\\s+\\w+\\s*:\\s*)[^;{\\}\"']+?(?=\\s*[;{])"), true, true, null, baseClause))
         );
 

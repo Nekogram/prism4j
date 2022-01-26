@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Aliases;
@@ -22,8 +21,7 @@ public class Prism_kotlin {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar kotlin = GrammarUtils.extend(
-                prism4j.requireGrammar("clike"),
+        final Grammar kotlin = prism4j.requireGrammar("clike").extend(
                 "kotlin",
                 token -> !"class-name".equals(token.name()),
                 token(
@@ -65,7 +63,7 @@ public class Prism_kotlin {
             );
         }
 
-        GrammarUtils.insertBeforeToken(kotlin, "string",
+        kotlin.insertBeforeToken("string",
                 token("string-literal",
                         pattern(compile("\"\"\"(?:[^$]|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*?\"\"\""), false, false, "multiline", grammar("inside", token("interpolation", pattern(compile("\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), false, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+"))))),
                         pattern(compile("\"(?:[^\"\\\\\\r\\n$]|\\\\.|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*\""), false, false, "singleline", grammar("inside", token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), true, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+")))))
@@ -73,13 +71,13 @@ public class Prism_kotlin {
                 token("char", pattern(compile("'(?:[^'\\\\\\r\\n]|\\\\(?:.|u[a-fA-F0-9]{0,4}))'"), false, true))
         );
 
-        kotlin.tokens().remove(GrammarUtils.findToken(kotlin, "string"));
+        kotlin.tokens().remove(kotlin.findToken("string"));
 
-        GrammarUtils.insertBeforeToken(kotlin, "keyword",
+        kotlin.insertBeforeToken("keyword",
                 token("annotation", pattern(compile("\\B@(?:\\w+:)?(?:[A-Z]\\w*|\\[[^\\]]+\\])"), false, false, "builtin"))
         );
 
-        GrammarUtils.insertBeforeToken(kotlin, "function",
+        kotlin.insertBeforeToken("function",
                 token("label", pattern(compile("\\b\\w+@|@\\w+\\b"), false, false, "symbol"))
         );
 

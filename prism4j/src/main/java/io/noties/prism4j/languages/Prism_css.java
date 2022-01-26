@@ -56,7 +56,7 @@ public class Prism_css {
 
         // now we need to put the all tokens from grammar inside `atrule` (except the `atrule` of cause)
         final Token atrule = grammar.tokens().get(1);
-        final Grammar inside = GrammarUtils.findFirstInsideGrammar(atrule);
+        final Grammar inside = Grammar.findFirstInsideGrammar(atrule);
         if (inside != null) {
             for (Token token : grammar.tokens()) {
                 if (!"atrule".equals(token.name())) {
@@ -67,7 +67,7 @@ public class Prism_css {
 
         final Grammar markup = prism4j.grammar("markup");
         if (markup != null) {
-            GrammarUtils.insertBeforeToken(markup, "tag",
+            markup.insertBeforeToken("tag",
                     token(
                             "style",
                             pattern(
@@ -86,9 +86,9 @@ public class Prism_css {
             final Grammar markupTagInside;
             {
                 Grammar _temp = null;
-                final Token token = GrammarUtils.findToken(markup, "tag");
+                final Token token = markup.findToken("tag");
                 if (token != null) {
-                    _temp = GrammarUtils.findFirstInsideGrammar(token);
+                    _temp = Grammar.findFirstInsideGrammar(token);
                     if (_temp != null) {
                         _temp = GrammarUtils.clone(_temp);
                     }
@@ -96,7 +96,7 @@ public class Prism_css {
                 markupTagInside = _temp;
             }
 
-            GrammarUtils.insertBeforeToken(markup, "tag/attr-value",
+            markup.insertBeforeToken("tag/attr-value",
                     token(
                             "style-attr",
                             pattern(

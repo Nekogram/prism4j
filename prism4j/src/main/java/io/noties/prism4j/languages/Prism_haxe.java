@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +12,7 @@ import static java.util.regex.Pattern.compile;
 public class Prism_haxe {
 
     public static Grammar create(@NotNull Prism4j prism4j) {
-        final Grammar haxe = GrammarUtils.extend(prism4j.requireGrammar("clike"), "haxe",
+        final Grammar haxe = prism4j.requireGrammar("clike").extend("haxe",
                 token("string",
                         pattern(compile("\"(?:[^\"\\\\]|\\\\[\\s\\S])*\""), false, true)
                 ),
@@ -23,7 +22,7 @@ public class Prism_haxe {
                 token("operator", pattern(compile("\\.{3}|\\+\\+|--|&&|\\|\\||->|=>|(?:<<?|>{1,3}|[-+*/%!=&|^])=?|[?:~]")))
         );
 
-        GrammarUtils.insertBeforeToken(haxe, "string",
+        haxe.insertBeforeToken("string",
                 token("string-interpolation", pattern(compile("'(?:[^'\\\\]|\\\\[\\s\\S])*'"), false, true, null,
                         grammar("inside",
                                 token("interpolation", pattern(compile("(^|[^\\\\])\\$(?:\\w+|\\{[^{}]+\\})"), true, false, null,
@@ -37,7 +36,7 @@ public class Prism_haxe {
                 ))
         );
 
-        GrammarUtils.insertBeforeToken(haxe, "class-name",
+        haxe.insertBeforeToken("class-name",
                 token("regex", pattern(compile("~/(?:[^/\\\\\\r\\n]|\\\\.)+/[a-z]*"), false, true, null,
                         grammar("inside",
                                 token("regex-flags", pattern(compile("\\b[a-z]+$"))),
@@ -47,7 +46,7 @@ public class Prism_haxe {
                 ))
         );
 
-        GrammarUtils.insertBeforeToken(haxe, "keyword",
+        haxe.insertBeforeToken("keyword",
                 token("preprocessor", pattern(compile("#(?:else|elseif|end|if)\\b.*"), false, false, "property")),
                 token("metadata", pattern(compile("@:?[\\w.]+"), false, false, "symbol")),
                 token("reification", pattern(compile("\\$(?:\\w+|(?=\\{))"), false, false, "important"))

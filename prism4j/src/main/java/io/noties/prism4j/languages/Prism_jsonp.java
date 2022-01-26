@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,10 +13,10 @@ public class Prism_jsonp {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        Grammar grammar = GrammarUtils.extend(prism4j.requireGrammar("clike"), "json",
+        Grammar jsonp = prism4j.requireGrammar("clike").extend("jsonp",
                 token("puctuation", pattern(compile("[{\\}\\[\\]();,.]"))));
-        GrammarUtils.insertBeforeToken(grammar, "punctuation",
+        jsonp.insertBeforeToken("punctuation",
                 token("function", pattern(compile("[_$a-zA-Z\\xA0-\\uFFFF][$\\w\\xA0-\\uFFFF]*(?=\\s*\\()"))));
-        return grammar;
+        return jsonp;
     }
 }
