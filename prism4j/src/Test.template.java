@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @RunWith(Parameterized.class)
@@ -26,7 +26,7 @@ public class {{class-name}} {
 
     @Parameterized.Parameters(name = "{0}")
     @NotNull
-    public static Collection<Object> parameters() {
+    public static List<String> parameters() {
         return TestUtils.testFiles("{{folder-name}}");
     }
 

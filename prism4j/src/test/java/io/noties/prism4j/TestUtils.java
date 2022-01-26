@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.List;
 
 import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals;
@@ -23,14 +22,13 @@ public abstract class TestUtils {
     private TestUtils() {
     }
 
-    @NotNull
-    public static Collection<Object> testFiles(@NotNull String lang) {
+    public static List<String> testFiles(@NotNull String lang) {
 
         final String folder = "languages/" + lang + "/";
 
         try (InputStream in = TestUtils.class.getClassLoader().getResourceAsStream(folder)) {
-            //noinspection unchecked
-            return (Collection) Ix.from(IOUtils.readLines(in, StandardCharsets.UTF_8))
+            assert in != null;
+            return Ix.from(IOUtils.readLines(in, StandardCharsets.UTF_8))
                     .filter(s -> s.endsWith(".test"))
                     .map(s -> folder + s)
                     .toList();

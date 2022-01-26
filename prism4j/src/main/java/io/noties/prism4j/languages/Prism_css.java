@@ -12,7 +12,6 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
-@Modify("markup")
 public class Prism_css {
 
     @NotNull
@@ -63,75 +62,6 @@ public class Prism_css {
                     inside.tokens().add(token);
                 }
             }
-        }
-
-        final Grammar markup = prism4j.grammar("markup");
-        if (markup != null) {
-            markup.insertBeforeToken("tag",
-                    token(
-                            "style",
-                            pattern(
-                                    compile("(<style[\\s\\S]*?>)[\\s\\S]*?(?=<\\/style>)", CASE_INSENSITIVE),
-                                    true,
-                                    true,
-                                    "language-css",
-                                    grammar
-                            )
-                    )
-            );
-
-            // important thing here is to clone found grammar
-            // otherwise we will have stackoverflow (inside tag references style-attr, which
-            // references inside tag, etc)
-            final Grammar markupTagInside;
-            {
-                Grammar _temp = null;
-                final Token token = markup.findToken("tag");
-                if (token != null) {
-                    _temp = Grammar.findFirstInsideGrammar(token);
-                    if (_temp != null) {
-                        _temp = GrammarUtils.clone(_temp);
-                    }
-                }
-                markupTagInside = _temp;
-            }
-
-            markup.insertBeforeToken("tag/attr-value",
-                    token(
-                            "style-attr",
-                            pattern(
-                                    compile("\\s*style=(\"|')(?:\\\\[\\s\\S]|(?!\\1)[^\\\\])*\\1", CASE_INSENSITIVE),
-                                    false,
-                                    false,
-                                    "language-css",
-                                    grammar(
-                                            "inside",
-                                            token(
-                                                    "attr-name",
-                                                    pattern(
-                                                            compile("^\\s*style", CASE_INSENSITIVE),
-                                                            false,
-                                                            false,
-                                                            null,
-                                                            markupTagInside
-                                                    )
-                                            ),
-                                            token("punctuation", pattern(compile("^\\s*=\\s*['\"]|['\"]\\s*$"))),
-                                            token(
-                                                    "attr-value",
-                                                    pattern(
-                                                            compile(".+", CASE_INSENSITIVE),
-                                                            false,
-                                                            false,
-                                                            null,
-                                                            grammar
-                                                    )
-                                            )
-
-                                    )
-                            )
-                    )
-            );
         }
 
         return grammar;

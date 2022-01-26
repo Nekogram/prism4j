@@ -167,10 +167,11 @@ public class Grammar {
 
         final String[] parts = path.split("/");
 
-        insertBeforeToken(parts, 0, tokens);
+        insertBeforeToken(this, parts, 0, tokens);
     }
 
     private void insertBeforeToken(
+            @NotNull Grammar grammar,
             @NotNull String[] parts,
             int index,
             @NotNull Token[] tokens) {
@@ -178,7 +179,7 @@ public class Grammar {
         final String part = parts[index];
         final boolean last = index == parts.length - 1;
 
-        final List<Token> grammarTokens = tokens();
+        final List<Token> grammarTokens = grammar.tokens();
 
         Token token;
 
@@ -201,7 +202,7 @@ public class Grammar {
                     // we will try to find first pattern with inside grammar
                     final Grammar inside = findFirstInsideGrammar(token);
                     if (inside != null) {
-                        insertBeforeToken(parts, index + 1, tokens);
+                        insertBeforeToken(inside, parts, index + 1, tokens);
                     }
                 }
 

@@ -224,7 +224,6 @@ public class DefaultGrammarLocator implements GrammarLocator {
         Grammar grammar = null;
         switch (name) {
             case "markup":
-                prism4j.grammar("css");
                 prism4j.grammar("javascript");
                 break;
             case "css":
