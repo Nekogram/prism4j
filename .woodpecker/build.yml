@@ -2,4 +2,4 @@ pipeline:
   test:
     image: gradle:6.9.2-jdk8
     commands:
-      - ./gradlew :prism4j:test
+      - gradle :prism4j:test
