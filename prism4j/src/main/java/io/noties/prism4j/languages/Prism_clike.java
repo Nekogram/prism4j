@@ -10,7 +10,7 @@ import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
-public abstract class Prism_clike {
+public class Prism_clike {
 
     private Prism_clike() {
     }

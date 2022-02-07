@@ -15,7 +15,7 @@ import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
 @Aliases({"xml", "html", "mathml", "svg"})
-public abstract class Prism_markup {
+public class Prism_markup {
 
     private Prism_markup() {
     }

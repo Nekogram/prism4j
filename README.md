@@ -51,7 +51,7 @@ In order to simplify adding language definitions to your project, Prism4j has so
 * `clojure`
 * `cpp`
 * `csharp` (`dotnet`)
-* `css` (+`css-extras`)
+* `css`
 * `dart`
 * `git`
 * `go`
