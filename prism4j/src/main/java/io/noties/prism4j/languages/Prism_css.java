@@ -3,7 +3,6 @@ package io.noties.prism4j.languages;
 import io.noties.prism4j.*;
 import org.jetbrains.annotations.NotNull;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
@@ -13,38 +12,38 @@ public class Prism_css {
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
 
-        final Grammar css = grammar(
+        final Grammar css = GrammarUtils.grammar(
                 "css",
-                token("comment", pattern(compile("\\/\\*[\\s\\S]*?\\*\\/"))),
-                token(
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile("\\/\\*[\\s\\S]*?\\*\\/"))),
+                GrammarUtils.token(
                         "atrule",
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("@[\\w-]+?.*?(?:;|(?=\\s*\\{))", CASE_INSENSITIVE),
                                 false,
                                 false,
                                 null,
-                                grammar(
+                                GrammarUtils.grammar(
                                         "inside",
-                                        token("rule", pattern(compile("@[\\w-]+")))
+                                        GrammarUtils.token("rule", GrammarUtils.pattern(compile("@[\\w-]+")))
                                 )
                         )
                 ),
-                token(
+                GrammarUtils.token(
                         "url",
-                        pattern(compile("url\\((?:([\"'])(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1|.*?)\\)", CASE_INSENSITIVE))
+                        GrammarUtils.pattern(compile("url\\((?:([\"'])(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1|.*?)\\)", CASE_INSENSITIVE))
                 ),
-                token("selector", pattern(compile("[^{\\}\\s][^{\\};]*?(?=\\s*\\{)"))),
-                token(
+                GrammarUtils.token("selector", GrammarUtils.pattern(compile("[^{\\}\\s][^{\\};]*?(?=\\s*\\{)"))),
+                GrammarUtils.token(
                         "string",
-                        pattern(compile("(\"|')(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1"), false, true)
+                        GrammarUtils.pattern(compile("(\"|')(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1"), false, true)
                 ),
-                token(
+                GrammarUtils.token(
                         "property",
-                        pattern(compile("[-_a-z\\xA0-\\uFFFF][-\\w\\xA0-\\uFFFF]*(?=\\s*:)", CASE_INSENSITIVE))
+                        GrammarUtils.pattern(compile("[-_a-z\\xA0-\\uFFFF][-\\w\\xA0-\\uFFFF]*(?=\\s*:)", CASE_INSENSITIVE))
                 ),
-                token("important", pattern(compile("\\B!important\\b", CASE_INSENSITIVE))),
-                token("function", pattern(compile("[-a-z0-9]+(?=\\()", CASE_INSENSITIVE))),
-                token("punctuation", pattern(compile("[(){\\};:]")))
+                GrammarUtils.token("important", GrammarUtils.pattern(compile("\\B!important\\b", CASE_INSENSITIVE))),
+                GrammarUtils.token("function", GrammarUtils.pattern(compile("[-a-z0-9]+(?=\\()", CASE_INSENSITIVE))),
+                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("[(){\\};:]")))
         );
 
         // can we maybe add some helper to specify simplified location?
@@ -63,17 +62,17 @@ public class Prism_css {
         // modify with CSS-Extras
         final Token selector = css.findToken("selector");
         if (selector != null) {
-            final Pattern pattern = pattern(
+            final Pattern pattern = GrammarUtils.pattern(
                     compile("[^{}\\s][^{}]*(?=\\s*\\{)"),
                     false,
                     false,
                     null,
-                    grammar("inside",
-                            token("pseudo-element", pattern(compile(":(?:after|before|first-letter|first-line|selection)|::[-\\w]+"))),
-                            token("pseudo-class", pattern(compile(":[-\\w]+(?:\\(.*\\))?"))),
-                            token("class", pattern(compile("\\.[-:.\\w]+"))),
-                            token("id", pattern(compile("#[-:.\\w]+"))),
-                            token("attribute", pattern(compile("\\[[^\\]]+\\]")))
+                    GrammarUtils.grammar("inside",
+                            GrammarUtils.token("pseudo-element", GrammarUtils.pattern(compile(":(?:after|before|first-letter|first-line|selection)|::[-\\w]+"))),
+                            GrammarUtils.token("pseudo-class", GrammarUtils.pattern(compile(":[-\\w]+(?:\\(.*\\))?"))),
+                            GrammarUtils.token("class", GrammarUtils.pattern(compile("\\.[-:.\\w]+"))),
+                            GrammarUtils.token("id", GrammarUtils.pattern(compile("#[-:.\\w]+"))),
+                            GrammarUtils.token("attribute", GrammarUtils.pattern(compile("\\[[^\\]]+\\]")))
                     )
             );
             selector.patterns().clear();
@@ -81,9 +80,9 @@ public class Prism_css {
         }
 
         css.insertBeforeToken("function",
-                token("hexcode", pattern(compile("#[\\da-f]{3,8}", CASE_INSENSITIVE))),
-                token("entity", pattern(compile("\\\\[\\da-fA-F]{1,8}", CASE_INSENSITIVE))),
-                token("number", pattern(compile("(-|)[\\d%.]+(px|)")))
+                GrammarUtils.token("hexcode", GrammarUtils.pattern(compile("#[\\da-f]{3,8}", CASE_INSENSITIVE))),
+                GrammarUtils.token("entity", GrammarUtils.pattern(compile("\\\\[\\da-fA-F]{1,8}", CASE_INSENSITIVE))),
+                GrammarUtils.token("number", GrammarUtils.pattern(compile("(-|)[\\d%.]+(px|)")))
         );
 
 

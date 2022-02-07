@@ -1,7 +1,6 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Aliases;
@@ -9,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
@@ -22,65 +20,65 @@ public class Prism_markup {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        final Token entity = token("entity", pattern(compile("&#?[\\da-z]{1,8};", Pattern.CASE_INSENSITIVE)));
-        final Grammar markup = grammar(
+        final Token entity = GrammarUtils.token("entity", GrammarUtils.pattern(compile("&#?[\\da-z]{1,8};", Pattern.CASE_INSENSITIVE)));
+        final Grammar markup = GrammarUtils.grammar(
                 "markup",
-                token("comment", pattern(compile("<!--[\\s\\S]*?-->"))),
-                token("prolog", pattern(compile("<\\?[\\s\\S]+?\\?>"))),
-                token("doctype", pattern(compile("<!DOCTYPE[\\s\\S]+?>", Pattern.CASE_INSENSITIVE))),
-                token("cdata", pattern(compile("<!\\[CDATA\\[[\\s\\S]*?]]>", Pattern.CASE_INSENSITIVE))),
-                token(
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile("<!--[\\s\\S]*?-->"))),
+                GrammarUtils.token("prolog", GrammarUtils.pattern(compile("<\\?[\\s\\S]+?\\?>"))),
+                GrammarUtils.token("doctype", GrammarUtils.pattern(compile("<!DOCTYPE[\\s\\S]+?>", Pattern.CASE_INSENSITIVE))),
+                GrammarUtils.token("cdata", GrammarUtils.pattern(compile("<!\\[CDATA\\[[\\s\\S]*?]]>", Pattern.CASE_INSENSITIVE))),
+                GrammarUtils.token(
                         "tag",
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("<\\/?(?!\\d)[^\\s>\\/=$<%]+(?:\\s+[^\\s>\\/=]+(?:=(?:(\"|')(?:\\\\[\\s\\S]|(?!\\1)[^\\\\])*\\1|[^\\s'\">=]+))?)*\\s*\\/?>", Pattern.CASE_INSENSITIVE),
                                 false,
                                 true,
                                 null,
-                                grammar(
+                                GrammarUtils.grammar(
                                         "inside",
-                                        token(
+                                        GrammarUtils.token(
                                                 "tag",
-                                                pattern(
+                                                GrammarUtils.pattern(
                                                         compile("^<\\/?[^\\s>\\/]+", Pattern.CASE_INSENSITIVE),
                                                         false,
                                                         false,
                                                         null,
-                                                        grammar(
+                                                        GrammarUtils.grammar(
                                                                 "inside",
-                                                                token("punctuation", pattern(compile("^<\\/?"))),
-                                                                token("namespace", pattern(compile("^[^\\s>\\/:]+:")))
+                                                                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("^<\\/?"))),
+                                                                GrammarUtils.token("namespace", GrammarUtils.pattern(compile("^[^\\s>\\/:]+:")))
                                                         )
                                                 )
                                         ),
-                                        token(
+                                        GrammarUtils.token(
                                                 "attr-value",
-                                                pattern(
+                                                GrammarUtils.pattern(
                                                         compile("=(?:(\"|')(?:\\\\[\\s\\S]|(?!\\1)[^\\\\])*\\1|[^\\s'\">=]+)", Pattern.CASE_INSENSITIVE),
                                                         false,
                                                         false,
                                                         null,
-                                                        grammar(
+                                                        GrammarUtils.grammar(
                                                                 "inside",
-                                                                token(
+                                                                GrammarUtils.token(
                                                                         "punctuation",
-                                                                        pattern(compile("^=")),
-                                                                        pattern(compile("(^|[^\\\\])[\"']"), true)
+                                                                        GrammarUtils.pattern(compile("^=")),
+                                                                        GrammarUtils.pattern(compile("(^|[^\\\\])[\"']"), true)
                                                                 ),
                                                                 entity
                                                         )
                                                 )
                                         ),
-                                        token("punctuation", pattern(compile("\\/?>"))),
-                                        token(
+                                        GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("\\/?>"))),
+                                        GrammarUtils.token(
                                                 "attr-name",
-                                                pattern(
+                                                GrammarUtils.pattern(
                                                         compile("[^\\s>\\/]+"),
                                                         false,
                                                         false,
                                                         null,
-                                                        grammar(
+                                                        GrammarUtils.grammar(
                                                                 "inside",
-                                                                token("namespace", pattern(compile("^[^\\s>\\/:]+:")))
+                                                                GrammarUtils.token("namespace", GrammarUtils.pattern(compile("^[^\\s>\\/:]+:")))
                                                         )
                                                 )
                                         )
@@ -92,9 +90,9 @@ public class Prism_markup {
 
         // modify with CSS
         markup.insertBeforeToken("tag",
-                token(
+                GrammarUtils.token(
                         "style",
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("(<style[\\s\\S]*?>)[\\s\\S]*?(?=</style>)", CASE_INSENSITIVE),
                                 true,
                                 true,
@@ -121,18 +119,18 @@ public class Prism_markup {
         }
 
         markup.insertBeforeToken("tag/attr-value",
-                token(
+                GrammarUtils.token(
                         "style-attr",
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("\\s*style=(\"|')(?:\\\\[\\s\\S]|(?!\\1)[^\\\\])*\\1", CASE_INSENSITIVE),
                                 false,
                                 false,
                                 "language-css",
-                                grammar(
+                                GrammarUtils.grammar(
                                         "inside",
-                                        token(
+                                        GrammarUtils.token(
                                                 "attr-name",
-                                                pattern(
+                                                GrammarUtils.pattern(
                                                         compile("^\\s*style", CASE_INSENSITIVE),
                                                         false,
                                                         false,
@@ -140,10 +138,10 @@ public class Prism_markup {
                                                         markupTagInside
                                                 )
                                         ),
-                                        token("punctuation", pattern(compile("^\\s*=\\s*['\"]|['\"]\\s*$"))),
-                                        token(
+                                        GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("^\\s*=\\s*['\"]|['\"]\\s*$"))),
+                                        GrammarUtils.token(
                                                 "attr-value",
-                                                pattern(
+                                                GrammarUtils.pattern(
                                                         compile(".+", CASE_INSENSITIVE),
                                                         false,
                                                         false,
@@ -159,8 +157,8 @@ public class Prism_markup {
 
         // modify with JavaScript
         markup.insertBeforeToken("tag",
-                token(
-                        "script", pattern(
+                GrammarUtils.token(
+                        "script", GrammarUtils.pattern(
                                 compile("(<script[\\s\\S]*?>)[\\s\\S]*?(?=</script>)", CASE_INSENSITIVE),
                                 true,
                                 true,

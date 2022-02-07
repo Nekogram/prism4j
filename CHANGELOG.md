@@ -18,6 +18,9 @@
       not necessary to add it manually)
     * the language annotation `@Modify` was removed due to changes of the internal language modification system
     * various methods were removed from `GrammarUtils` and added to `Grammar` and `Prism4j`
+    * methods and classes related to language definitions were moved to `io.noties.prism4j.languages`
+    * `Node` is not longer a subclass of `Prism4j`
+    * `TokenFilterer` is not longer a subclass of `GrammarUtils`
 
 ### Enhancements
 

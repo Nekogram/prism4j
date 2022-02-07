@@ -1,5 +1,8 @@
-package io.noties.prism4j;
+package io.noties.prism4j.languages;
 
+import io.noties.prism4j.Grammar;
+import io.noties.prism4j.Pattern;
+import io.noties.prism4j.Token;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -6,7 +6,6 @@ import io.noties.prism4j.Token;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.MULTILINE;
 import static java.util.regex.Pattern.compile;
 
@@ -20,77 +19,77 @@ public class Prism_markdown {
                 "markdown"
         );
 
-        final Token bold = token("bold", pattern(
+        final Token bold = GrammarUtils.token("bold", GrammarUtils.pattern(
                 compile("(^|[^\\\\])(\\*\\*|__)(?:(?:\\r?\\n|\\r)(?!\\r?\\n|\\r)|.)+?\\2"),
                 true,
                 false,
                 null,
-                grammar("inside", token("punctuation", pattern(compile("^\\*\\*|^__|\\*\\*$|__$"))))
+                GrammarUtils.grammar("inside", GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("^\\*\\*|^__|\\*\\*$|__$"))))
         ));
 
-        final Token italic = token("italic", pattern(
+        final Token italic = GrammarUtils.token("italic", GrammarUtils.pattern(
                 compile("(^|[^\\\\])([*_])(?:(?:\\r?\\n|\\r)(?!\\r?\\n|\\r)|.)+?\\2"),
                 true,
                 false,
                 null,
-                grammar("inside", token("punctuation", pattern(compile("^[*_]|[*_]$"))))
+                GrammarUtils.grammar("inside", GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("^[*_]|[*_]$"))))
         ));
 
-        final Token url = token("url", pattern(
+        final Token url = GrammarUtils.token("url", GrammarUtils.pattern(
                 compile("!?\\[[^\\]]+\\](?:\\([^\\s)]+(?:[\\t ]+\"(?:\\\\.|[^\"\\\\])*\")?\\)| ?\\[[^\\]\\n]*\\])"),
                 false,
                 false,
                 null,
-                grammar("inside",
-                        token("variable", pattern(compile("(!?\\[)[^\\]]+(?=\\]$)"), true)),
-                        token("string", pattern(compile("\"(?:\\\\.|[^\"\\\\])*\"(?=\\)$)")))
+                GrammarUtils.grammar("inside",
+                        GrammarUtils.token("variable", GrammarUtils.pattern(compile("(!?\\[)[^\\]]+(?=\\]$)"), true)),
+                        GrammarUtils.token("string", GrammarUtils.pattern(compile("\"(?:\\\\.|[^\"\\\\])*\"(?=\\)$)")))
                 )
         ));
 
         markdown.insertBeforeToken("prolog",
-                token("blockquote", pattern(compile("^>(?:[\\t ]*>)*", MULTILINE))),
-                token("code",
-                        pattern(compile("^(?: {4}|\\t).+", MULTILINE), false, false, "keyword"),
-                        pattern(compile("``.+?``|`[^`\\n]+`"), false, false, "keyword")
+                GrammarUtils.token("blockquote", GrammarUtils.pattern(compile("^>(?:[\\t ]*>)*", MULTILINE))),
+                GrammarUtils.token("code",
+                        GrammarUtils.pattern(compile("^(?: {4}|\\t).+", MULTILINE), false, false, "keyword"),
+                        GrammarUtils.pattern(compile("``.+?``|`[^`\\n]+`"), false, false, "keyword")
                 ),
-                token(
+                GrammarUtils.token(
                         "title",
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("\\w+.*(?:\\r?\\n|\\r)(?:==+|--+)"),
                                 false,
                                 false,
                                 "important",
-                                grammar("inside", token("punctuation", pattern(compile("==+$|--+$"))))
+                                GrammarUtils.grammar("inside", GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("==+$|--+$"))))
                         ),
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("(^\\s*)#+.+", MULTILINE),
                                 true,
                                 false,
                                 "important",
-                                grammar("inside", token("punctuation", pattern(compile("^#+|#+$"))))
+                                GrammarUtils.grammar("inside", GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("^#+|#+$"))))
                         )
                 ),
-                token("hr", pattern(
+                GrammarUtils.token("hr", GrammarUtils.pattern(
                         compile("(^\\s*)([*-])(?:[\\t ]*\\2){2,}(?=\\s*$)", MULTILINE),
                         true,
                         false,
                         "punctuation"
                 )),
-                token("list", pattern(
+                GrammarUtils.token("list", GrammarUtils.pattern(
                         compile("(^\\s*)(?:[*+-]|\\d+\\.)(?=[\\t ].)", MULTILINE),
                         true,
                         false,
                         "punctuation"
                 )),
-                token("url-reference", pattern(
+                GrammarUtils.token("url-reference", GrammarUtils.pattern(
                         compile("!?\\[[^\\]]+\\]:[\\t ]+(?:\\S+|<(?:\\\\.|[^>\\\\])+>)(?:[\\t ]+(?:\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'|\\((?:\\\\.|[^)\\\\])*\\)))?"),
                         false,
                         false,
                         "url",
-                        grammar("inside",
-                                token("variable", pattern(compile("^(!?\\[)[^\\]]+"), true)),
-                                token("string", pattern(compile("(?:\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'|\\((?:\\\\.|[^)\\\\])*\\))$"))),
-                                token("punctuation", pattern(compile("^[\\[\\]!:]|[<>]")))
+                        GrammarUtils.grammar("inside",
+                                GrammarUtils.token("variable", GrammarUtils.pattern(compile("^(!?\\[)[^\\]]+"), true)),
+                                GrammarUtils.token("string", GrammarUtils.pattern(compile("(?:\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'|\\((?:\\\\.|[^)\\\\])*\\))$"))),
+                                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("^[\\[\\]!:]|[<>]")))
                         )
                 )),
                 bold,

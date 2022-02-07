@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class Visitor {
 
-    public void visit(@NotNull List<? extends Prism4j.Node> nodes) {
-        for (Prism4j.Node node : nodes) {
+    public void visit(@NotNull List<? extends Node> nodes) {
+        for (Node node : nodes) {
             if (node.isSyntax()) {
                 visitSyntax((Syntax) node);
             } else {

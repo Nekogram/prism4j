@@ -1,5 +1,7 @@
 package io.noties.prism4j;
 
+import io.noties.prism4j.languages.GrammarUtils;
+import io.noties.prism4j.languages.TokenFilter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +72,7 @@ public class Grammar {
     @NotNull
     public Grammar extend(
             @NotNull String name,
-            @NotNull GrammarUtils.TokenFilter filter,
+            @NotNull TokenFilter filter,
             Token... tokens) {
 
         final int size = tokens != null

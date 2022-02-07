@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.*;
 
 @SuppressWarnings("unused")
@@ -19,26 +18,26 @@ public class Prism_latex {
 
         final Pattern funcPattern = compile("\\\\(?:[^a-z()\\[\\]]|[a-z*]+)", CASE_INSENSITIVE);
 
-        final Grammar insideEqu = grammar("inside",
-                token("equation-command", pattern(funcPattern, false, false, "regex"))
+        final Grammar insideEqu = GrammarUtils.grammar("inside",
+                GrammarUtils.token("equation-command", GrammarUtils.pattern(funcPattern, false, false, "regex"))
         );
 
-        return grammar("latex",
-                token("comment", pattern(compile("%.*", MULTILINE))),
-                token("cdata", pattern(
+        return GrammarUtils.grammar("latex",
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile("%.*", MULTILINE))),
+                GrammarUtils.token("cdata", GrammarUtils.pattern(
                                 compile("(\\\\begin\\{((?:verbatim|lstlisting)\\*?)\\})[\\s\\S]*?(?=\\\\end\\{\\2\\})"),
                                 true
                         )
                 ),
-                token("equation",
-                        pattern(
+                GrammarUtils.token("equation",
+                        GrammarUtils.pattern(
                                 compile("\\$\\$(?:\\\\[\\s\\S]|[^\\\\$])+\\$\\$|\\$(?:\\\\[\\s\\S]|[^\\\\$])+\\$|\\\\\\([\\s\\S]*?\\\\\\)|\\\\\\[[\\s\\S]*?\\\\\\]"),
                                 false,
                                 false,
                                 "string",
                                 insideEqu
                         ),
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("(\\\\begin\\{((?:equation|math|eqnarray|align|multline|gather)\\*?)\\})[\\s\\S]*?(?=\\\\end\\{\\2\\})"),
                                 true,
                                 false,
@@ -46,27 +45,27 @@ public class Prism_latex {
                                 insideEqu
                         )
                 ),
-                token("keyword", pattern(
+                GrammarUtils.token("keyword", GrammarUtils.pattern(
                         compile("(\\\\(?:begin|end|ref|cite|label|usepackage|documentclass)(?:\\[[^\\]]+\\])?\\{)[^\\}]+(?=\\})"),
                         true
                 )),
-                token("url", pattern(
+                GrammarUtils.token("url", GrammarUtils.pattern(
                         compile("(\\\\url\\{)[^\\}]+(?=\\})"),
                         true
                 )),
-                token("headline", pattern(
+                GrammarUtils.token("headline", GrammarUtils.pattern(
                         compile("(\\\\(?:part|chapter|section|subsection|frametitle|subsubsection|paragraph|subparagraph|subsubparagraph|subsubsubparagraph)\\*?(?:\\[[^\\]]+\\])?\\{)[^}]+(?=\\}(?:\\[[^\\]]+\\])?)"),
                         true,
                         false,
                         "class-name"
                 )),
-                token("function", pattern(
+                GrammarUtils.token("function", GrammarUtils.pattern(
                         funcPattern,
                         false,
                         false,
                         "selector"
                 )),
-                token("punctuation", pattern(compile("[\\[\\]{\\}&]")))
+                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("[\\[\\]{\\}&]")))
         );
     }
 }

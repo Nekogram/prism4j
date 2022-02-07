@@ -4,7 +4,6 @@ import io.noties.prism4j.Grammar;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
@@ -13,23 +12,23 @@ public class Prism_clojure {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        return grammar("clojure",
-                token("comment", pattern(compile(";+.*"), false, true)),
-                token("string", pattern(compile("\"(?:[^\"\\\\]|\\\\.)*\""), false, true)),
-                token("char", pattern(compile("\\\\\\w+"))),
-                token("symbol", pattern(compile("(^|[\\s()\\[\\]{\\},])::?[\\w*+!?'<>=/.-]+"), true)),
-                token("operator", pattern(compile("(?:::|[:|'])\\b[a-z][\\w*+!?-]*\\b", CASE_INSENSITIVE))),
-                token("keyword",
-                        pattern(
+        return GrammarUtils.grammar("clojure",
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile(";+.*"), false, true)),
+                GrammarUtils.token("string", GrammarUtils.pattern(compile("\"(?:[^\"\\\\]|\\\\.)*\""), false, true)),
+                GrammarUtils.token("char", GrammarUtils.pattern(compile("\\\\\\w+"))),
+                GrammarUtils.token("symbol", GrammarUtils.pattern(compile("(^|[\\s()\\[\\]{\\},])::?[\\w*+!?'<>=/.-]+"), true)),
+                GrammarUtils.token("operator", GrammarUtils.pattern(compile("(?:::|[:|'])\\b[a-z][\\w*+!?-]*\\b", CASE_INSENSITIVE))),
+                GrammarUtils.token("keyword",
+                        GrammarUtils.pattern(
                                 compile("(\\()(?:-|->|->>|\\.|\\.\\.|\\*|\\/|\\+|<|<=|=|==|>|>=|accessor|agent|agent-errors|aget|alength|all-ns|alter|and|append-child|apply|array-map|aset|aset-boolean|aset-byte|aset-char|aset-double|aset-float|aset-int|aset-long|aset-short|assert|assoc|await|await-for|bean|binding|bit-and|bit-not|bit-or|bit-shift-left|bit-shift-right|bit-xor|boolean|branch\\?|butlast|byte|cast|char|children|class|clear-agent-errors|comment|commute|comp|comparator|complement|concat|cond|conj|cons|constantly|construct-proxy|contains\\?|count|create-ns|create-struct|cycle|dec|declare|def|def-|definline|definterface|defmacro|defmethod|defmulti|defn|defn-|defonce|defproject|defprotocol|defrecord|defstruct|deftype|deref|difference|disj|dissoc|distinct|do|doall|doc|dorun|doseq|dosync|dotimes|doto|double|down|drop|drop-while|edit|end\\?|ensure|eval|every\\?|false\\?|ffirst|file-seq|filter|find|find-doc|find-ns|find-var|first|float|flush|fn|fnseq|for|frest|gensym|get|get-proxy-class|hash-map|hash-set|identical\\?|identity|if|if-let|if-not|import|in-ns|inc|index|insert-child|insert-left|insert-right|inspect-table|inspect-tree|instance\\?|int|interleave|intersection|into|into-array|iterate|join|key|keys|keyword|keyword\\?|last|lazy-cat|lazy-cons|left|lefts|let|line-seq|list|list\\*|load|load-file|locking|long|loop|macroexpand|macroexpand-1|make-array|make-node|map|map-invert|map\\?|mapcat|max|max-key|memfn|merge|merge-with|meta|min|min-key|monitor-enter|name|namespace|neg\\?|new|newline|next|nil\\?|node|not|not-any\\?|not-every\\?|not=|ns|ns-imports|ns-interns|ns-map|ns-name|ns-publics|ns-refers|ns-resolve|ns-unmap|nth|nthrest|or|parse|partial|path|peek|pop|pos\\?|pr|pr-str|print|print-str|println|println-str|prn|prn-str|project|proxy|proxy-mappings|quot|quote|rand|rand-int|range|re-find|re-groups|re-matcher|re-matches|re-pattern|re-seq|read|read-line|recur|reduce|ref|ref-set|refer|rem|remove|remove-method|remove-ns|rename|rename-keys|repeat|replace|replicate|resolve|rest|resultset-seq|reverse|rfirst|right|rights|root|rrest|rseq|second|select|select-keys|send|send-off|seq|seq-zip|seq\\?|set|set!|short|slurp|some|sort|sort-by|sorted-map|sorted-map-by|sorted-set|special-symbol\\?|split-at|split-with|str|string\\?|struct|struct-map|subs|subvec|symbol|symbol\\?|sync|take|take-nth|take-while|test|throw|time|to-array|to-array-2d|tree-seq|true\\?|try|union|up|update-proxy|val|vals|var|var-get|var-set|var\\?|vector|vector-zip|vector\\?|when|when-first|when-let|when-not|with-local-vars|with-meta|with-open|with-out-str|xml-seq|xml-zip|zero\\?|zipmap|zipper)(?=[\\s)]|$)"),
                                 true
                         )
                 ),
-                token("boolean", pattern(compile("\\b(?:true|false|nil)\\b"))),
-                token("number", pattern(compile("(^|[^\\w$@])(?:\\d+(?:[/.]\\d+)?(?:e[+-]?\\d+)?|0x[a-f0-9]+|[1-9]\\d?r[a-z0-9]+)[lmn]?(?![\\w$@])", CASE_INSENSITIVE), true)),
-                token("function", pattern(compile("((?:^|[^'])\\()[\\w*+!?'<>=/.-]+(?=[\\s)]|$)"), true)),
-                token("operator", pattern(compile("[#@^`~]"))),
-                token("punctuation", pattern(compile("[{\\}\\[\\](),]")))
+                GrammarUtils.token("boolean", GrammarUtils.pattern(compile("\\b(?:true|false|nil)\\b"))),
+                GrammarUtils.token("number", GrammarUtils.pattern(compile("(^|[^\\w$@])(?:\\d+(?:[/.]\\d+)?(?:e[+-]?\\d+)?|0x[a-f0-9]+|[1-9]\\d?r[a-z0-9]+)[lmn]?(?![\\w$@])", CASE_INSENSITIVE), true)),
+                GrammarUtils.token("function", GrammarUtils.pattern(compile("((?:^|[^'])\\()[\\w*+!?'<>=/.-]+(?=[\\s)]|$)"), true)),
+                GrammarUtils.token("operator", GrammarUtils.pattern(compile("[#@^`~]"))),
+                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("[{\\}\\[\\](),]")))
         );
     }
 }

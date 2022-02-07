@@ -20,70 +20,6 @@ public class Prism4j {
         this.grammarLocator = grammarLocator;
     }
 
-    /**
-     * Factory method to create a {@link Grammar}
-     *
-     * @param name   of the defined grammar
-     * @param tokens a list of {@link Token}s
-     * @return an instance of {@link Grammar}
-     */
-    @NotNull
-    public static Grammar grammar(@NotNull String name, @NotNull List<Token> tokens) {
-        return new Grammar(name, tokens);
-    }
-
-    @NotNull
-    public static Grammar grammar(@NotNull String name, Token... tokens) {
-        return new Grammar(name, ArrayUtils.toList(tokens));
-    }
-
-    @NotNull
-    public static Token token(@NotNull String name, @NotNull List<Pattern> patterns) {
-        return new Token(name, patterns);
-    }
-
-    @NotNull
-    public static Token token(@NotNull String name, Pattern... patterns) {
-        return new Token(name, ArrayUtils.toList(patterns));
-    }
-
-    @NotNull
-    public static Pattern pattern(@NotNull java.util.regex.Pattern regex) {
-        return new Pattern(regex, false, false, null, null);
-    }
-
-    @NotNull
-    public static Pattern pattern(@NotNull java.util.regex.Pattern regex, boolean lookbehind) {
-        return new Pattern(regex, lookbehind, false, null, null);
-    }
-
-    @NotNull
-    public static Pattern pattern(
-            @NotNull java.util.regex.Pattern regex,
-            boolean lookbehind,
-            boolean greedy) {
-        return new Pattern(regex, lookbehind, greedy, null, null);
-    }
-
-    @NotNull
-    public static Pattern pattern(
-            @NotNull java.util.regex.Pattern regex,
-            boolean lookbehind,
-            boolean greedy,
-            @Nullable String alias) {
-        return new Pattern(regex, lookbehind, greedy, alias, null);
-    }
-
-    @NotNull
-    public static Pattern pattern(
-            @NotNull java.util.regex.Pattern regex,
-            boolean lookbehind,
-            boolean greedy,
-            @Nullable String alias,
-            @Nullable Grammar inside) {
-        return new Pattern(regex, lookbehind, greedy, alias, inside);
-    }
-
     private static boolean isSyntaxNode(@NotNull Node node) {
         return node.isSyntax();
     }
@@ -289,28 +225,6 @@ public class Prism4j {
                 }
             }
         }
-    }
-
-    /**
-     * Basic structure that represents parsing state
-     *
-     * @see Text
-     * @see Syntax
-     */
-    public interface Node {
-
-        /**
-         * @return raw text length. For {@link Text} node it\'s {@link Text#literal()} length
-         * and for {@link Syntax} it is {@link Syntax#matchedString()} length
-         */
-        int textLength();
-
-        /**
-         * As we have only two types maybe doing a lot of `instanceof` checks is not that required
-         *
-         * @return a boolean indicating if this node is an instance of {@link Syntax}
-         */
-        boolean isSyntax();
     }
 
 }

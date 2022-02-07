@@ -63,7 +63,7 @@ public abstract class TestUtils {
         return new Case(input, simplifiedOutput, file);
     }
 
-    public static void assertCase(@NotNull Case c, @NotNull List<? extends Prism4j.Node> nodes) {
+    public static void assertCase(@NotNull Case c, @NotNull List<? extends Node> nodes) {
 
         final String expected = c.simplifiedOutput.toString();
         final String actual = simplify(nodes).toString();
@@ -80,10 +80,10 @@ public abstract class TestUtils {
     }
 
     @NotNull
-    private static JsonArray simplify(@NotNull List<? extends Prism4j.Node> nodes) {
+    private static JsonArray simplify(@NotNull List<? extends Node> nodes) {
         // root array
         final JsonArray array = new JsonArray();
-        for (Prism4j.Node node : nodes) {
+        for (Node node : nodes) {
             if (node instanceof Text) {
                 final String literal = ((Text) node).literal();
                 if (literal.trim().length() != 0) {

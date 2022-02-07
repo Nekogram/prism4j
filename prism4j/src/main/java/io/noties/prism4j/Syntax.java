@@ -5,10 +5,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Syntax implements Prism4j.Node {
+public class Syntax implements Node {
 
     private final String type;
-    private final List<? extends Prism4j.Node> children;
+    private final List<? extends Node> children;
     private final String alias;
     private final String matchedString;
     private final boolean greedy;
@@ -16,7 +16,7 @@ public class Syntax implements Prism4j.Node {
 
     public Syntax(
             @NotNull String type,
-            @NotNull List<? extends Prism4j.Node> children,
+            @NotNull List<? extends Node> children,
             @Nullable String alias,
             @NotNull String matchedString,
             boolean greedy,
@@ -45,7 +45,7 @@ public class Syntax implements Prism4j.Node {
     }
 
     @NotNull
-    public List<? extends Prism4j.Node> children() {
+    public List<? extends Node> children() {
         return children;
     }
 

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.compile;
 
 
@@ -24,22 +23,22 @@ public class Prism_kotlin {
         final Grammar kotlin = prism4j.requireGrammar("clike").extend(
                 "kotlin",
                 token -> !"class-name".equals(token.name()),
-                token(
+                GrammarUtils.token(
                         "keyword",
-                        pattern(compile("(^|[^.])\\b(?:abstract|actual|annotation|as|break|by|catch|class|companion|const|constructor|continue|crossinline|data|do|dynamic|else|enum|expect|external|final|finally|for|fun|get|if|import|in|infix|init|inline|inner|interface|internal|is|lateinit|noinline|null|object|open|operator|out|override|package|private|protected|public|reified|return|sealed|set|super|suspend|tailrec|this|throw|to|try|typealias|val|var|vararg|when|where|while)\\b"), true)
+                        GrammarUtils.pattern(compile("(^|[^.])\\b(?:abstract|actual|annotation|as|break|by|catch|class|companion|const|constructor|continue|crossinline|data|do|dynamic|else|enum|expect|external|final|finally|for|fun|get|if|import|in|infix|init|inline|inner|interface|internal|is|lateinit|noinline|null|object|open|operator|out|override|package|private|protected|public|reified|return|sealed|set|super|suspend|tailrec|this|throw|to|try|typealias|val|var|vararg|when|where|while)\\b"), true)
                 ),
-                token(
+                GrammarUtils.token(
                         "function",
-                        pattern(compile("(?:`[^\\r\\n`]+`|\\b\\w+)(?=\\s*\\()"), false, true),
-                        pattern(compile("(\\.)(?:`[^\\r\\n`]+`|\\w+)(?=\\s*\\{)"), true, true)
+                        GrammarUtils.pattern(compile("(?:`[^\\r\\n`]+`|\\b\\w+)(?=\\s*\\()"), false, true),
+                        GrammarUtils.pattern(compile("(\\.)(?:`[^\\r\\n`]+`|\\w+)(?=\\s*\\{)"), true, true)
                 ),
-                token(
+                GrammarUtils.token(
                         "number",
-                        pattern(compile("\\b(?:0[xX][\\da-fA-F]+(?:_[\\da-fA-F]+)*|0[bB][01]+(?:_[01]+)*|\\d+(?:_\\d+)*(?:\\.\\d+(?:_\\d+)*)?(?:[eE][+-]?\\d+(?:_\\d+)*)?[fFL]?)\\b"))
+                        GrammarUtils.pattern(compile("\\b(?:0[xX][\\da-fA-F]+(?:_[\\da-fA-F]+)*|0[bB][01]+(?:_[01]+)*|\\d+(?:_\\d+)*(?:\\.\\d+(?:_\\d+)*)?(?:[eE][+-]?\\d+(?:_\\d+)*)?[fFL]?)\\b"))
                 ),
-                token(
+                GrammarUtils.token(
                         "operator",
-                        pattern(compile("\\+[+=]?|-[-=>]?|==?=?|!(?:!|==?)?|[\\/*%<>]=?|[?:]:?|\\.\\.|&&|\\|\\||\\b(?:and|inv|or|shl|shr|ushr|xor)\\b"))
+                        GrammarUtils.pattern(compile("\\+[+=]?|-[-=>]?|==?=?|!(?:!|==?)?|[\\/*%<>]=?|[?:]:?|\\.\\.|&&|\\|\\||\\b(?:and|inv|or|shl|shr|ushr|xor)\\b"))
                 )
         );
 
@@ -53,32 +52,32 @@ public class Prism_kotlin {
             // `raw-string` tokens didn't have `inside`, so there were not tokenized
             // I still find that it has potential to fall with stackoverflow (in some cases)
             final List<Token> tokens = new ArrayList<>(kotlin.tokens().size() + 1);
-            tokens.add(token("delimiter", pattern(compile("^\\$\\{|\\}$"), false, false, "variable")));
+            tokens.add(GrammarUtils.token("delimiter", GrammarUtils.pattern(compile("^\\$\\{|\\}$"), false, false, "variable")));
             tokens.addAll(kotlin.tokens());
 
-            interpolationInside = grammar(
+            interpolationInside = GrammarUtils.grammar(
                     "inside",
-                    token("interpolation-punctuation", pattern(compile("^\\$\\{?|\\}$"), false, false, "punctuation")),
-                    token("expression", pattern(compile("[\\s\\S]+"), false, false, null, kotlin))
+                    GrammarUtils.token("interpolation-punctuation", GrammarUtils.pattern(compile("^\\$\\{?|\\}$"), false, false, "punctuation")),
+                    GrammarUtils.token("expression", GrammarUtils.pattern(compile("[\\s\\S]+"), false, false, null, kotlin))
             );
         }
 
         kotlin.insertBeforeToken("string",
-                token("string-literal",
-                        pattern(compile("\"\"\"(?:[^$]|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*?\"\"\""), false, false, "multiline", grammar("inside", token("interpolation", pattern(compile("\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), false, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+"))))),
-                        pattern(compile("\"(?:[^\"\\\\\\r\\n$]|\\\\.|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*\""), false, false, "singleline", grammar("inside", token("interpolation", pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), true, false, null, interpolationInside)), token("string", pattern(compile("[\\s\\S]+")))))
+                GrammarUtils.token("string-literal",
+                        GrammarUtils.pattern(compile("\"\"\"(?:[^$]|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*?\"\"\""), false, false, "multiline", GrammarUtils.grammar("inside", GrammarUtils.token("interpolation", GrammarUtils.pattern(compile("\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), false, false, null, interpolationInside)), GrammarUtils.token("string", GrammarUtils.pattern(compile("[\\s\\S]+"))))),
+                        GrammarUtils.pattern(compile("\"(?:[^\"\\\\\\r\\n$]|\\\\.|\\$(?:(?!\\{)|\\{[^{\\}]*\\}))*\""), false, false, "singleline", GrammarUtils.grammar("inside", GrammarUtils.token("interpolation", GrammarUtils.pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$(?:[a-z_]\\w*|\\{[^{\\}]*\\})", Pattern.CASE_INSENSITIVE), true, false, null, interpolationInside)), GrammarUtils.token("string", GrammarUtils.pattern(compile("[\\s\\S]+")))))
                 ),
-                token("char", pattern(compile("'(?:[^'\\\\\\r\\n]|\\\\(?:.|u[a-fA-F0-9]{0,4}))'"), false, true))
+                GrammarUtils.token("char", GrammarUtils.pattern(compile("'(?:[^'\\\\\\r\\n]|\\\\(?:.|u[a-fA-F0-9]{0,4}))'"), false, true))
         );
 
         kotlin.tokens().remove(kotlin.findToken("string"));
 
         kotlin.insertBeforeToken("keyword",
-                token("annotation", pattern(compile("\\B@(?:\\w+:)?(?:[A-Z]\\w*|\\[[^\\]]+\\])"), false, false, "builtin"))
+                GrammarUtils.token("annotation", GrammarUtils.pattern(compile("\\B@(?:\\w+:)?(?:[A-Z]\\w*|\\[[^\\]]+\\])"), false, false, "builtin"))
         );
 
         kotlin.insertBeforeToken("function",
-                token("label", pattern(compile("\\b\\w+@|@\\w+\\b"), false, false, "symbol"))
+                GrammarUtils.token("label", GrammarUtils.pattern(compile("\\b\\w+@|@\\w+\\b"), false, false, "symbol"))
         );
 
         return kotlin;

@@ -5,7 +5,6 @@ import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.annotations.Aliases;
 import org.jetbrains.annotations.NotNull;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
@@ -15,17 +14,17 @@ public class Prism_json {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        return grammar(
+        return GrammarUtils.grammar(
                 "json",
-                token("property", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?=\\s*:)"), false, true)),
-                token("string", pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?!\\s*:)"), false, true)),
-                token("comment", pattern(compile("//.*|/\\*[\\s\\S]*?(?:\\*/|$)"), false, true)),
-                token("number", pattern(compile("-?\\b\\d+(?:\\.\\d+)?(?:e[+-]?\\d+)?\\b", CASE_INSENSITIVE))),
-                token("punctuation", pattern(compile("[{\\}\\[\\],]"))),
+                GrammarUtils.token("property", GrammarUtils.pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?=\\s*:)"), false, true)),
+                GrammarUtils.token("string", GrammarUtils.pattern(compile("\"(?:\\\\.|[^\\\\\"\\r\\n])*\"(?!\\s*:)"), false, true)),
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile("//.*|/\\*[\\s\\S]*?(?:\\*/|$)"), false, true)),
+                GrammarUtils.token("number", GrammarUtils.pattern(compile("-?\\b\\d+(?:\\.\\d+)?(?:e[+-]?\\d+)?\\b", CASE_INSENSITIVE))),
+                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("[{\\}\\[\\],]"))),
                 // not sure about this one...
-                token("operator", pattern(compile(":"))),
-                token("boolean", pattern(compile("\\b(?:true|false)\\b"))),
-                token("null", pattern(compile("\\bnull\\b"), false, false, "keyword"))
+                GrammarUtils.token("operator", GrammarUtils.pattern(compile(":"))),
+                GrammarUtils.token("boolean", GrammarUtils.pattern(compile("\\b(?:true|false)\\b"))),
+                GrammarUtils.token("null", GrammarUtils.pattern(compile("\\bnull\\b"), false, false, "keyword"))
         );
     }
 }

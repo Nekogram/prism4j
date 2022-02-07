@@ -4,7 +4,6 @@ import io.noties.prism4j.Grammar;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.MULTILINE;
 import static java.util.regex.Pattern.compile;
 
@@ -13,22 +12,22 @@ public class Prism_git {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        return grammar("git",
-                token("comment", pattern(compile("^#.*", MULTILINE))),
-                token("deleted", pattern(compile("^[-–].*", MULTILINE))),
-                token("inserted", pattern(compile("^\\+.*", MULTILINE))),
-                token("string", pattern(compile("(\"|')(?:\\\\.|(?!\\1)[^\\\\\\r\\n])*\\1", MULTILINE))),
-                token("command", pattern(
+        return GrammarUtils.grammar("git",
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile("^#.*", MULTILINE))),
+                GrammarUtils.token("deleted", GrammarUtils.pattern(compile("^[-–].*", MULTILINE))),
+                GrammarUtils.token("inserted", GrammarUtils.pattern(compile("^\\+.*", MULTILINE))),
+                GrammarUtils.token("string", GrammarUtils.pattern(compile("(\"|')(?:\\\\.|(?!\\1)[^\\\\\\r\\n])*\\1", MULTILINE))),
+                GrammarUtils.token("command", GrammarUtils.pattern(
                         compile("^.*\\$ git .*$", MULTILINE),
                         false,
                         false,
                         null,
-                        grammar("inside",
-                                token("parameter", pattern(compile("\\s--?\\w+", MULTILINE)))
+                        GrammarUtils.grammar("inside",
+                                GrammarUtils.token("parameter", GrammarUtils.pattern(compile("\\s--?\\w+", MULTILINE)))
                         )
                 )),
-                token("coord", pattern(compile("^@@.*@@$", MULTILINE))),
-                token("commit-sha1", pattern(compile("^commit \\w{40}$", MULTILINE)))
+                GrammarUtils.token("coord", GrammarUtils.pattern(compile("^@@.*@@$", MULTILINE))),
+                GrammarUtils.token("commit-sha1", GrammarUtils.pattern(compile("^commit \\w{40}$", MULTILINE)))
         );
     }
 }

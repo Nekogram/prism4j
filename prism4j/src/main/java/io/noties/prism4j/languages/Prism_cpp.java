@@ -1,11 +1,9 @@
 package io.noties.prism4j.languages;
 
 import io.noties.prism4j.Grammar;
-import io.noties.prism4j.GrammarUtils;
 import io.noties.prism4j.Prism4j;
 import org.jetbrains.annotations.NotNull;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
@@ -19,48 +17,48 @@ public class Prism_cpp {
 
         final Grammar cpp = prism4j.requireGrammar("c").extend(
                 "cpp",
-                token("class-name",
-                        pattern(compile("(\\b(?:class|concept|enum|struct|typename)\\s+)(?!" + keywordPattern + ")\\w+"), true),
-                        pattern(compile("\\b[A-Z]\\w*(?=\\s*::\\s*\\w+\\s*\\()")),
-                        pattern(compile("\\b[A-Z_]\\w*(?=\\s*::\\s*~\\w+\\s*\\()", CASE_INSENSITIVE)),
-                        pattern(compile("\\b\\w+(?=\\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>\\s*::\\s*\\w+\\s*\\()"))
+                GrammarUtils.token("class-name",
+                        GrammarUtils.pattern(compile("(\\b(?:class|concept|enum|struct|typename)\\s+)(?!" + keywordPattern + ")\\w+"), true),
+                        GrammarUtils.pattern(compile("\\b[A-Z]\\w*(?=\\s*::\\s*\\w+\\s*\\()")),
+                        GrammarUtils.pattern(compile("\\b[A-Z_]\\w*(?=\\s*::\\s*~\\w+\\s*\\()", CASE_INSENSITIVE)),
+                        GrammarUtils.pattern(compile("\\b\\w+(?=\\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>\\s*::\\s*\\w+\\s*\\()"))
                 ),
-                token("keyword", pattern(compile(keywordPattern))),
-                token("number", pattern(compile("(?:\\b0b[01']+|\\b0x(?:[\\da-f']+(?:\\.[\\da-f']*)?|\\.[\\da-f']+)(?:p[+-]?[\\d']+)?|(?:\\b[\\d']+(?:\\.[\\d']*)?|\\B\\.[\\d']+)(?:e[+-]?[\\d']+)?)[ful]{0,4}", CASE_INSENSITIVE), false, true)),
-                token("operator", pattern(compile(">>=?|<<=?|->|--|\\+\\+|&&|\\|\\||[?:~]|<=>|[-+*/%&|^!=<>]=?|\\b(?:and|and_eq|bitand|bitor|not|not_eq|or|or_eq|xor|xor_eq)\\b")))
+                GrammarUtils.token("keyword", GrammarUtils.pattern(compile(keywordPattern))),
+                GrammarUtils.token("number", GrammarUtils.pattern(compile("(?:\\b0b[01']+|\\b0x(?:[\\da-f']+(?:\\.[\\da-f']*)?|\\.[\\da-f']+)(?:p[+-]?[\\d']+)?|(?:\\b[\\d']+(?:\\.[\\d']*)?|\\B\\.[\\d']+)(?:e[+-]?[\\d']+)?)[ful]{0,4}", CASE_INSENSITIVE), false, true)),
+                GrammarUtils.token("operator", GrammarUtils.pattern(compile(">>=?|<<=?|->|--|\\+\\+|&&|\\|\\||[?:~]|<=>|[-+*/%&|^!=<>]=?|\\b(?:and|and_eq|bitand|bitor|not|not_eq|or|or_eq|xor|xor_eq)\\b")))
         );
 
         cpp.insertBeforeToken("function",
-                token("boolean", pattern(compile("\\b(?:true|false)\\b")))
+                GrammarUtils.token("boolean", GrammarUtils.pattern(compile("\\b(?:true|false)\\b")))
         );
 
         cpp.insertBeforeToken("string",
-                token("module", pattern(
+                GrammarUtils.token("module", GrammarUtils.pattern(
                         compile("(\\b(?:module|import)\\s+)(?:\"(?:\\\\(?:\\r\\n|[\\s\\S])|[^\"\\\\\\r\\n])*\"|<[^<>\\r\\n]*>|\\b(?!" + keywordPattern + ")\\w+(?:\\s*\\.\\s*\\w+)*\\b(?:\\s*:\\s*\\b(?!" + keywordPattern + ")\\w+(?:\\s*\\.\\s*\\w+)*\\b)?|:\\s*\\b(?!" + keywordPattern + ")\\w+(?:\\s*\\.\\s*\\w+)*\\b)"),
                         true, true, null,
-                        grammar("inside", token("string", pattern(compile("^[<\"][\\s\\S]+"))), token("operator", pattern(compile(":"))), token("punctuation", pattern(compile("\\."))))
+                        GrammarUtils.grammar("inside", GrammarUtils.token("string", GrammarUtils.pattern(compile("^[<\"][\\s\\S]+"))), GrammarUtils.token("operator", GrammarUtils.pattern(compile(":"))), GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("\\."))))
                 )),
-                token("raw-string", pattern(compile("R\"([^()\\\\ ]{0,16})\\([\\s\\S]*?\\)\\1\""), false, true, "string"))
+                GrammarUtils.token("raw-string", GrammarUtils.pattern(compile("R\"([^()\\\\ ]{0,16})\\([\\s\\S]*?\\)\\1\""), false, true, "string"))
         );
 
         cpp.insertBeforeToken("keyword",
-                token("generic-function", pattern(compile("\\b(?!operator\\b)[a-z_]\\w*\\s*<(?:[^<>]|<[^<>])*>*>(?=\\s*\\()", CASE_INSENSITIVE),
+                GrammarUtils.token("generic-function", GrammarUtils.pattern(compile("\\b(?!operator\\b)[a-z_]\\w*\\s*<(?:[^<>]|<[^<>])*>*>(?=\\s*\\()", CASE_INSENSITIVE),
                                 false, false, null,
-                                grammar("inside",
-                                        token("function", pattern(compile("^\\w+"))),
-                                        token("generic", pattern(compile("<[\\s\\S]+"),
+                                GrammarUtils.grammar("inside",
+                                        GrammarUtils.token("function", GrammarUtils.pattern(compile("^\\w+"))),
+                                        GrammarUtils.token("generic", GrammarUtils.pattern(compile("<[\\s\\S]+"),
                                                 false, false, "class-name", cpp)))
                         )
                 )
         );
 
-        cpp.insertBeforeToken("operator", token("double-colon", pattern(compile("::"))));
+        cpp.insertBeforeToken("operator", GrammarUtils.token("double-colon", GrammarUtils.pattern(compile("::"))));
 
         final Grammar baseClause = GrammarUtils.clone(cpp);
-        baseClause.insertBeforeToken("operator", token("class-name", pattern(compile("\\b[a-z_]\\w*\\b(?!\\s*::)", CASE_INSENSITIVE), false, true)));
+        baseClause.insertBeforeToken("operator", GrammarUtils.token("class-name", GrammarUtils.pattern(compile("\\b[a-z_]\\w*\\b(?!\\s*::)", CASE_INSENSITIVE), false, true)));
 
         cpp.insertBeforeToken("class-name",
-                token("base-clause", pattern(compile("(\\b(?:class|struct)\\s+\\w+\\s*:\\s*)[^;{\\}\"']+?(?=\\s*[;{])"), true, true, null, baseClause))
+                GrammarUtils.token("base-clause", GrammarUtils.pattern(compile("(\\b(?:class|struct)\\s+\\w+\\s*:\\s*)[^;{\\}\"']+?(?=\\s*[;{])"), true, true, null, baseClause))
         );
 
         return cpp;

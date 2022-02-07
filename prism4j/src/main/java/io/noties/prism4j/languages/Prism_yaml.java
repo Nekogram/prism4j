@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.*;
 
 @SuppressWarnings("unused")
@@ -28,56 +27,56 @@ public class Prism_yaml {
         final String plainKey = "(?:[^\\s\\x00-\\x08\\x0e-\\x1f!\"#%&'*,\\-:>?@\\[\\]`{|\\}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|[?:-][^\\s\\x00-\\x08\\x0e-\\x1f,\\[\\]{\\}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff])(?:[ \\t]*(?:(?![#:])[^\\s\\x00-\\x08\\x0e-\\x1f,\\[\\]{}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]|:[^\\s\\x00-\\x08\\x0e-\\x1f,\\[\\]{\\}\\x7f-\\x84\\x86-\\x9f\\ud800-\\udfff\\ufffe\\uffff]))*";
         final String string = "\"(?:[^\"\\\\\\r\\n]|\\\\.)*\"|'(?:[^'\\\\\\r\\n]|\\\\.)*'";
 
-        return grammar("yaml",
-                token("scalar", pattern(
+        return GrammarUtils.grammar("yaml",
+                GrammarUtils.token("scalar", GrammarUtils.pattern(
                         compile("([\\-:]\\s*(?:\\s" + properties + "[ \\t]+)?[|>])[ \\t]*(?:((?:\\r?\\n|\\r)[ \\t]+)\\S[^\\r\\n]*(?:\\2[^\\r\\n]+)*)"),
                         true,
                         false,
                         "string"
                 )),
-                token("comment", pattern(compile("#.*"))),
-                token("key", pattern(
+                GrammarUtils.token("comment", GrammarUtils.pattern(compile("#.*"))),
+                GrammarUtils.token("key", GrammarUtils.pattern(
                         compile("((?:^|[:\\-,\\[{\\r\\n?])[ \\t]*(?:" + properties + "[ \\t]+)?)(?:" + plainKey + "|" + string + ")(?=\\s*:\\s)"),
                         true,
                         true,
                         "atrule"
                 )),
-                token("directive", pattern(
+                GrammarUtils.token("directive", GrammarUtils.pattern(
                         compile("(^[ \\t]*)%.+", MULTILINE),
                         true,
                         false,
                         "important"
                 )),
-                token("datetime", pattern(
+                GrammarUtils.token("datetime", GrammarUtils.pattern(
                         createValuePattern("\\d{4}-\\d\\d?-\\d\\d?(?:[tT]|[ \\t]+)\\d\\d?:\\d{2}:\\d{2}(?:\\.\\d*)?(?:[ \\t]*(?:Z|[-+]\\d\\d?(?::\\d{2})?))?|\\d{4}-\\d{2}-\\d{2}|\\d\\d?:\\d{2}(?::\\d{2}(?:\\.\\d*)?)?", MULTILINE),
                         true,
                         false,
                         "number"
                 )),
-                token("boolean", pattern(
+                GrammarUtils.token("boolean", GrammarUtils.pattern(
                         createValuePattern("true|false", MULTILINE | CASE_INSENSITIVE),
                         true,
                         false,
                         "important"
                 )),
-                token("null", pattern(
+                GrammarUtils.token("null", GrammarUtils.pattern(
                         createValuePattern("null|~", MULTILINE | CASE_INSENSITIVE),
                         true,
                         false,
                         "important"
                 )),
-                token("string", pattern(
+                GrammarUtils.token("string", GrammarUtils.pattern(
                         createValuePattern(string, MULTILINE),
                         true,
                         true
                 )),
-                token("number", pattern(
+                GrammarUtils.token("number", GrammarUtils.pattern(
                         createValuePattern("[+-]?(?:0x[\\da-f]+|0o[0-7]+|(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:e[+-]?\\d+)?|\\.inf|\\.nan)", MULTILINE | CASE_INSENSITIVE),
                         true
                 )),
-                token("tag", pattern(compile(tag))),
-                token("important", pattern(compile(anchorOrAlias))),
-                token("punctuation", pattern(compile("---|[:\\[\\]{\\}\\-,|>?]|\\.\\.\\.")))
+                GrammarUtils.token("tag", GrammarUtils.pattern(compile(tag))),
+                GrammarUtils.token("important", GrammarUtils.pattern(compile(anchorOrAlias))),
+                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("---|[:\\[\\]{\\}\\-,|>?]|\\.\\.\\.")))
         );
 
     }

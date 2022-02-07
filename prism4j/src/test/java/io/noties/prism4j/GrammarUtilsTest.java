@@ -1,5 +1,6 @@
 package io.noties.prism4j;
 
+import io.noties.prism4j.languages.GrammarUtils;
 import ix.Ix;
 import org.junit.Before;
 import org.junit.Test;

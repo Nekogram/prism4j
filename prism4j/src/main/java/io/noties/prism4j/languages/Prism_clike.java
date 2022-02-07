@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-import static io.noties.prism4j.Prism4j.*;
 import static java.util.regex.Pattern.compile;
 
 @SuppressWarnings("unused")
@@ -17,39 +16,39 @@ public class Prism_clike {
 
     @NotNull
     public static Grammar create(@NotNull Prism4j prism4j) {
-        return grammar(
+        return GrammarUtils.grammar(
                 "clike",
-                token(
+                GrammarUtils.token(
                         "comment",
-                        pattern(compile("(^|[^\\\\])/\\*[\\s\\S]*?(?:\\*/|$)"), true, true),
-                        pattern(compile("(^|[^\\\\:])//.*"), true, true)
+                        GrammarUtils.pattern(compile("(^|[^\\\\])/\\*[\\s\\S]*?(?:\\*/|$)"), true, true),
+                        GrammarUtils.pattern(compile("(^|[^\\\\:])//.*"), true, true)
                 ),
-                token(
+                GrammarUtils.token(
                         "string",
-                        pattern(compile("([\"'])(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1"), false, true)
+                        GrammarUtils.pattern(compile("([\"'])(?:\\\\(?:\\r\\n|[\\s\\S])|(?!\\1)[^\\\\\\r\\n])*\\1"), false, true)
                 ),
-                token(
+                GrammarUtils.token(
                         "class-name",
-                        pattern(
+                        GrammarUtils.pattern(
                                 compile("(\\b(?:class|interface|extends|implements|trait|instanceof|new)\\s+|\\bcatch\\s+\\()[\\w.\\\\]+"),
                                 true,
                                 false,
                                 null,
-                                grammar("inside", token("punctuation", pattern(compile("[.\\\\]"))))
+                                GrammarUtils.grammar("inside", GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("[.\\\\]"))))
                         )
                 ),
-                token(
+                GrammarUtils.token(
                         "keyword",
-                        pattern(compile("\\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\\b"))
+                        GrammarUtils.pattern(compile("\\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\\b"))
                 ),
-                token("boolean", pattern(compile("\\b(?:true|false)\\b"))),
-                token("function", pattern(compile("\\b\\w+(?=\\()"))),
-                token(
+                GrammarUtils.token("boolean", GrammarUtils.pattern(compile("\\b(?:true|false)\\b"))),
+                GrammarUtils.token("function", GrammarUtils.pattern(compile("\\b\\w+(?=\\()"))),
+                GrammarUtils.token(
                         "number",
-                        pattern(compile("\\b0x[\\da-f]+\\b|(?:\\b\\d+(?:\\.\\d*)?|\\B\\.\\d+)(?:e[+-]?\\d+)?", Pattern.CASE_INSENSITIVE))
+                        GrammarUtils.pattern(compile("\\b0x[\\da-f]+\\b|(?:\\b\\d+(?:\\.\\d*)?|\\B\\.\\d+)(?:e[+-]?\\d+)?", Pattern.CASE_INSENSITIVE))
                 ),
-                token("operator", pattern(compile("[<>]=?|[!=]=?=?|--?|\\+\\+?|&&?|\\|\\|?|[?*/~^%]"))),
-                token("punctuation", pattern(compile("[{\\}\\[\\];(),.:]")))
+                GrammarUtils.token("operator", GrammarUtils.pattern(compile("[<>]=?|[!=]=?=?|--?|\\+\\+?|&&?|\\|\\|?|[?*/~^%]"))),
+                GrammarUtils.token("punctuation", GrammarUtils.pattern(compile("[{\\}\\[\\];(),.:]")))
         );
     }
 }

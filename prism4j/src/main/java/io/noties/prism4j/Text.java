@@ -2,7 +2,7 @@ package io.noties.prism4j;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Text implements Prism4j.Node {
+public class Text implements Node {
 
     private final String literal;
 
