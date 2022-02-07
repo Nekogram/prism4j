@@ -102,7 +102,6 @@ the `DefaultGrammarLocator` use the
 the `DefaultGrammarLocator` will be asked for a `svg` language the `markup` will be returned.
 
 ```java
-
 @Aliases({"html", "xml", "mathml", "svg"})
 public class Prism_markup {
 }
