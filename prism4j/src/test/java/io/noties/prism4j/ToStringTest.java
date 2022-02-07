@@ -15,7 +15,7 @@ public class ToStringTest {
         for (String language : locator.languages()) {
             grammar = prism4j.grammar(language);
             if (grammar != null) {
-                System.err.printf("language: %s, toString: %s%n", language, ToString.toString(grammar));
+                System.out.printf("language: %s, toString: %s%n", language, ToString.toString(grammar));
             }
         }
     }

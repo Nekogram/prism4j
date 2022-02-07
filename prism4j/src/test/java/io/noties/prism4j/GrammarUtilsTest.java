@@ -24,7 +24,7 @@ public class GrammarUtilsTest {
                 .foreach(s -> {
                     final Grammar grammar = prism4j.grammar(s);
                     if (grammar != null) {
-                        System.err.printf("cloning language: %s%n", s);
+                        System.out.printf("cloning language: %s%n", s);
                         GrammarUtils.clone(grammar);
                     }
                 });
