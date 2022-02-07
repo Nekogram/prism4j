@@ -71,11 +71,6 @@ final String name=realLanguageName(language);
         cache.put(name,NULL);
         }else{
         cache.put(name,grammar);
-        Grammar grammarExtended=triggerModify(prism4j,name);
-        if(grammarExtended!=null){
-        cache.put(name,grammarExtended);
-        grammar=grammarExtended;
-        }
         }
 
         return grammar;
@@ -89,10 +84,6 @@ protected String realLanguageName(@NotNull String name){
 @Nullable
 protected Grammar obtainGrammar(@NotNull Prism4j prism4j,@NotNull String name){
         {{obtain-grammar}}
-        }
-
-protected Grammar triggerModify(@NotNull Prism4j prism4j,@NotNull String name){
-        {{trigger-modify}}
         }
 
 @Override

@@ -4,7 +4,6 @@ import io.noties.prism4j.Grammar;
 import io.noties.prism4j.Prism4j;
 import io.noties.prism4j.Token;
 import io.noties.prism4j.annotations.Aliases;
-import io.noties.prism4j.annotations.Modify;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import static java.util.regex.Pattern.*;
 
 @SuppressWarnings("unused")
 @Aliases("js")
-@Modify("markup")
 public class Prism_javascript {
 
     @NotNull
@@ -101,21 +99,6 @@ public class Prism_javascript {
         interpolation.patterns().add(
                 pattern(compile("((?:^|[^\\\\])(?:\\\\{2})*)\\$\\{(?:[^{\\}]|\\{(?:[^{\\}]|\\{[^\\}]*\\})*\\})+\\}"), true, false, null, insideInterpolation)
         );
-
-        final Grammar markup = prism4j.grammar("markup");
-        if (markup != null) {
-            markup.insertBeforeToken("tag",
-                    token(
-                            "script", pattern(
-                                    compile("(<script[\\s\\S]*?>)[\\s\\S]*?(?=</script>)", CASE_INSENSITIVE),
-                                    true,
-                                    true,
-                                    "language-javascript",
-                                    js
-                            )
-                    )
-            );
-        }
 
         return js;
     }

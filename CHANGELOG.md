@@ -16,6 +16,7 @@
       (you can extend `Grammar`, `Pattern`, `Syntax`, `Text`, `Token` and `Visitor`, they provide the same functions)
     * the language annotation `@Extend` was removed because `DefaultGrammarLocator` always ships with every language (
       not necessary to add it manually)
+    * the language annotation `@Modify` was removed due to changes of the internal language modification system
     * various methods were removed from `GrammarUtils` and added to `Grammar` and `Prism4j`
 
 ### Enhancements

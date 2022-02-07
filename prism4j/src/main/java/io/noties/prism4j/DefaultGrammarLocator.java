@@ -71,11 +71,6 @@ public class DefaultGrammarLocator implements GrammarLocator {
             cache.put(name, NULL);
         } else {
             cache.put(name, grammar);
-            Grammar grammarExtended = triggerModify(prism4j, name);
-            if (grammarExtended != null) {
-                cache.put(name, grammarExtended);
-                grammar = grammarExtended;
-            }
         }
 
         return grammar;
@@ -144,9 +139,6 @@ public class DefaultGrammarLocator implements GrammarLocator {
                 break;
             case "css":
                 grammar = Prism_css.create(prism4j);
-                break;
-            case "css-extras":
-                grammar = Prism_css_extras.create(prism4j);
                 break;
             case "csv":
                 grammar = Prism_csv.create(prism4j);
@@ -220,23 +212,10 @@ public class DefaultGrammarLocator implements GrammarLocator {
         return grammar;
     }
 
-    protected Grammar triggerModify(@NotNull Prism4j prism4j, @NotNull String name) {
-        Grammar grammar = null;
-        switch (name) {
-            case "markup":
-                prism4j.grammar("javascript");
-                break;
-            case "css":
-                grammar = prism4j.grammar("css-extras");
-                break;
-        }
-        return grammar;
-    }
-
     @Override
     @NotNull
     public HashSet<String> languages() {
-        final HashSet<String> set = new HashSet<>(31);
+        final HashSet<String> set = new HashSet<>(30);
         set.add("basic");
         set.add("brainfuck");
         set.add("c");
@@ -245,7 +224,6 @@ public class DefaultGrammarLocator implements GrammarLocator {
         set.add("cpp");
         set.add("csharp");
         set.add("css");
-        set.add("css-extras");
         set.add("csv");
         set.add("dart");
         set.add("git");

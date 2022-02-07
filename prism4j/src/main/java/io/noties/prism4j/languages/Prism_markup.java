@@ -157,6 +157,19 @@ public abstract class Prism_markup {
                 )
         );
 
+        // modify with JavaScript
+        markup.insertBeforeToken("tag",
+                token(
+                        "script", pattern(
+                                compile("(<script[\\s\\S]*?>)[\\s\\S]*?(?=</script>)", CASE_INSENSITIVE),
+                                true,
+                                true,
+                                "language-javascript",
+                                prism4j.requireGrammar("javascript")
+                        )
+                )
+        );
+
         return markup;
     }
 }

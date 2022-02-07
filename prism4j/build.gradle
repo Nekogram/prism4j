@@ -109,7 +109,7 @@ task regenerateDefaultGrammarLocator {
     println("[prism4j] Recreation of DefaultGrammarLocator took: " + (end - start) + " ms")
 }
 
-void regenerate() {
+static void regenerate() {
 
     final Map<String, LanguageInfo> languages = prepareLanguages()
 
@@ -127,7 +127,7 @@ void regenerate() {
     )
 }
 
-Map<String, LanguageInfo> prepareLanguages() {
+static Map<String, LanguageInfo> prepareLanguages() {
 
     final List<String> names = allLanguages()
 
@@ -155,7 +155,7 @@ static List<String> allLanguages() {
             .toList() as List<String>
 }
 
-void languageInfo(Map<String, LanguageInfo> map, String name) {
+static void languageInfo(Map<String, LanguageInfo> map, String name) {
 
     if (map.containsKey(name)) {
         return
@@ -165,10 +165,8 @@ void languageInfo(Map<String, LanguageInfo> map, String name) {
     final String source = FileUtils.readFileToString(new File(languageSourceFileName(name)), StandardCharsets.UTF_8)
 
     final List<String> aliases = findAliasesInformation(source)
-    final List<String> modify = findModifyInformation(source)
-    final boolean modifyExtend = findModifyExtendInformation(source)
 
-    map.put(name, new LanguageInfo(name, aliases, modify, modifyExtend, source))
+    map.put(name, new LanguageInfo(name, aliases, source))
 }
 
 static String languageSourceFileName(String name) {
@@ -185,7 +183,6 @@ static String grammarLocatorSource(
     final StringBuilder builder = new StringBuilder(template)
     replaceTemplate(builder, "{{real-language-name}}", createRealLanguageName(languages))
     replaceTemplate(builder, "{{obtain-grammar}}", createObtainGrammar(languages))
-    replaceTemplate(builder, "{{trigger-modify}}", createTriggerModify(languages))
     replaceTemplate(builder, "{{languages}}", createLanguages(languages))
     final Formatter formatter = new Formatter(
             JavaFormatterOptions.builder()
@@ -263,56 +260,6 @@ static String createObtainGrammar(Map<String, LanguageInfo> languages) {
             }
     builder.append("default:\ngrammar = null;\n}")
             .append("return grammar;")
-    return builder.toString()
-}
-
-static String createTriggerModify(Map<String, LanguageInfo> languages) {
-
-    // so, create a map collection where each entry in `modify` is the key and languageInfo.name is value
-    final Map<String, List<LanguageInfo>> map = new HashMap<>(3)
-
-    List<String> modify
-
-    for (LanguageInfo info : languages.values()) {
-
-        modify = info.modify
-
-        if (modify != null
-                && modify.size() > 0) {
-
-            for (String name : modify) {
-                map.computeIfAbsent(name, { new ArrayList<>(3) }).add(info)
-            }
-        }
-    }
-
-    if (map.size() == 0) {
-        return ""
-    }
-
-    final StringBuilder builder = new StringBuilder()
-    builder.append("Grammar grammar = null;\n")
-    builder.append("switch(name){\n")
-    for (Map.Entry<String, List<LanguageInfo>> entry : map.entrySet()) {
-        //if (entry.getValue().modify != null
-        //        && entry.getValue().modify.size() > 0) {
-
-        builder.append("case \"")
-                .append(entry.getKey())
-                .append("\":\n")
-        if (entry.getValue().size() == 1 && entry.getValue()[0].modifyExtend) {
-            builder.append("grammar = ")
-        }
-        for (LanguageInfo lang : entry.getValue()) {
-            builder.append("prism4j.grammar(\"")
-                    .append(lang.name)
-                    .append("\");\n")
-        }
-        builder.append("break;\n")
-        //}
-    }
-    builder.append("}")
-    builder.append("return grammar;")
     return builder.toString()
 }
 
@@ -396,34 +343,19 @@ static List<String> findAliasesInformation(String source) {
     return findAnnotationArrayInformation("@Aliases", source)
 }
 
-static List<String> findModifyInformation(String source) {
-    return findAnnotationArrayInformation("@Modify", source)
-}
-
-static boolean findModifyExtendInformation(String source) {
-    final Pattern annotation = Pattern.compile("@Modify\\(value = (\\{|)((\"\\S+\")(,|))+(}|), extend = true\\)")
-    return annotation.matcher(source).find()
-}
-
 class LanguageInfo {
 
     public final String name
     public final List<String> aliases
-    public final List<String> modify
-    public final boolean modifyExtend
     public final String source
 
     LanguageInfo(
             String name,
             List<String> aliases,
-            List<String> modify,
-            boolean modifyExtend,
             String source
     ) {
         this.name = name
         this.aliases = aliases
-        this.modify = modify
-        this.modifyExtend = modifyExtend
         this.source = source
     }
 
