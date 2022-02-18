@@ -29,8 +29,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'commons-io:commons-io:2.11.0'
     testImplementation 'com.github.akarnokd:ixjava:1.0.0'
-    testImplementation 'com.google.code.gson:gson:2.8.9'
-    testImplementation 'net.javacrumbs.json-unit:json-unit:2.28.0'
+    testImplementation 'com.google.code.gson:gson:2.9.0'
+    testImplementation 'net.javacrumbs.json-unit:json-unit:2.30.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
