@@ -1,0 +1,15 @@
+funcWithStringAsFirstParam("Hello World")
+funcWithIntAsFirstParam(10)
+
+----------------------------------------------------
+
+[
+    ["function", "funcWithStringAsFirstParam"],
+    ["punctuation", "("],
+    ["string", "\"Hello World\""],
+    ["punctuation", ")"],
+    ["function", "funcWithIntAsFirstParam"],
+    ["punctuation", "("],
+    ["number", "10"],
+    ["punctuation", ")"]
+]

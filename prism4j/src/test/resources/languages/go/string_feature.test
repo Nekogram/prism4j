@@ -15,10 +15,10 @@
 	["string", "`abc`"],
 	["string", "`\\n\n\\n`"],
 	["string", "`\\`"],
-	["string", "\n\"\""],
-	["string", "\n\"\\n\""],
-	["string", "\n\"\\\"\""],
-	["string", "\n\"Hello, world!\\n\""],
-	["string", "\n\"日本語\""],
-	["string", "\n\"\\xff\\u00FF\""]
+	["string", "\"\""],
+	["string", "\"\\n\""],
+	["string", "\"\\\"\""],
+	["string", "\"Hello, world!\\n\""],
+	["string", "\"日本語\""],
+	["string", "\"\\xff\\u00FF\""]
 ]
