@@ -20,7 +20,7 @@ class Prism4jExample {
         final Grammar grammar = prism4j.grammar("json");
         if (grammar != null) {
             final List<Node> nodes = prism4j.tokenize(code, grammar);
-            final AbsVisitor visitor = new AbsVisitor() {
+            final Visitor visitor = new Visitor() {
                 @Override
                 void visitText(@NonNull Prism4j.Text text) {
                     // raw text
