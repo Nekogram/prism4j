@@ -80,16 +80,12 @@ public class DefaultGrammarLocator implements GrammarLocator {
     protected String realLanguageName(@NotNull String name) {
         final String out;
         switch (name) {
-            case "dotnet":
-                out = "csharp";
+            case "js":
+                out = "javascript";
                 break;
             case "tex":
             case "context":
                 out = "latex";
-                break;
-            case "kt":
-            case "kts":
-                out = "kotlin";
                 break;
             case "xml":
             case "html":
@@ -97,14 +93,21 @@ public class DefaultGrammarLocator implements GrammarLocator {
             case "svg":
                 out = "markup";
                 break;
+            case "yml":
+                out = "yaml";
+                break;
+            case "shell":
+                out = "bash";
+                break;
             case "webmanifest":
                 out = "json";
                 break;
-            case "js":
-                out = "javascript";
+            case "kt":
+            case "kts":
+                out = "kotlin";
                 break;
-            case "yml":
-                out = "yaml";
+            case "dotnet":
+                out = "csharp";
                 break;
             default:
                 out = name;
@@ -116,6 +119,9 @@ public class DefaultGrammarLocator implements GrammarLocator {
     protected Grammar obtainGrammar(@NotNull Prism4j prism4j, @NotNull String name) {
         final Grammar grammar;
         switch (name) {
+            case "bash":
+                grammar = Prism_bash.create(prism4j);
+                break;
             case "basic":
                 grammar = Prism_basic.create(prism4j);
                 break;
@@ -218,7 +224,8 @@ public class DefaultGrammarLocator implements GrammarLocator {
     @Override
     @NotNull
     public HashSet<String> languages() {
-        final HashSet<String> set = new HashSet<>(31);
+        final HashSet<String> set = new HashSet<>(32);
+        set.add("bash");
         set.add("basic");
         set.add("brainfuck");
         set.add("c");

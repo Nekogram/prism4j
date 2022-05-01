@@ -44,6 +44,7 @@ class Prism4jExample {
 
 In order to simplify adding language definitions to your project, Prism4j has some available languages:
 
+* `bash` (not completely functional, some tests don't pass) 
 * `basic`
 * `brainf*ck`
 * `c`
