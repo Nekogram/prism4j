@@ -19,8 +19,8 @@ buildscript {
 }
 
 apply plugin: 'java-library'
-
-version = VERSION_NAME
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
@@ -109,25 +109,25 @@ task regenerateDefaultGrammarLocator {
     println("[prism4j] Recreation of DefaultGrammarLocator took: " + (end - start) + " ms")
 }
 
-static void regenerate() {
+void regenerate() {
 
     final Map<String, LanguageInfo> languages = prepareLanguages()
 
     final String template = grammarLocatorTemplate()
     final String source = grammarLocatorSource(template, languages)
 
-    Writer writer = new FileWriter("prism4j/src/main/java/io/noties/prism4j/DefaultGrammarLocator.java")
+    Writer writer = new FileWriter("${project.projectDir}/src/main/java/io/noties/prism4j/DefaultGrammarLocator.java")
     writer.write(source)
     writer.close()
 
     FileUtils.writeStringToFile(
-            new File("prism4j/src/main/java/io/noties/prism4j/DefaultGrammarLocator.java"),
+            new File("${project.projectDir}/src/main/java/io/noties/prism4j/DefaultGrammarLocator.java"),
             source,
             StandardCharsets.UTF_8
     )
 }
 
-static Map<String, LanguageInfo> prepareLanguages() {
+Map<String, LanguageInfo> prepareLanguages() {
 
     final List<String> names = allLanguages()
 
@@ -140,9 +140,9 @@ static Map<String, LanguageInfo> prepareLanguages() {
     return languages
 }
 
-static List<String> allLanguages() {
+List<String> allLanguages() {
 
-    final String[] list = new File("prism4j/src/main/java/io/noties/prism4j/languages/").list()
+    final String[] list = new File("${project.projectDir}/src/main/java/io/noties/prism4j/languages/").list()
     if (list == null || list.length < 1) {
         throw new RuntimeException("Cannot not obtain language files")
     }
@@ -155,7 +155,7 @@ static List<String> allLanguages() {
             .toList() as List<String>
 }
 
-static void languageInfo(Map<String, LanguageInfo> map, String name) {
+void languageInfo(Map<String, LanguageInfo> map, String name) {
 
     if (map.containsKey(name)) {
         return
@@ -169,15 +169,15 @@ static void languageInfo(Map<String, LanguageInfo> map, String name) {
     map.put(name, new LanguageInfo(name, aliases, source))
 }
 
-static String languageSourceFileName(String name) {
-    return String.format(Locale.US, "prism4j/src/main/java/io/noties/prism4j/languages/Prism_%1\$s.java", javaValidName(name))
+String languageSourceFileName(String name) {
+    return String.format(Locale.US, "${project.projectDir}/src/main/java/io/noties/prism4j/languages/Prism_%1\$s.java", javaValidName(name))
 }
 
-static String grammarLocatorTemplate() {
-    return FileUtils.readFileToString(new File("prism4j/src/DefaultGrammarLocator.template.java"), StandardCharsets.UTF_8)
+String grammarLocatorTemplate() {
+    return FileUtils.readFileToString(new File("${project.projectDir}/src/DefaultGrammarLocator.template.java"), StandardCharsets.UTF_8)
 }
 
-static String grammarLocatorSource(
+String grammarLocatorSource(
         String template,
         Map<String, LanguageInfo> languages) {
     final StringBuilder builder = new StringBuilder(template)
@@ -380,4 +380,57 @@ class LanguageInfo {
                 "name='" + name + '\'' +
                 '}'
     }
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            group 'app.nekogram.prism4j'
+            artifactId 'prism4j'
+            version '2.1.0'
+            from components.java
+            pom {
+                name = 'prism4j'
+                description = 'Simplified Java clone of prism-js.'
+                url = 'https://github.com/tehcneko/prism4j'
+                licenses {
+                    license {
+                        name = 'Apache License 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'tehcneko'
+                        url = 'https://github.com/tehcneko'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/tehcneko/prism4j.git'
+                    url = 'https://github.com/tehcneko/prism4j'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name 'ossrh'
+            url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            credentials(PasswordCredentials)
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications.mavenJava
 }

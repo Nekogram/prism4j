@@ -80,8 +80,21 @@ public class DefaultGrammarLocator implements GrammarLocator {
     protected String realLanguageName(@NotNull String name) {
         final String out;
         switch (name) {
+            case "shell":
+                out = "bash";
+                break;
+            case "dotnet":
+                out = "csharp";
+                break;
             case "js":
                 out = "javascript";
+                break;
+            case "webmanifest":
+                out = "json";
+                break;
+            case "kt":
+            case "kts":
+                out = "kotlin";
                 break;
             case "tex":
             case "context":
@@ -95,19 +108,6 @@ public class DefaultGrammarLocator implements GrammarLocator {
                 break;
             case "yml":
                 out = "yaml";
-                break;
-            case "shell":
-                out = "bash";
-                break;
-            case "webmanifest":
-                out = "json";
-                break;
-            case "kt":
-            case "kts":
-                out = "kotlin";
-                break;
-            case "dotnet":
-                out = "csharp";
                 break;
             default:
                 out = name;
